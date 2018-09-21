@@ -5,7 +5,7 @@
 	
 	
 	<!-- 商品管理 -->
-	<li class="menu-list"><a href=""><i class="fa fa-male"></i><span><?php echo $this->language['sys_left_menu_goods'];?></span></a>
+	<li class="menu-list"><a href=""><i class="fa fa-shopping-cart"></i><span><?php echo $this->language['sys_left_menu_goods'];?></span></a>
 		<ul class="sub-menu-list">
 			<li id="goods/goods_add"><a href="<?php echo $this->config->app_url_root.'/Goods/goods_add'?>"><?php echo $this->language['sys_left_menu_goods_add']?></a></li>
 			<li id="goods/goods_index"><a href="<?php echo $this->config->app_url_root.'/Goods/goods_index'?>"><?php echo $this->language['sys_left_menu_goods']?></a></li>

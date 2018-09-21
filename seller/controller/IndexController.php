@@ -30,7 +30,7 @@ class IndexController extends CO_Controller{
 		//mw会话管理包
 		$this->session=new SELLER_Session();
 		//检验登录状态
-		@checkonline($_SESSION['seller']['id']);
+		checkonline($_SESSION['seller']['id']);
 		// $this->index_model = $this->GetModel('Index');
 		//加载语言包
 		$this->GetLang('sys')->GetLang('index');

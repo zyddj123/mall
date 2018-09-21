@@ -355,6 +355,19 @@ function getIP() {
 	}
 	return $ip;
 }
+if(!function_exists('show_msg'))
+{
+	/**
+	 * show_msg验证弹窗
+	 * @param unknown_type $message
+	 * @param unknown_type $url
+	 */
+	function show_msg($message,$url='')
+	{
+		echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><script type='text/javascript'>alert('$message');window.location.href='$url';</script>";
+		exit();
+	}
+}
 /**
  * checkonline 判断用户是否登录
  */
