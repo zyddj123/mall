@@ -7,7 +7,7 @@
  * @copyright		Copyright (c) 2016 - 2017.
  * @license			
  * @link				
- * @since				Version 1.17
+ * @since				Version 1.19
  */
 
 // ------------------------------------------------------------------------
