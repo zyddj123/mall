@@ -13,10 +13,16 @@ if(!defined('CO_BASE_CHECK')){
 	<title><?php echo $this->language['index_title']?></title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
+	<link href="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl();?>/js/select2/select2.min.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl();?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
 	<style>
 	.star{
 		color: #ff0000;
 		margin-right: 5px;
+	}
+	.radio{
+		display: flex;
 	}
 </style>
 </head>
@@ -175,6 +181,26 @@ if(!defined('CO_BASE_CHECK')){
 											</div>
 										</section>
 
+										<!--规格-->
+										<section>
+											<header class="panel-heading"> 规格 </header>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-4 col-sm-4">
+														<input type="checkbox" id="is_more_attr" class="js-switch" checked="checked" /><span style="margin-left: 10px;color: #f8ac59">此商品有多规格</span>
+														<span><i class="fa fa-hand-o-right"></i>跳转到
+															<a href="#">规格管理</a>
+														</span>
+													</div>
+													<div class="row">
+														<div id="attr" class="col-lg-8 col-sm-8" style="margin-top:30px;margin-left: 15px;">
+															<div class="col-lg-8 col-sm-8" id="select2_d"></div>
+															<div class="col-lg-8 col-sm-8 attr_value"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</section>
 										
 									</div>
 								</form>
@@ -196,8 +222,41 @@ if(!defined('CO_BASE_CHECK')){
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
 <script src="<?php echo $this->getThemesUrl();?>/js/spinner/js/spinner.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/select2/select2.full.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/select2/zh-CN.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/iCheck/jquery.icheck.min.js"></script>
 <script>
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
+
+	var elem = document.querySelector(".js-switch");
+	var switchery= new Switchery( elem,{color : '#f8ac59'});
+	change_attr_view();
+	$('#is_more_attr').change(function(event) {
+		change_attr_view();
+	});
+
+	//判断是否有多规格
+	function change_attr_view(){
+		if($('#is_more_attr').prop('checked')){
+			$('#select2_d').append('<select id="attr1" class="select2 form-control" style="width:30%"><option value="">请选择</option><option value="颜色">颜色</option><option value="内存">内存</option></select>');
+			$('.select2').select2({
+				'language':'zh-CN'
+			}).change(function(event) {
+				$('.attr_value').append('<div class="radio"><input type="checkbox" class="icheckbox" checked><label>Yellow Checkbox </label></div>');
+				$('.radio input').iCheck({
+					checkboxClass: 'icheckbox_flat-yellow',
+					radioClass: 'iradio_flat-yellow'
+				});
+			});
+		}else{
+			$('#select2_d').empty();
+		}
+	}
+
+	
+
+
 </script>
 </body>
 </html>
