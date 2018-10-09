@@ -186,22 +186,87 @@ if(!defined('CO_BASE_CHECK')){
 											<header class="panel-heading"> 规格 </header>
 											<div class="panel-body">
 												<div class="row">
-													<div class="col-lg-4 col-sm-4">
-														<input type="checkbox" id="is_more_attr" class="js-switch" checked="checked" /><span style="margin-left: 10px;color: #f8ac59">此商品有多规格</span>
-														<span><i class="fa fa-hand-o-right"></i>跳转到
-															<a href="#">规格管理</a>
-														</span>
-													</div>
 													<div class="row">
-														<div id="attr" class="col-lg-8 col-sm-8" style="margin-top:30px;margin-left: 15px;">
-															<div class="col-lg-8 col-sm-8" id="select2_d"></div>
-															<div class="col-lg-8 col-sm-8 attr_value"></div>
+														<div class="col-lg-4 col-sm-4">
+															<input type="checkbox" id="is_more_attr" class="js-switch"  /><span style="margin-left: 10px;color: #f8ac59">此商品有多规格</span>
+															<span><i class="fa fa-hand-o-right"></i>跳转到
+																<a href="#">规格管理</a>
+															</span>
+														</div>
+													</div><br>
+													<div class="row" id="attr">
+														<div class="col-lg-4 col-sm-4 attr1">
+															<div class="col-lg-8 col-sm-8 select2_d1">
+																<select class="select2 form-control attr_select1" style="width:60%">
+																	<option value="">请选择</option>
+																	<option value="颜色">颜色</option>
+																	<option value="内存">内存</option>
+																</select>
+															</div>
+															<div class="col-lg-8 col-sm-8 attr_value1">
+																<div class="radio">
+																	<input type="checkbox" class="icheckbox" checked><label>Yellow</label>
+																</div>
+																<div class="radio">
+																	<input type="checkbox" class="icheckbox" checked><label>blue</label>
+																</div>
+																<div class="radio">
+																	<input type="checkbox" class="icheckbox" checked><label>green</label>
+																</div>
+															</div>
+														</div>
+														
+														
+													</div>
+													
+													<div class="row" style="margin-top: 30px;" id="edit_attr">
+
+														<div class="col-lg-8 col-sm-8">
+															<table class="table table-bordered table-striped table-condensed">
+															<thead>
+																<tr>
+																	<th></th>
+																	<th>颜色</th>
+																	<th>内存</th>
+																	<th>规格编号</th>
+																	<th>图片</th>
+																	<th>操作</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>1</td>
+																	<td>黄色 </td>
+																	<td>$1.38</td>
+																	<td>-0.01</td>
+																	<td>-0.36%</td>
+																	<td>$1.39</td>
+																</tr>
+																<tr>
+																	<td>2</td>
+																	<td>黄色 </td>
+																	<td>$1.15</td>
+																	<td>  +0.02</td>
+																	<td>1.32%</td>
+																	<td>$1.14</td>
+																</tr>
+																<tr>
+																	<td>3</td>
+																	<td>蓝色</td>
+																	<td>$0.72</td>
+																	<td>0.00</td>
+																	<td>0.00%</td>
+																	<td>$0.73</td>
+																</tr>
+
+															</tbody>
+														</table>
 														</div>
 													</div>
 												</div>
 											</div>
 										</section>
-										
+
 									</div>
 								</form>
 							</div>
@@ -236,21 +301,24 @@ if(!defined('CO_BASE_CHECK')){
 		change_attr_view();
 	});
 
+	$('.radio input').iCheck({
+		checkboxClass: 'icheckbox_flat-yellow',
+		radioClass: 'iradio_flat-yellow'
+	});
+
+	$('.select2').select2({
+		'language':'zh-CN'
+	});
 	//判断是否有多规格
 	function change_attr_view(){
-		if($('#is_more_attr').prop('checked')){
-			$('#select2_d').append('<select id="attr1" class="select2 form-control" style="width:30%"><option value="">请选择</option><option value="颜色">颜色</option><option value="内存">内存</option></select>');
-			$('.select2').select2({
-				'language':'zh-CN'
-			}).change(function(event) {
-				$('.attr_value').append('<div class="radio"><input type="checkbox" class="icheckbox" checked><label>Yellow Checkbox </label></div>');
-				$('.radio input').iCheck({
-					checkboxClass: 'icheckbox_flat-yellow',
-					radioClass: 'iradio_flat-yellow'
-				});
+		if($('#is_more_attr').prop('checked')){	
+			$('.attr1').show();
+			$('.attr_value1').hide();
+			$('.attr_select1').change(function(){
+				$('.attr_value1').show();
 			});
 		}else{
-			$('#select2_d').empty();
+			$('.attr1').hide();
 		}
 	}
 
