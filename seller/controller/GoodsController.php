@@ -54,6 +54,14 @@ class GoodsController extends CO_Controller{
 		$this->session->set('left_menu_action', 'goods/goods_index');
 		$this->render('goods/index');
 	}
+
+	function goods_category(){
+		//导航定位
+		$this->session->set('left_menu_action', 'goods/goods_category');
+		$this->render('goods/category');
+	}
+
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}

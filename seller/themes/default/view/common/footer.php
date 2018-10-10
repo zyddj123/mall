@@ -1,5 +1,5 @@
 <footer class="sticky-footer">
-            2017 &copy; 
+            2018 &copy; 
 </footer>
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="common-select" class="modal fade">
 	<div class="modal-dialog" style="width:80%;">

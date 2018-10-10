@@ -56,7 +56,7 @@ if(!defined('CO_BASE_CHECK')){
 			<div class="wrapper">
 				<section class="panel">
 					<header class="panel-heading custom-tab">
-						<ul class="nav nav-tabs">
+						<ul class="nav nav-tabs" id="countTab">
 							<li class="active">
 								<a href="#goods_mes" data-toggle="tab">
 									<i class="fa fa-globe"></i>
@@ -65,14 +65,14 @@ if(!defined('CO_BASE_CHECK')){
 							</li>
 							<li>
 								<a href="#goods_detal" data-toggle="tab">
-									<i class="fa fa-pencil-square"></i>
-									详细描述
+									<i class="fa fa-tachometer"></i>
+									详细属性
 								</a>
 							</li>
 							<li class="">
-								<a href="#goods_img" data-toggle="tab">
-									<i class="fa fa-picture-o"></i>
-									商品相册
+								<a href="#goods_brief" data-toggle="tab">
+									<i class="fa fa-pencil-square"></i>
+									商品描述
 								</a>
 							</li>
 						</ul>
@@ -95,17 +95,17 @@ if(!defined('CO_BASE_CHECK')){
 														</div>
 													</div>
 													<div class="col-lg-4 col-sm-4">
-														<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品类别</label>
+														<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品品牌</label>
 														<div class="col-lg-6">
 															<select class="form-control">
-																<option>数码</option>
-																<option>服饰</option>
-																<option>食品</option>
+																<option>小米</option>
+																<option>苹果</option>
+																<option>华为</option>
 															</select>
 														</div>
 														<div class="col-lg-4">
 															<span><i class="fa fa-hand-o-right"></i>跳转到
-																<a href="#">商品类别</a>
+																<a href="#">商品品牌</a>
 															</span>
 														</div>
 													</div>
@@ -120,18 +120,20 @@ if(!defined('CO_BASE_CHECK')){
 													</div>
 													
 													<div class="col-lg-4 col-sm-4">
-														<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品品牌</label>
-														<div class="col-lg-6">
-															<select class="form-control">
-																<option>小米</option>
-																<option>苹果</option>
-																<option>华为</option>
-															</select>
-														</div>
-														<div class="col-lg-4">
-															<span><i class="fa fa-hand-o-right"></i>跳转到
-																<a href="#">商品品牌</a>
-															</span>
+														<label style="float:left; margin-top: 7px;"><span class="star">*</span>上架下架</label>
+														<div class="col-lg-6" style="display: inline-flex;">
+															<div class="flat-yellow single-row">
+																<div class="radio ">
+																	<input tabindex="3" type="radio" checked="checked"  name="demo-radio">
+																	<label>上架</label>
+																</div>
+															</div>
+															<div class="flat-red single-row">
+																<div class="radio ">
+																	<input tabindex="3" type="radio"  name="demo-radio">
+																	<label>下架</label>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -223,58 +225,125 @@ if(!defined('CO_BASE_CHECK')){
 
 														<div class="col-lg-8 col-sm-8">
 															<table class="table table-bordered table-striped table-condensed">
-															<thead>
-																<tr>
-																	<th></th>
-																	<th>颜色</th>
-																	<th>内存</th>
-																	<th>规格编号</th>
-																	<th>图片</th>
-																	<th>操作</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td>黄色 </td>
-																	<td>$1.38</td>
-																	<td>-0.01</td>
-																	<td>-0.36%</td>
-																	<td>$1.39</td>
-																</tr>
-																<tr>
-																	<td>2</td>
-																	<td>黄色 </td>
-																	<td>$1.15</td>
-																	<td>  +0.02</td>
-																	<td>1.32%</td>
-																	<td>$1.14</td>
-																</tr>
-																<tr>
-																	<td>3</td>
-																	<td>蓝色</td>
-																	<td>$0.72</td>
-																	<td>0.00</td>
-																	<td>0.00%</td>
-																	<td>$0.73</td>
-																</tr>
+																<thead>
+																	<tr>
+																		<th></th>
+																		<th>颜色</th>
+																		<th>内存</th>
+																		<th>规格编号</th>
+																		<th>图片</th>
+																		<th>操作</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>1</td>
+																		<td>黄色 </td>
+																		<td>$1.38</td>
+																		<td>-0.01</td>
+																		<td>-0.36%</td>
+																		<td>$1.39</td>
+																	</tr>
+																	<tr>
+																		<td>2</td>
+																		<td>黄色 </td>
+																		<td>$1.15</td>
+																		<td>  +0.02</td>
+																		<td>1.32%</td>
+																		<td>$1.14</td>
+																	</tr>
+																	<tr>
+																		<td>3</td>
+																		<td>蓝色</td>
+																		<td>$0.72</td>
+																		<td>0.00</td>
+																		<td>0.00%</td>
+																		<td>$0.73</td>
+																	</tr>
 
-															</tbody>
-														</table>
+																</tbody>
+															</table>
 														</div>
 													</div>
 												</div>
 											</div>
 										</section>
-
+										<button class="btn btn-warning" id="btn1" type="button">下一步</button>
 									</div>
 								</form>
 							</div>
 							<div class="tab-pane" id="goods_detal">
-								详细描述
+								<form action="">
+									<div class="form-group">
+										<!--商品属性模版-->
+										<section>
+											<header class="panel-heading"> 商品类型 </header>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-4 col-sm-4"></div>
+													<div class="col-lg-4 col-sm-4">
+														<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品类别</label>
+														<div class="col-lg-6">
+															<select class="form-control" id="goods_category">
+																<option>数码</option>
+																<option>服饰</option>
+																<option>食品</option>
+															</select>
+														</div>
+														<div class="col-lg-4">
+															<span><i class="fa fa-hand-o-right"></i>跳转到
+																<a href="#">商品类别</a>
+															</span>
+														</div>
+													</div>
+												</div>
+												<!--用于不同类型的模版展示-->
+												<div class="row" id="tmp">
+													
+												</div>
+											</div>
+										</section>
+										<button class="btn btn-warning" id="btn2" type="button">上一步</button>
+										<button class="btn btn-warning" id="btn3" type="button">下一步</button>
+									</div>
+								</form>
 							</div>
-							<div class="tab-pane" id="goods_img">
-								商品相册
+							<div class="tab-pane" id="goods_brief">
+								<form action="">
+									<div class="form-group">
+										<!--商品描述-->
+										<section>
+											<header class="panel-heading"> 商品简单描述 </header>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-2 col-sm-2"></div>
+													<div class="col-lg-8 col-sm-8">
+														<label style="float:left; margin-top: 7px;"><span class="star">*</span>简单描述</label>
+														<div class="col-lg-8">
+															<textarea rows="6" class="form-control"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+										</section>
+										<section>
+											<header class="panel-heading"> 商品详细描述 </header>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-2 col-sm-2"></div>
+													<div class="col-lg-8 col-sm-8">
+														<label style="float:left; margin-top: 7px;"><span class="star">*</span>详细描述</label>
+														<div class="col-lg-8">
+															<textarea rows="10" class="form-control"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+										</section>
+										<button class="btn btn-warning" id="btn4" type="button">上一步</button>
+										<button class="btn btn-warning" id="btn5" type="button">添加</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -322,6 +391,22 @@ if(!defined('CO_BASE_CHECK')){
 		}
 	}
 
+	//按钮绑定事件
+	$('#btn1').click(function(){
+		$('#countTab a[href="#goods_detal"]').tab('show');
+	});
+	$('#btn2').click(function(){
+		$('#countTab a[href="#goods_mes"]').tab('show');
+	});
+	$('#btn3').click(function(){
+		$('#countTab a[href="#goods_brief"]').tab('show');
+	});
+	$('#btn4').click(function(){
+		$('#countTab a[href="#goods_detal"]').tab('show');
+	});
+	$('#btn5').click(function(){
+		// $('#countTab a[href="#goods_brief"]').tab('show');
+	});
 	
 
 
