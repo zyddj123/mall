@@ -13,9 +13,6 @@ if(!defined('CO_BASE_CHECK')){
 	<title><?php echo $this->language['index_title']?></title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
-	<link href="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.css" rel="stylesheet">
-	<link href="<?php echo $this->getThemesUrl();?>/js/select2/select2.min.css" rel="stylesheet">
-	<link href="<?php echo $this->getThemesUrl();?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
 </head>
 <body class="sticky-header">
 	<section>
@@ -161,11 +158,6 @@ if(!defined('CO_BASE_CHECK')){
 	</div>
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
-<script src="<?php echo $this->getThemesUrl();?>/js/spinner/js/spinner.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/select2/select2.full.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/select2/zh-CN.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/iCheck/jquery.icheck.min.js"></script>
 <script>
 
 </script>
