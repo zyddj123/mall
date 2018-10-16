@@ -42,11 +42,13 @@ if(!defined('CO_BASE_CHECK')){
 
 			<!-- content -->
 			<div class="wrapper">
-				<section class="panel">
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<h3 class="panel-title">商品类别</h3>
+					</header>
 					<div class="panel-body">
 						<!--基本信息-->
 						<section>
-							<header class="panel-heading"> 商品类别 </header>
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-4 col-sm-4">
