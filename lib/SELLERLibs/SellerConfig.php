@@ -16,6 +16,10 @@ class SellerConfig{
 	/*------------------------------数据库表-------------------------------*/
 	//seller用户表
 	const SELLER = 'mall_seller';
+	const BRAND = 'mall_brand';
+	const UNIT = 'mall_unit';
+	const ATTRS_KEY = 'mall_goods_attrs_key';
+	const ATTRS_VALUE = 'mall_goods_attrs_value';
 	/*---------------------------------路径--------------------------------*/
 	const UPLOAD_HEAD = '/upload/head/';//头像上传路径
 }

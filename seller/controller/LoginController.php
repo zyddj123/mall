@@ -59,7 +59,7 @@ class LoginController extends CO_Controller{
 		$seller_name = $this->input->post('uid');
 		$seller_pwd = $this->input->post('password');
 		$chk = $this->_checkUserPwd($seller_name,$seller_pwd);
-		var_dump($chk);
+		// var_dump($chk);
 		//验证码
 		if($this->_bln_login_auth_code && strtolower($this->input->post('auth_code'))!=strtolower($this->session->Get('login_auth_code'))){
 			$this->_failure();

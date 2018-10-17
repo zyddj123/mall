@@ -92,9 +92,10 @@ if(!defined('CO_BASE_CHECK')){
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品品牌</label>
 													<div class="col-lg-6">
 														<select class="form-control">
-															<option>小米</option>
-															<option>苹果</option>
-															<option>华为</option>
+															<option value="">请选择</option>
+															<?php foreach($brand as $key => $value) :?>
+																<option value="<?php echo $value['id'];?>"><?php echo $value['brand_name'];?></option>
+															<?php endforeach;?>
 														</select>
 													</div>
 													<div class="col-lg-4">
@@ -162,9 +163,10 @@ if(!defined('CO_BASE_CHECK')){
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>选择单位</label>
 													<div class="col-lg-6">
 														<select class="form-control">
-															<option>件</option>
-															<option>部</option>
-															<option>台</option>
+															<option value="">请选择</option>
+															<?php foreach($unit as $key => $value) :?>
+																<option value="<?php echo $value['id'];?>"><?php echo $value['unit_name'];?></option>
+															<?php endforeach;?>
 														</select>
 													</div>
 													<div class="col-lg-4">
@@ -195,20 +197,27 @@ if(!defined('CO_BASE_CHECK')){
 														<div class="col-lg-8 col-sm-8 select2_d1">
 															<select class="select2 form-control attr_select1" style="width:60%">
 																<option value="">请选择</option>
-																<option value="颜色">颜色</option>
-																<option value="内存">内存</option>
+																<?php foreach($attr_key as $key => $value) :?>
+																	<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>
+																<?php endforeach;?>
 															</select>
 														</div>
 														<div class="col-lg-8 col-sm-8 attr_value1">
-															<div class="radio">
-																<input type="checkbox" class="icheckbox" checked><label>Yellow</label>
-															</div>
-															<div class="radio">
-																<input type="checkbox" class="icheckbox" checked><label>blue</label>
-															</div>
-															<div class="radio">
-																<input type="checkbox" class="icheckbox" checked><label>green</label>
-															</div>
+
+														</div>
+													</div>
+
+													<div class="col-lg-4 col-sm-4 attr2">
+														<div class="col-lg-8 col-sm-8 select2_d2">
+															<select class="select2 form-control attr_select2" style="width:60%">
+																<option value="">请选择</option>
+																<?php foreach($attr_key as $key => $value) :?>
+																	<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>
+																<?php endforeach;?>
+															</select>
+														</div>
+														<div class="col-lg-8 col-sm-8 attr_value2">
+
 														</div>
 													</div>
 
@@ -218,44 +227,8 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="row" style="margin-top: 30px;" id="edit_attr">
 
 													<div class="col-lg-8 col-sm-8">
-														<table class="table table-bordered table-striped table-condensed">
-															<thead>
-																<tr>
-																	<th></th>
-																	<th>颜色</th>
-																	<th>内存</th>
-																	<th>规格编号</th>
-																	<th>图片</th>
-																	<th>操作</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td>黄色 </td>
-																	<td>$1.38</td>
-																	<td>-0.01</td>
-																	<td>-0.36%</td>
-																	<td>$1.39</td>
-																</tr>
-																<tr>
-																	<td>2</td>
-																	<td>黄色 </td>
-																	<td>$1.15</td>
-																	<td>  +0.02</td>
-																	<td>1.32%</td>
-																	<td>$1.14</td>
-																</tr>
-																<tr>
-																	<td>3</td>
-																	<td>蓝色</td>
-																	<td>$0.72</td>
-																	<td>0.00</td>
-																	<td>0.00%</td>
-																	<td>$0.73</td>
-																</tr>
-
-															</tbody>
+														<table class="table table-bordered table-striped table-condensed" id="table_data">
+															
 														</table>
 													</div>
 												</div>
@@ -372,11 +345,74 @@ if(!defined('CO_BASE_CHECK')){
 			$('.attr1').show();
 			$('.attr_value1').hide();
 			$('.attr_select1').change(function(){
-				$('.attr_value1').show();
+				$('#edit_attr').show();
+				var attr_id1 = $('.attr_select1').val();
+				var data_attr_value1 = get_value(attr_id1);
+				var str = '';
+				$.each(data_attr_value1,function(index, el) {
+					str += '<div class="radio">';
+					str += '<input type="checkbox" class="icheckbox" value="'+el.id+'" checked><label>'+el.value+'</label></div>';
+				});
+				$('.attr_value1').empty().append(str).show();
+				$('.radio input').iCheck({
+					checkboxClass: 'icheckbox_flat-yellow',
+					radioClass: 'iradio_flat-yellow'
+				});
+				table_data();
+			});
+
+			$('.attr2').show();
+			$('.attr_value2').hide();
+			$('.attr_select2').change(function(){
+				$('#edit_attr').show();
+				var attr_id2 = $('.attr_select2').val();
+				var data_attr_value2 = get_value(attr_id2);
+				var str = '';
+				$.each(data_attr_value2,function(index, el) {
+					str += '<div class="radio">';
+					str += '<input type="checkbox" class="icheckbox" value="'+el.id+'" checked><label>'+el.value+'</label></div>';
+				});
+				$('.attr_value2').empty().append(str).show();
+				$('.radio input').iCheck({
+					checkboxClass: 'icheckbox_flat-yellow',
+					radioClass: 'iradio_flat-yellow'
+				});
+				table_data();
 			});
 		}else{
 			$('.attr1').hide();
+			$('.attr2').hide();
+			$('#edit_attr').hide();
 		}
+	}
+
+	//ajax获取规格值
+	function get_value(attr_id){
+		var data;
+		$.ajaxSettings.async = false;
+		$.post("/Goods/ajax_get_attr_value",{'attr_id':attr_id},function(e){
+			data = $.parseJSON(e);
+		});
+		$.ajaxSettings.async = true;
+		return (data)?data:false;
+	}
+
+	//规格值的组合并填充表格
+	function table_data(){
+		var str = '';
+		str += '<thead><tr>';
+		str += '<th></th>';
+		str += '<th>'+$('.attr_select1 option:selected').text()+'</th>';
+		str += '<th>'+$('.attr_select2 option:selected').text()+'</th>';
+		str += '<th>规格编号</th>';
+		str += '<th>图片</th>';
+		str += '<th>操作</th>';
+		str += '</tr></thead>';
+		str += '<tbody>';
+		//具体规格的组合排列
+		str += '<tr><td></td></tr>';
+		str += '</tbody>';
+		$('#table_data').empty().append(str);
 	}
 
 	$(function() {
