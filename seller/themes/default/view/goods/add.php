@@ -188,8 +188,9 @@ if(!defined('CO_BASE_CHECK')){
 													<div class="col-lg-4 col-sm-4">
 														<input type="checkbox" id="is_more_attr" class="js-switch"  /><span style="margin-left: 10px;color: #f8ac59">此商品有多规格</span>
 														<span><i class="fa fa-hand-o-right"></i>跳转到
-															<a href="#">规格管理</a>
-														</span>
+															<a href="javascript:void(0)">规格管理</a>
+														</span>&nbsp;&nbsp;&nbsp;
+														<span id="add_attr_btn"><i class="fa fa-plus"></i><a href="javascript:void(0)">添加规格</a></span>
 													</div>
 												</div><br>
 												<div class="row" id="attr">
@@ -250,10 +251,12 @@ if(!defined('CO_BASE_CHECK')){
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品类别</label>
 													<div class="col-lg-6">
 														<select class="form-control" id="goods_category">
-															<option>数码</option>
-															<option>服饰</option>
-															<option>食品</option>
-														</select>
+															<option value="">请选择</option>
+															<?php foreach($category as $key => $value) :?>
+																<option value="<?php echo $value['id'];?>"><?php echo $value['category_name'];?></option>
+															<?php endforeach;?>
+														</select><br>
+														<p style="color: #65cea7">请选择商品类型完善商品属性</p><br>
 													</div>
 													<div class="col-lg-4">
 														<span><i class="fa fa-hand-o-right"></i>跳转到
@@ -262,9 +265,14 @@ if(!defined('CO_BASE_CHECK')){
 													</div>
 												</div>
 											</div>
+											<center></center>
 											<!--用于不同类型的模版展示-->
-											<div class="row" id="tmp">
-
+											<div class="row" >
+												<div class="col-lg-3 col-sm-3"></div>
+												<div class="col-lg-5 col-sm-5" id="tmp">
+													
+												</div>
+												<div class="col-lg-4 col-sm-4"></div>
 											</div>
 										</div>
 									</section>
@@ -446,6 +454,34 @@ if(!defined('CO_BASE_CHECK')){
 		// });
 	});
 
+	//添加规格按钮点击事件
+	$('#add_attr_btn').click(function(){
+		
+	});
+
+	/******************第二步 商品属性*****************************/
+	$('#goods_category').change(function(){
+		var category_id = $('#goods_category').val();
+		if(category_id!=0){
+			$.post("/Goods/ajax_get_templet_key",{"category_id":category_id},function(e){
+				var data = $.parseJSON(e);
+				if(data){
+					var str = '';
+					$.each(data,function(index, el) {
+						str += '<div class="form-group">';
+						str += '<label class="col-lg-4 col-sm-4 control-label" style="padding-top: 5px;text-align: right;">'+el.tmp_key+'</label>';
+						str += '<div class="col-lg-8">';
+						str += '<input type="text" class="form-control input-sm m-bot15" id="'+el.id+'"></div></div>';
+					});
+					$('#tmp').empty().append(str);
+				}else{
+					$('#tmp').empty().append("<center>此商品类型下暂无商品属性，请添加</center>");
+				}
+			});
+		}else{
+			$('#tmp').empty();	
+		}
+	});
 
 </script>
 </body>

@@ -48,12 +48,19 @@ class GoodsController extends CO_Controller{
 		$data['brand'] = $this->goods_model->get_brands($_SESSION['seller']['id']);
 		$data['unit'] = $this->goods_model->get_units($_SESSION['seller']['id']);
 		$data['attr_key'] = $this->goods_model->get_attrs_key($_SESSION['seller']['id']);
+		$data['category'] = $this->goods_model->get_categorys($_SESSION['seller']['id']);
 		$this->render('goods/add',$data);
 	}
 
 	function ajax_get_attr_value(){
 		$attr_key_id = $this->input->post('attr_id');
 		$data = $this->goods_model->get_attrs_value($_SESSION['seller']['id'],$attr_key_id);
+		echo json_encode($data);
+	}
+
+	function ajax_get_templet_key(){
+		$category_id = $this->input->post('category_id');
+		$data = $this->goods_model->get_templet_key($_SESSION['seller']['id'],$category_id);
 		echo json_encode($data);
 	}
 

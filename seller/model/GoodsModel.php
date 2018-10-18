@@ -69,6 +69,26 @@ class GoodsModel extends CO_Model{
 		$data = $this->db->query($sql);
 		return $data;
 	}
+	/**
+	 * [get_categorys 获取某seller下的商品类别]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function get_categorys($id){
+		$sql = "SELECT * FROM ".SellerConfig::CATEGORY." WHERE `store_id` = 0 OR `store_id` = '".$id."' ORDER BY `store_id` ASC";
+		$data = $this->db->query($sql);
+		return $data;
+	}
+	/**
+	 * [get_templet 获取某seller下的商品规格的值]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function get_templet_key($id,$category_id){
+		$sql = "SELECT * FROM ".SellerConfig::TEMPLET_KEY." WHERE (`store_id` = 0 OR `store_id` = '".$id."') AND `category_id` = '".$category_id."' ORDER BY `store_id` , `sort`";
+		$data = $this->db->query($sql);
+		return $data;
+	}
 
 	
 	

@@ -20,6 +20,8 @@ class SellerConfig{
 	const UNIT = 'mall_unit';
 	const ATTRS_KEY = 'mall_goods_attrs_key';
 	const ATTRS_VALUE = 'mall_goods_attrs_value';
+	const CATEGORY = 'mall_category';
+	const TEMPLET_KEY = 'mall_templet_key';
 	/*---------------------------------路径--------------------------------*/
 	const UPLOAD_HEAD = '/upload/head/';//头像上传路径
 }

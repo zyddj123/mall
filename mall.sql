@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-10-17 17:42:40
+Date: 2018-10-18 17:22:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4240,6 +4240,7 @@ CREATE TABLE `mall_seller_session` (
 -- Records of mall_seller_session
 -- ----------------------------
 INSERT INTO `mall_seller_session` VALUES ('1j9df3tj5ndrtglnbnqv550pu3', '1539772866', 'seller|a:9:{s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:10:\"seller_sex\";N;s:12:\"seller_phone\";N;s:10:\"seller_img\";N;s:11:\"seller_mail\";N;s:13:\"seller_status\";N;s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('bqtfncvcl5nqdeut4rfcfr74k1', '1539860664', 'seller|a:9:{s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:10:\"seller_sex\";N;s:12:\"seller_phone\";N;s:10:\"seller_img\";N;s:11:\"seller_mail\";N;s:13:\"seller_status\";N;s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
 
 -- ----------------------------
 -- Table structure for mall_sessions
@@ -4668,21 +4669,25 @@ INSERT INTO `mall_tag` VALUES ('6', '0', '22', '智能手机');
 INSERT INTO `mall_tag` VALUES ('7', '0', '31', '音乐手机');
 
 -- ----------------------------
--- Table structure for mall_templet
+-- Table structure for mall_templet_key
 -- ----------------------------
-DROP TABLE IF EXISTS `mall_templet`;
-CREATE TABLE `mall_templet` (
+DROP TABLE IF EXISTS `mall_templet_key`;
+CREATE TABLE `mall_templet_key` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `tmp_key` varchar(255) NOT NULL COMMENT '模版名称',
   `sort` int(11) NOT NULL COMMENT '排序',
   `store_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
 
 -- ----------------------------
--- Records of mall_templet
+-- Records of mall_templet_key
 -- ----------------------------
+INSERT INTO `mall_templet_key` VALUES ('1', '1', '厂商', '0', '0');
+INSERT INTO `mall_templet_key` VALUES ('2', '1', '操作系统', '0', '0');
+INSERT INTO `mall_templet_key` VALUES ('3', '1', '屏幕材质', '0', '0');
+INSERT INTO `mall_templet_key` VALUES ('4', '1', '网络制式', '0', '0');
 
 -- ----------------------------
 -- Table structure for mall_topic
