@@ -13,7 +13,6 @@ if(!defined('CO_BASE_CHECK')){
 	<title><?php echo $this->language['index_title']?></title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
-	<link href="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.css" rel="stylesheet">
 	<link href="<?php echo $this->getThemesUrl();?>/js/select2/select2.min.css" rel="stylesheet">
 	<link href="<?php echo $this->getThemesUrl();?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
 	<link href="<?php echo $this->getThemesUrl();?>/css/jquery.stepy.css" rel="stylesheet">
@@ -186,7 +185,7 @@ if(!defined('CO_BASE_CHECK')){
 											<div class="row">
 												<div class="row">
 													<div class="col-lg-4 col-sm-4">
-														<input type="checkbox" id="is_more_attr" class="js-switch"  /><span style="margin-left: 10px;color: #f8ac59">此商品有多规格</span>
+														<span style="margin-left: 10px;color: #f8ac59">商品多规格</span>
 														<span><i class="fa fa-hand-o-right"></i>跳转到
 															<a href="javascript:void(0)">规格管理</a>
 														</span>&nbsp;&nbsp;&nbsp;
@@ -194,7 +193,7 @@ if(!defined('CO_BASE_CHECK')){
 													</div>
 												</div><br>
 												<div class="row" id="attr">
-													<div class="col-lg-4 col-sm-4 attr1">
+													<!-- <div class="col-lg-4 col-sm-4 attr1">
 														<div class="col-lg-8 col-sm-8 select2_d1">
 															<select class="select2 form-control attr_select1" style="width:60%">
 																<option value="">请选择</option>
@@ -206,21 +205,7 @@ if(!defined('CO_BASE_CHECK')){
 														<div class="col-lg-8 col-sm-8 attr_value1">
 
 														</div>
-													</div>
-
-													<div class="col-lg-4 col-sm-4 attr2">
-														<div class="col-lg-8 col-sm-8 select2_d2">
-															<select class="select2 form-control attr_select2" style="width:60%">
-																<option value="">请选择</option>
-																<?php foreach($attr_key as $key => $value) :?>
-																	<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>
-																<?php endforeach;?>
-															</select>
-														</div>
-														<div class="col-lg-8 col-sm-8 attr_value2">
-
-														</div>
-													</div>
+													</div>-->
 
 
 												</div>
@@ -324,7 +309,6 @@ if(!defined('CO_BASE_CHECK')){
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
 <script src="<?php echo $this->getThemesUrl();?>/js/spinner/js/spinner.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/switchery/switchery.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/select2/select2.full.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/select2/zh-CN.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/iCheck/jquery.icheck.min.js"></script>
@@ -332,67 +316,98 @@ if(!defined('CO_BASE_CHECK')){
 <script>
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
 
-	var elem = document.querySelector(".js-switch");
-	var switchery= new Switchery( elem,{color : '#f8ac59'});
-	change_attr_view();
-	$('#is_more_attr').change(function(event) {
-		change_attr_view();
-	});
-
+	var attr_count = 1;
+	var attr_data = {};
 	$('.radio input').iCheck({
 		checkboxClass: 'icheckbox_flat-yellow',
 		radioClass: 'iradio_flat-yellow'
 	});
 
-	$('.select2').select2({
-		'language':'zh-CN'
+	//添加规格按钮点击事件
+	$('#add_attr_btn').click(function(){
+		draw_attr_div(attr_count);
+		draw_attr_value_div(attr_count);
+		++attr_count;
 	});
-	//判断是否有多规格
-	function change_attr_view(){
-		if($('#is_more_attr').prop('checked')){	
-			$('.attr1').show();
-			$('.attr_value1').hide();
-			$('.attr_select1').change(function(){
-				$('#edit_attr').show();
-				var attr_id1 = $('.attr_select1').val();
-				var data_attr_value1 = get_value(attr_id1);
-				var str = '';
-				$.each(data_attr_value1,function(index, el) {
-					str += '<div class="radio">';
-					str += '<input type="checkbox" class="icheckbox" value="'+el.id+'" checked><label>'+el.value+'</label></div>';
-				});
-				$('.attr_value1').empty().append(str).show();
-				$('.radio input').iCheck({
-					checkboxClass: 'icheckbox_flat-yellow',
-					radioClass: 'iradio_flat-yellow'
-				});
-				table_data();
+
+	//绘制规格名称选择框
+	function draw_attr_div(id){
+		str = '<div class="col-lg-3 col-sm-3 m-bot15 attr'+id+'">';
+		str += '<div class="col-lg-8 col-sm-8 select2_d'+id+'">';
+		str += '<select class="select2 form-control attr_select'+id+'" style="width:60%">';
+		str += '<option value="">请选择</option>';
+		str += '<?php foreach($attr_key as $key => $value) :?>';
+		str += '<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>';
+		str += '<?php endforeach;?>';
+		str += '</select></div>';
+		str += '<div class="col-lg-8 col-sm-8 attr_value'+id+'">';
+		str += '</div></div>';
+		$('#attr').append(str);
+		$('.select2').select2({
+			'language':'zh-CN'
+		});
+	}
+
+	//绘制规格名称选择框下的具体规格值
+	function draw_attr_value_div(id){
+		$('.attr_select'+id).change(function(){
+			var attr_id = $('.attr_select'+id).val();
+			var data_attr_value = get_value(attr_id);
+			var str = '';
+			str += '<div id="insert_attr_value'+id+'"><input type="text" style="width:50%; margin-top: 5px;"> <a>添加</a></div>';
+			$.each(data_attr_value,function(index, el) {
+				str += '<div class="radio">';
+				str += '<input type="checkbox" class="icheckbox attr_value_icheckbox" value="'+el.id+'" attr_id='+attr_id+' checked><label>'+el.value+'</label></div>';
+			});
+			str += '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" id="create_attr_table_btn'+id+'" style="margin-bottom:5px;">确定</a>';
+
+			$('.attr_value'+id).empty().append(str).css('background-color','#eff0f4').css('padding-bottom','10px').show();
+
+			$('.radio input').iCheck({
+				checkboxClass: 'icheckbox_flat-yellow',
+				radioClass: 'iradio_flat-yellow'
 			});
 
-			$('.attr2').show();
-			$('.attr_value2').hide();
-			$('.attr_select2').change(function(){
-				$('#edit_attr').show();
-				var attr_id2 = $('.attr_select2').val();
-				var data_attr_value2 = get_value(attr_id2);
-				var str = '';
-				$.each(data_attr_value2,function(index, el) {
-					str += '<div class="radio">';
-					str += '<input type="checkbox" class="icheckbox" value="'+el.id+'" checked><label>'+el.value+'</label></div>';
+			$('#edit_attr').show();
+			table_data(id);
+
+			$('#create_attr_table_btn'+id).click(function(){
+				$('#insert_attr_value'+id).hide();//添加属性的div隐藏
+				$('#create_attr_table_btn'+id).hide();//确定按钮隐藏
+				$('.attr_value'+id).css('background-color','#FFF');//背景颜色变回正常
+				// attr_data['attr'+id][$(this).val()] = $(this).closest('.icheckbox_flat-yellow').next('label').text();
+				var attr_name = 'arr'+id;
+				attr_data[attr_name] = '';
+				var a = {};
+				$('.attr_value'+id+' .attr_value_icheckbox:checked').each(function(){ 
+					a[$(this).val()]= $(this).closest('.icheckbox_flat-yellow').next('label').text();
 				});
-				$('.attr_value2').empty().append(str).show();
-				$('.radio input').iCheck({
-					checkboxClass: 'icheckbox_flat-yellow',
-					radioClass: 'iradio_flat-yellow'
-				});
-				table_data();
+				attr_data[attr_name] = a;
+				//处理数据
+				var mm = data_handle(attr_data);
+				console.log(attr_data);
+				// var str = '';
+				// $.each(function(index, el) {
+				// 	str += '<tr><td></td></tr>';
+				// });
+				// $('#table_data_tbody').empty().append(str);
 			});
-		}else{
-			$('.attr1').hide();
-			$('.attr2').hide();
-			$('#edit_attr').hide();
+			
+		});
+	}
+
+	//处理数据  待完成
+	function data_handle(data){
+		var res = [];
+		for (var i = 1; i < attr_count+1; i++) {
+			for(var x in data['arr'+i]){
+				data['arr'+i][x]
+			}
 		}
 	}
+	
+	
+	
 
 	//ajax获取规格值
 	function get_value(attr_id){
@@ -405,20 +420,24 @@ if(!defined('CO_BASE_CHECK')){
 		return (data)?data:false;
 	}
 
+
+
 	//规格值的组合并填充表格
-	function table_data(){
+	function table_data(id){
 		var str = '';
 		str += '<thead><tr>';
 		str += '<th></th>';
-		str += '<th>'+$('.attr_select1 option:selected').text()+'</th>';
-		str += '<th>'+$('.attr_select2 option:selected').text()+'</th>';
+		for(var i = 0;i < id;i++){
+			if($('.attr_select'+(i+1)+' option:selected').val()!=0){
+				str += '<th>'+$('.attr_select'+(i+1)+' option:selected').text()+'</th>';
+			}
+		}
 		str += '<th>规格编号</th>';
 		str += '<th>图片</th>';
 		str += '<th>操作</th>';
 		str += '</tr></thead>';
-		str += '<tbody>';
+		str += '<tbody id="table_data_tbody">';
 		//具体规格的组合排列
-		str += '<tr><td></td></tr>';
 		str += '</tbody>';
 		$('#table_data').empty().append(str);
 	}
@@ -454,10 +473,7 @@ if(!defined('CO_BASE_CHECK')){
 		// });
 	});
 
-	//添加规格按钮点击事件
-	$('#add_attr_btn').click(function(){
-		
-	});
+	
 
 	/******************第二步 商品属性*****************************/
 	$('#goods_category').change(function(){
