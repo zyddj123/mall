@@ -376,7 +376,7 @@ if(!defined('CO_BASE_CHECK')){
 				$('#create_attr_table_btn'+id).hide();//确定按钮隐藏
 				$('.attr_value'+id).css('background-color','#FFF');//背景颜色变回正常
 				// attr_data['attr'+id][$(this).val()] = $(this).closest('.icheckbox_flat-yellow').next('label').text();
-				var attr_name = 'arr'+id;
+				var attr_name = 'arr'+(id);
 				attr_data[attr_name] = '';
 				var a = {};
 				$('.attr_value'+id+' .attr_value_icheckbox:checked').each(function(){ 
@@ -384,30 +384,74 @@ if(!defined('CO_BASE_CHECK')){
 				});
 				attr_data[attr_name] = a;
 				//处理数据
-				var mm = data_handle(attr_data);
-				console.log(attr_data);
-				// var str = '';
-				// $.each(function(index, el) {
-				// 	str += '<tr><td></td></tr>';
-				// });
-				// $('#table_data_tbody').empty().append(str);
+				var mm = data_handle(attr_data,id);
+				console.log(mm);
+				var str = '';
+				var t = 1;
+				$.each(mm,function(index, el) {
+					str += '<tr>';
+					str += '<td>'+t+'</td>';
+					for(var i = 0;i < id;i++){
+						str += '<th>'+el+'</th>';
+					}
+					str += '</tr>';
+					t++;
+				});
+				$('#table_data_tbody').empty().append(str);
 			});
 			
 		});
 	}
 
 	//处理数据  待完成
-	function data_handle(data){
-		var res = [];
-		for (var i = 1; i < attr_count+1; i++) {
-			for(var x in data['arr'+i]){
-				data['arr'+i][x]
+	function data_handle(data,id){
+		var dad = [];
+		console.log(id);
+		switch(id){
+			case 1:
+			for(var x in data['arr1']){
+				// var res = [];
+				// res[x] = data['arr1'][x];
+				dad.push(data['arr1'][x]);
 			}
+			break;
+			case 2:
+			for(var x in data['arr1']){
+				for(var y in data['arr2']){
+					// var res = [];
+					// res[x+y] = data['arr1'][x]+data['arr2'][y];
+					dad.push(data['arr1'][x]+data['arr2'][y]);
+				}
+			}
+			break;
+			case 3:
+			for(var x in data['arr1']){
+				for(var y in data['arr2']){
+					for(var z in data['arr3']){
+						// var res = [];
+						// res[x+y+z] = data['arr1'][x]+data['arr2'][y]+data['arr3'][z];
+						dad.push(data['arr1'][x]+data['arr2'][y]+data['arr3'][z]);
+					}
+				}
+			}
+			// case 4:
+			// for(var x in a['arr1']){
+			// 	for(var y in a['arr2']){
+			// 		for(var z in a['arr3']){
+			// 			var res = [];
+			// 			res[x+y+z] = a['arr1'][x]+a['arr2'][y]+a['arr3'][z];
+			// 			dad.push(res);
+			// 		}
+			// 	}
+			// }
+			default:
+			
 		}
+		return dad;
 	}
-	
-	
-	
+
+
+
 
 	//ajax获取规格值
 	function get_value(attr_id){
