@@ -317,7 +317,7 @@ if(!defined('CO_BASE_CHECK')){
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
 
 	var attr_count = 1;
-	var attr_data = {};
+	var attr_data = {'attr_key':{},'attr_value':{}};
 	$('.radio input').iCheck({
 		checkboxClass: 'icheckbox_flat-yellow',
 		radioClass: 'iradio_flat-yellow'
@@ -371,33 +371,42 @@ if(!defined('CO_BASE_CHECK')){
 			$('#edit_attr').show();
 			table_data(id);
 
+			//确认按钮按下操作
 			$('#create_attr_table_btn'+id).click(function(){
 				$('#insert_attr_value'+id).hide();//添加属性的div隐藏
 				$('#create_attr_table_btn'+id).hide();//确定按钮隐藏
-				$('.attr_value'+id).css('background-color','#FFF');//背景颜色变回正常
-				// attr_data['attr'+id][$(this).val()] = $(this).closest('.icheckbox_flat-yellow').next('label').text();
-				var attr_name = 'arr'+(id);
-				attr_data[attr_name] = '';
-				var a = {};
-				$('.attr_value'+id+' .attr_value_icheckbox:checked').each(function(){ 
-					a[$(this).val()]= $(this).closest('.icheckbox_flat-yellow').next('label').text();
+				$('.attr_value'+id+' .attr_value_icheckbox:not(:checked)').each(function(){
+					$(this).closest('.radio').remove(); //移除未选中项
 				});
-				attr_data[attr_name] = a;
+				$('.attr_value'+id).css('background-color','#FFF');//背景颜色变回正常
+				$('.attr_value'+id+' .attr_value_icheckbox:checked').each(function(i,e){
+					var _attr_num = $(this).closest('.attr'+id).find('option:selected').val();
+					var _attr_key = $(this).closest('.attr'+id).find('option:selected').text();
+					var _attr_value_num = $(this).val();
+					var _attr_value = $(this).closest('.icheckbox_flat-yellow').next('label').text();
+					attr_data.attr_key[_attr_num]= _attr_key;
+					if(!attr_data.attr_value[_attr_num]) attr_data.attr_value[_attr_num] = {};
+					attr_data.attr_value[_attr_num][_attr_value_num] = _attr_value;
+					$(this).closest('.icheckbox_flat-yellow').remove(); //移除icheckbox
+				});
+
+				//attr_data = {'attr_key':{'1':'颜色','2':'内存','3':'尺码'},'attr_value':{'1':{'1':'银色','2':'黑色','3':'蓝色','4':'红色'},'2':{'5':'32G','6':'64G'},'3':{'8': "36码", '9': "37码", '10': "38码"}}};
+				
 				//处理数据
 				var mm = data_handle(attr_data,id);
 				console.log(mm);
-				var str = '';
-				var t = 1;
-				$.each(mm,function(index, el) {
-					str += '<tr>';
-					str += '<td>'+t+'</td>';
-					for(var i = 0;i < id;i++){
-						str += '<th>'+el+'</th>';
-					}
-					str += '</tr>';
-					t++;
-				});
-				$('#table_data_tbody').empty().append(str);
+				// var str = '';
+				// var t = 1;
+				// $.each(mm,function(index, el) {
+				// 	str += '<tr>';
+				// 	str += '<td>'+t+'</td>';
+				// 	for(var i = 0;i < id;i++){
+				// 		str += '<th>'+el+'</th>';
+				// 	}
+				// 	str += '</tr>';
+				// 	t++;
+				// });
+				// $('#table_data_tbody').empty().append(str);
 			});
 			
 		});
@@ -406,34 +415,37 @@ if(!defined('CO_BASE_CHECK')){
 	//处理数据  待完成
 	function data_handle(data,id){
 		var dad = [];
-		console.log(id);
+		$.each(data.attr_value,function(index, el) {
+			dad.push(el);
+		});
+		var tmp_a = [];
+		tmp_a = dad[0];
+		var res = [];
 		switch(id){
 			case 1:
-			for(var x in data['arr1']){
-				// var res = [];
-				// res[x] = data['arr1'][x];
-				dad.push(data['arr1'][x]);
-			}
+			res = tmp_a;
 			break;
 			case 2:
-			for(var x in data['arr1']){
-				for(var y in data['arr2']){
-					// var res = [];
-					// res[x+y] = data['arr1'][x]+data['arr2'][y];
-					dad.push(data['arr1'][x]+data['arr2'][y]);
-				}
-			}
+			var tmp_b = [];
+			tmp_b = dad[1];
+			$.each(tmp_a,function(index, el) {
+				$.each(tmp_b,function(x, e) {
+					res[index+'_'+x] = el+'_'+e;
+				});
+			});
 			break;
 			case 3:
-			for(var x in data['arr1']){
-				for(var y in data['arr2']){
-					for(var z in data['arr3']){
-						// var res = [];
-						// res[x+y+z] = data['arr1'][x]+data['arr2'][y]+data['arr3'][z];
-						dad.push(data['arr1'][x]+data['arr2'][y]+data['arr3'][z]);
-					}
-				}
-			}
+			var tmp_b = [];
+			tmp_b = dad[1];
+			var tmp_c = [];
+			tmp_c = dad[2];
+			$.each(tmp_a,function(index, el) {
+				$.each(tmp_b,function(x, e) {
+					$.each(tmp_c,function(k, v) {
+						res[index+'_'+x+'_'+k] = el+'_'+e+'_'+v;
+					});
+				});
+			});
 			// case 4:
 			// for(var x in a['arr1']){
 			// 	for(var y in a['arr2']){
@@ -447,7 +459,7 @@ if(!defined('CO_BASE_CHECK')){
 			default:
 			
 		}
-		return dad;
+		return res;
 	}
 
 
