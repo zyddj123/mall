@@ -369,7 +369,6 @@ if(!defined('CO_BASE_CHECK')){
 			});
 
 			$('#edit_attr').show();
-			table_data(id);
 
 			//确认按钮按下操作
 			$('#create_attr_table_btn'+id).click(function(){
@@ -393,27 +392,39 @@ if(!defined('CO_BASE_CHECK')){
 				//attr_data = {'attr_key':{'1':'颜色','2':'内存','3':'尺码'},'attr_value':{'1':{'1':'银色','2':'黑色','3':'蓝色','4':'红色'},'2':{'5':'32G','6':'64G'},'3':{'8': "36码", '9': "37码", '10': "38码"}}};
 				
 				//处理数据
-				var mm = data_handle(attr_data,id);
-				console.log(mm);
-				// var str = '';
-				// var t = 1;
-				// $.each(mm,function(index, el) {
-				// 	str += '<tr>';
-				// 	str += '<td>'+t+'</td>';
-				// 	for(var i = 0;i < id;i++){
-				// 		str += '<th>'+el+'</th>';
-				// 	}
-				// 	str += '</tr>';
-				// 	t++;
-				// });
-				// $('#table_data_tbody').empty().append(str);
+				var mm = data_handle(attr_data,attr_count-1);
+				console.log(attr_data);
+				var str = '';
+				str += '<thead><tr>';
+				str += '<th>#</th>';
+				for(var p in attr_data.attr_key){
+					str += '<th>'+attr_data.attr_key[p]+'</th>';
+				}
+				str += '<th>规格编号</th>';
+				str += '<th>图片</th>';
+				str += '<th>操作</th>';
+				str += '</tr></thead>';
+				str += '<tbody id="table_data_tbody">';
+				var t = 1;
+				for( var k in mm){
+					var key = k.split('_');
+					var value = mm[k].split('_');
+					str += '<tr><td>'+t+'</td>';
+					for(var j in key){
+						str += '<td>'+value[j]+'</td>';
+					}
+					str += '<td>规格编号</td><td>图片</td><td>移除</td></tr>';
+					t++;
+				}
+				str += '</tbody>';
+				$('#table_data').empty().append(str);
 			});
 			
 		});
 	}
 
-	//处理数据  待完成
-	function data_handle(data,id){
+	//处理数据
+	function data_handle(data,attr_count){
 		var dad = [];
 		$.each(data.attr_value,function(index, el) {
 			dad.push(el);
@@ -421,7 +432,7 @@ if(!defined('CO_BASE_CHECK')){
 		var tmp_a = [];
 		tmp_a = dad[0];
 		var res = [];
-		switch(id){
+		switch(attr_count){
 			case 1:
 			res = tmp_a;
 			break;
@@ -462,9 +473,6 @@ if(!defined('CO_BASE_CHECK')){
 		return res;
 	}
 
-
-
-
 	//ajax获取规格值
 	function get_value(attr_id){
 		var data;
@@ -474,28 +482,6 @@ if(!defined('CO_BASE_CHECK')){
 		});
 		$.ajaxSettings.async = true;
 		return (data)?data:false;
-	}
-
-
-
-	//规格值的组合并填充表格
-	function table_data(id){
-		var str = '';
-		str += '<thead><tr>';
-		str += '<th></th>';
-		for(var i = 0;i < id;i++){
-			if($('.attr_select'+(i+1)+' option:selected').val()!=0){
-				str += '<th>'+$('.attr_select'+(i+1)+' option:selected').text()+'</th>';
-			}
-		}
-		str += '<th>规格编号</th>';
-		str += '<th>图片</th>';
-		str += '<th>操作</th>';
-		str += '</tr></thead>';
-		str += '<tbody id="table_data_tbody">';
-		//具体规格的组合排列
-		str += '</tbody>';
-		$('#table_data').empty().append(str);
 	}
 
 	$(function() {
