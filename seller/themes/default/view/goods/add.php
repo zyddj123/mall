@@ -212,7 +212,7 @@ if(!defined('CO_BASE_CHECK')){
 
 												<div class="row" style="margin-top: 30px;" id="edit_attr">
 
-													<div class="col-lg-8 col-sm-8">
+													<div class="col-lg-10 col-sm-10">
 														<table class="table table-bordered table-striped table-condensed" id="table_data">
 															
 														</table>
@@ -400,7 +400,8 @@ if(!defined('CO_BASE_CHECK')){
 				for(var p in attr_data.attr_key){
 					str += '<th>'+attr_data.attr_key[p]+'</th>';
 				}
-				str += '<th>规格编号</th>';
+				str += '<th>库存</th>';
+				str += '<th>售价</th>';
 				str += '<th>图片</th>';
 				str += '<th>操作</th>';
 				str += '</tr></thead>';
@@ -413,7 +414,7 @@ if(!defined('CO_BASE_CHECK')){
 					for(var j in key){
 						str += '<td>'+value[j]+'</td>';
 					}
-					str += '<td>规格编号</td><td>图片</td><td>移除</td></tr>';
+					str += '<td style="width:10%"><input type="text" name="stock"></td><td style="width:10%"><input type="text name="price"></td><td style="display:-webkit-box;height:47px;"><input type="file" class="attr_img" value="上传"><div class="result" style="margin-top:-10px;margin-bottom:-10px;height:45px;"></div></td><td><center><button class="btn btn-danger btn-xs remove_btn" type="button">移除</button></center></td></tr>';
 					t++;
 				}
 				str += '</tbody>';
@@ -422,6 +423,28 @@ if(!defined('CO_BASE_CHECK')){
 			
 		});
 	}
+
+	//上传图片并展示
+	$('body').on("change",".attr_img",function(){
+		var file = $(this)[0].files[0];
+		var res_div = $(this)[0];
+		if(!/image\/\w+/.test(file.type)){  
+    		alert("看清楚，这个需要图片！");  
+    		return false;
+    	}  
+    	var reader = new FileReader();
+    	//将文件以Data URL形式读入页面  
+    	reader.readAsDataURL(file);  
+    	reader.onload=function(e){  
+    		console.log(res_div);
+    		$(res_div).next('.result').empty().append('<img style="height:45px;width:45px" src="' + this.result +'" alt="" />');
+        }
+	});
+
+	//移除按钮操作
+	$('body').on("click",".remove_btn",function(){
+		$(this).closest('tr').remove();
+	});
 
 	//处理数据
 	function data_handle(data,attr_count){
