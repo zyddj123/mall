@@ -189,7 +189,8 @@ if(!defined('CO_BASE_CHECK')){
 														<span><i class="fa fa-hand-o-right"></i>跳转到
 															<a href="javascript:void(0)">规格管理</a>
 														</span>&nbsp;&nbsp;&nbsp;
-														<span id="add_attr_btn"><i class="fa fa-plus"></i><a href="javascript:void(0)">添加规格</a></span>
+														<span id="add_attr_btn"><i class="fa fa-plus"></i><a href="javascript:void(0)">添加规格</a></span>&nbsp;&nbsp;&nbsp;
+														<span><i class="fa fa-plus"></i><a href="#model" data-toggle="modal">批量添加库存/售价</a></span>
 													</div>
 												</div><br>
 												<div class="row" id="attr">
@@ -211,7 +212,7 @@ if(!defined('CO_BASE_CHECK')){
 												</div>
 
 												<div class="row" style="margin-top: 30px;" id="edit_attr">
-
+													
 													<div class="col-lg-10 col-sm-10">
 														<table class="table table-bordered table-striped table-condensed" id="table_data">
 															
@@ -223,6 +224,34 @@ if(!defined('CO_BASE_CHECK')){
 									</section>
 								</div>
 							</fieldset>
+							<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="model" class="modal fade" style="display: none;">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+											<h4 class="modal-title">批量添加库存/售价</h4>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+												<label for="piliang_stock" class="col-lg-2 col-sm-2 control-label" style="margin-top:8px;">批量库存</label>
+												<div class="col-lg-10">
+													<input type="text" class="form-control" id="piliang_stock">
+												</div>
+											</div><br><br>
+											<div class="form-group">
+												<label for="piliang_price" class="col-lg-2 col-sm-2 control-label" style="margin-top:8px;">批量售价</label>
+												<div class="col-lg-10">
+													<input type="text" class="form-control" id="piliang_price">
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+											<button type="button" id="piliang_add_btn" class="btn btn-success">添加</button>
+										</div>
+									</div>
+								</div>
+							</div>
 							<fieldset title="第二步">
 								<legend>详细属性</legend>
 								<div class="form-group">
@@ -393,10 +422,10 @@ if(!defined('CO_BASE_CHECK')){
 				
 				//处理数据
 				var mm = data_handle(attr_data,attr_count-1);
-				console.log(attr_data);
+				console.log(mm);
 				var str = '';
 				str += '<thead><tr>';
-				str += '<th>#</th>';
+				// str += '<th>#</th>';
 				for(var p in attr_data.attr_key){
 					str += '<th>'+attr_data.attr_key[p]+'</th>';
 				}
@@ -406,16 +435,21 @@ if(!defined('CO_BASE_CHECK')){
 				str += '<th>操作</th>';
 				str += '</tr></thead>';
 				str += '<tbody id="table_data_tbody">';
-				var t = 1;
+				// var t = 1;
 				for( var k in mm){
 					var key = k.split('_');
 					var value = mm[k].split('_');
-					str += '<tr><td>'+t+'</td>';
+					str += '<tr>';
+					// str += '<td>'+t+'</td>';
 					for(var j in key){
 						str += '<td>'+value[j]+'</td>';
 					}
-					str += '<td style="width:10%"><input type="text" name="stock"></td><td style="width:10%"><input type="text name="price"></td><td style="display:-webkit-box;height:47px;"><input type="file" class="attr_img" value="上传"><div class="result" style="margin-top:-10px;margin-bottom:-10px;height:45px;"></div></td><td><center><button class="btn btn-danger btn-xs remove_btn" type="button">移除</button></center></td></tr>';
-					t++;
+					str += '<td style="width:10%"><input type="text" class="stock" name="stock"></td>';
+					str += '<td style="width:10%"><input type="text" class="price" name="price"></td>';
+					str += '<td style="display:-webkit-box;height:47px;"><input type="file" class="attr_img" value="上传"><div class="result" style="margin-top:-10px;margin-bottom:-10px;height:45px;"></div></td>';
+					str += '<td><center><button class="btn btn-danger btn-xs remove_btn" type="button">移除</button></center></td>';
+					str += '</tr>';
+					// t++;
 				}
 				str += '</tbody>';
 				$('#table_data').empty().append(str);
@@ -429,21 +463,29 @@ if(!defined('CO_BASE_CHECK')){
 		var file = $(this)[0].files[0];
 		var res_div = $(this)[0];
 		if(!/image\/\w+/.test(file.type)){  
-    		alert("看清楚，这个需要图片！");  
-    		return false;
-    	}  
-    	var reader = new FileReader();
+			alert("看清楚，这个需要图片！");  
+			return false;
+		}  
+		var reader = new FileReader();
     	//将文件以Data URL形式读入页面  
     	reader.readAsDataURL(file);  
     	reader.onload=function(e){  
     		console.log(res_div);
     		$(res_div).next('.result').empty().append('<img style="height:45px;width:45px" src="' + this.result +'" alt="" />');
-        }
-	});
+    	}
+    });
 
 	//移除按钮操作
 	$('body').on("click",".remove_btn",function(){
 		$(this).closest('tr').remove();
+	});
+
+	//批量操作按钮
+	$('#piliang_add_btn').click(function(event) {
+		var piliang_price = $('#piliang_price').val();
+		var piliang_stock = $('#piliang_stock').val();
+		$('.stock').val(piliang_stock);
+		$('.price').val(piliang_price);
 	});
 
 	//处理数据

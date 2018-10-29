@@ -70,10 +70,33 @@ class GoodsController extends CO_Controller{
 		$this->render('goods/index');
 	}
 
+	//商品类别管理
 	function goods_category(){
 		//导航定位
 		$this->session->set('left_menu_action', 'goods/goods_category');
+
 		$this->render('goods/category');
+	}
+
+	//ajax获取商品类别
+	function ajax_goods_category(){
+		$get   = $this->input->get();
+		$info  = array();
+		$where = array(
+			"or"=>array("id","name"),
+			);
+		$select = array(
+			"id",
+			'category_name'
+			);
+		$order = array(
+			"id",	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
+			"id",
+			'category_name',
+			);
+		$a = new DataTable($get, array("select" => $select, "sum" => "id", "table" => 'mall_category', "order" => $order, "where" => $where),'');
+		// var_dump($a->output());
+		echo json_encode($a->output());
 	}
 
 

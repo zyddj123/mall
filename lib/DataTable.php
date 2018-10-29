@@ -43,8 +43,8 @@ class DataTable
    * @param string $[name] [数据库的名字] 默认是
    */
   function __construct($dataTableGet,$info,$databaseName=""){
-    self::_init($dataTableGet);
-    self::_getDb($databaseName);
+    $this->_init($dataTableGet);
+    $this->_getDb($databaseName);
     $this->_info=$info;
     // var_dump("111");
   }
