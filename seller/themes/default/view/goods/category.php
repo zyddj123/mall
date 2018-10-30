@@ -14,6 +14,11 @@ if(!defined('CO_BASE_CHECK')){
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
 	<link href="<?php echo $this->getThemesUrl();?>/js/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<style>
+	div.dataTables_wrapper div.dataTables_filter {
+		text-align: -webkit-auto;
+	}
+</style>
 </head>
 <body class="sticky-header">
 	<section>
@@ -61,10 +66,9 @@ if(!defined('CO_BASE_CHECK')){
 										<table class="table table-bordered table-striped table-condensed" id="goods_category">
 											<thead>
 												<tr>
-													<th>id</th>
+													<th>#</th>
 													<th>商品类型名称</th>
 													<!-- <th>属性数量</th> -->
-													<!-- <th>状态</th> -->
 													<th>操作</th>
 												</tr>
 											</thead>
@@ -93,40 +97,22 @@ if(!defined('CO_BASE_CHECK')){
 									</div>
 								</div><br>
 								<div class="row" style="padding-left: 20px;padding-right: 20px;">
+									<input type="hidden" id="hidden_category_id" value="">
 									<table class="table table-bordered table-striped table-condensed">
 										<thead>
 											<tr>
-												<th></th>
+												<th>#</th>
 												<th>商品类型</th>
 												<th>属性名称</th>
 												<th>排序</th>
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>手机 </td>
-												<td>制式</td>
-												<td>1</td>
-												<td> 编辑 | 移除</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>手机 </td>
-												<td>蓝牙</td>
-												<td>2</td>
-												<td> 编辑 | 移除</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>手机</td>
-												<td>电量</td>
-												<td>3</td>
-												<td> 编辑 | 移除</td>
-											</tr>
-										</tbody>
+										<tbody id="attr_table">
+											
+										</tbody>  
 									</table>
+									<center><div class="pagination" id="pagination2"></div></center>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -146,11 +132,10 @@ if(!defined('CO_BASE_CHECK')){
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
 <script src="<?php echo $this->getThemesUrl();?>/js/datatable/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/jqPaginator.js"></script>
 <script>
 	var table = $("#goods_category").DataTable({
-		order: [
-		["1", 'asc']
-		], //按照发布时间降序排序
+		order:[],
 		page: false,
 		serverSide:true,
 		info: true,
@@ -161,39 +146,78 @@ if(!defined('CO_BASE_CHECK')){
 			data: null,
 			targets: 0
 		},{
-			data: "id",
-		},{
 			data: "category_name",
-		},/*{
-			data: "create_category_time",
-		},{
-			data: "ROLENAME",
-		},*/{
+		},
+		// {
+		// 	data: "",
+		// },
+		{
 			data: "null",
 		}],
 		columnDefs: [{
 			targets: -1,
 			data: null,
-			defaultContent: "<a>编辑</a>|<a>删除</a>",
+			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑属性模版</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
-			"orderable": false, "targets": -1,  //设置第一列和最后一列不可排序
+			"orderable": false, "targets": [0,-1],
 		}],
 		createdRow: function(row, data, index) {
 			$(row).data('id', data.id);
-			console.log($(row).data('id'));
+			// console.log($(row).data('id'));
 			// console.log(index);
 		},
 		"fnDrawCallback": function(){
-			　　        var api = this.api();
-			　　var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数
+			　　var api = this.api();
+			　　var startIndex= api.context[0]._iDisplayStart;
 			　　api.column(0).nodes().each(function(cell, i) {
 				cell.innerHTML = startIndex + i + 1;
 			　　}); 
 		},
 		language: {  
-			// url: '<?php echo APP_HTTP_ROOT.$this->GetThemes();?>/assets/datatable/i18n/en.json'
+			url: '<?php echo $this->getThemesUrl();?>/js/datatable/i18n/zh-cn.json'
 		}
 	});
+
+	//编辑属性模版点击事件
+	$('body').on("click",".edit_btn",function(){
+		$('#attr_table').empty();
+		$('#pagination2').empty();
+		var category_id = $(this).closest('tr').data('id');
+		$('#hidden_category_id').val(category_id);
+		ajax_get_tmp_key(category_id);
+	});
+	function ajax_get_tmp_key(category_id){
+		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_category_get_templet_key_count'?>",{"category_id":category_id},function(tot){
+			tot = Number(tot);
+			$.jqPaginator('#pagination2', {
+				totalCounts:tot,
+				pageSize:10,
+				onPageChange: function (num, type,pageSize) {
+					var start = (num-1)*pageSize;
+					$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_category_get_templet_key'?>",{"category_id":category_id,"start":start,"ppc":pageSize},function(e){
+						e = JSON.parse(e);
+						var str = '';
+						if(e){
+							var i = 1;
+							for(v in e){
+								str += '<tr id="'+e[v].id+'">';
+								str += '<td>'+i+'</td>';
+								str += '<td>'+e[v].category_name+'</td>';
+								str += '<td>'+e[v].tmp_key+'</td>';
+								str += '<td>'+e[v].sort+'</td>';
+								str += '<td><center><a href="#"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center></td>';
+								str += '</tr>';
+								i++;
+							}
+							$('#attr_table').empty().append(str);
+						}else{
+							$('#pagination2').empty().append('此商品类型下暂无商品属性，请添加');
+						}
+					});
+				}
+			});
+		});
+	}
 </script>
 </body>
 </html>

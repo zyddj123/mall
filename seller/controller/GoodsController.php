@@ -83,7 +83,7 @@ class GoodsController extends CO_Controller{
 		$get   = $this->input->get();
 		$info  = array();
 		$where = array(
-			"or"=>array("id","name"),
+			"or"=>array("id","category_name"),
 			);
 		$select = array(
 			"id",
@@ -94,10 +94,25 @@ class GoodsController extends CO_Controller{
 			"id",
 			'category_name',
 			);
-		$a = new DataTable($get, array("select" => $select, "sum" => "id", "table" => 'mall_category', "order" => $order, "where" => $where),'');
+		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => 'mall_category', "order" => $order, "where" => $where),'');
 		// var_dump($a->output());
 		echo json_encode($a->output());
 	}
+
+	function ajax_category_get_templet_key_count(){
+		$category_id   = $this->input->post('category_id');
+		$data = $this->goods_model->get_templet_key($_SESSION['seller']['id'],$category_id);
+		echo count($data);
+	}
+
+	function ajax_category_get_templet_key(){
+		$category_id   = $this->input->post('category_id');
+		$start = $this->input->post('start');
+		$ppc = $this->input->post('ppc');
+		$data = $this->goods_model->category_get_templet_key($_SESSION['seller']['id'],$category_id,$start,$ppc);
+		echo json_encode($data);
+	}
+
 
 
 	function getThemesUrl(){

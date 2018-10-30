@@ -42,9 +42,10 @@ class DataTable
    * )
    * @param string $[name] [数据库的名字] 默认是
    */
-  function __construct($dataTableGet,$info,$databaseName=""){
+  function __construct($db,$dataTableGet,$info,$databaseName=""){
     $this->_init($dataTableGet);
-    $this->_getDb($databaseName);
+    $this->_db = $db;
+    // $this->_getDb($databaseName);
     $this->_info=$info;
     // var_dump("111");
   }
@@ -68,24 +69,25 @@ class DataTable
    * 获取数据库连接
    * 失败的处理方式先保留
    */
-  protected function _getDb($name){
-    try {
-      $db=GetDB($name);
-      if($db){
-        $this->_db=$db;
-      }else{
-        return false;
-      }
-    } catch (Exception $e) {
-      return false;
-    }
-  }
+  // protected function _getDb($name){
+  //   try {
+  //     $db=CO::GetDB($name);
+  //     var_dump($db);
+  //     if($db){
+  //       $this->_db=$db;
+  //     }else{
+  //       return false;
+  //     }
+  //   } catch (Exception $e) {
+  //     return false;
+  //   }
+  // }
   /**
    * 查询数据库
    * 所有的查询都通过这个函数以后该只需要更改这一个函数就能更改所有的数据库操作
    */
   protected function _getAll($sql){
-    return $this->_db->GetAll($sql);
+    return $this->_db->getAll($sql);
   }
   
   /**

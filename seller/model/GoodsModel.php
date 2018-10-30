@@ -90,7 +90,17 @@ class GoodsModel extends CO_Model{
 		return $data;
 	}
 
-	
-	
+	/**
+	 * [get_templet 获取某seller下的商品规格的值]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function category_get_templet_key($id,$category_id,$start,$ppc){
+		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` ORDER BY ".SellerConfig::TEMPLET_KEY.".`store_id` , ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
+		$data = $this->db->query($sql);
+		return $data;
+	}
+
+
 }
 ?>
