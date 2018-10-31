@@ -115,7 +115,6 @@ if(!defined('CO_BASE_CHECK')){
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-								<button type="button" class="btn btn-success">保存</button>
 							</div>
 						</div>
 					</div>
@@ -191,7 +190,8 @@ if(!defined('CO_BASE_CHECK')){
 		var td_tmp_key_val = td_tmp_key.text();
 		var td_sort = $(this).closest('tr').find('.sort');
 		var td_sort_val = td_sort.text();
-		$(this).closest('tr').find('.edit_tmp_key_btn').attr('class','save_tmp_key_btn').html('<i class="fa fa-save"></i>保存');
+		var td_edit_tmp_key_btn = $(this).closest('tr').find('.edit_tmp_key_btn');
+		td_edit_tmp_key_btn.attr('class','save_tmp_key_btn').html('<i class="fa fa-save"></i>保存');
 		td_tmp_key.empty().append('<input type="text" class="tmp_key_input" value="'+td_tmp_key_val+'">');
 		td_sort.empty().append('<input type="text" class="sort_input" value="'+td_sort_val+'">');
 		$('body').on('click','.save_tmp_key_btn',function(){
@@ -200,9 +200,16 @@ if(!defined('CO_BASE_CHECK')){
 			var input_sort = $(this).closest('tr').find('.sort_input');
 			var input_tmp_key_val = input_tmp_key.val();
 			var input_sort_val = input_sort.val();
+			var td_save_tmp_key_btn = $(this).closest('tr').find('.save_tmp_key_btn');
 			if(input_tmp_key_val!=''&&input_sort_val!=''){
 				$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_edit_templet_key'?>",{"tmp_key_id":tmp_key_id,"tmp_key":input_tmp_key_val,"sort":input_sort_val},function(e){
-					console.log(e);
+					if(e){
+						td_tmp_key.empty().append(input_tmp_key_val);
+						td_sort.empty().append(input_sort_val);
+						td_save_tmp_key_btn.attr('class','edit_tmp_key_btn').html('<i class="fa fa-edit"></i>编辑');
+					}else{
+						alert("修改失败，请重新保存");
+					}
 				});
 			}else{
 				alert("输入不能为空！");

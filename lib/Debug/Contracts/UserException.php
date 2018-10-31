@@ -1,7 +1,7 @@
 <?php
 
 namespace Debug\Contracts;
-
+use Debug\Config;
 class UserException
 {
     //错误编号
@@ -28,14 +28,27 @@ class UserException
      */
     public function __construct($errno, $errstr, $file, $line, $trace)
     {
+        $this->config=new Config();
+        $this->pathMap=$this->config->pathMap;
+
         $this->class = __CLASS__;
         $this->errno = $errno;
         $this->errstr = $errstr;
-        $this->file = $file;
+        $this->file = $this->parseFilePath($file);
+        $this->realfile = $file;
         $this->line = $line;
         $this->trace = $this->formateTrace($trace);
     }
 
+    public function parseFilePath($file){
+        if(count($this->pathMap)==2){
+            $s=$this->pathMap['source'];
+            $t=$this->pathMap['target'];
+            return str_replace($t,$s,$file);
+        }else{
+            return $file;
+        }
+    }
     /**
      * 将错误和异常抛出的堆栈信息格式化.
      *
@@ -48,7 +61,8 @@ class UserException
             foreach ($trace as $key => $value) {
                 if (isset($value['file'])) {
                     $tmp = [];
-                    $tmp['file'] = isset($value['file']) ? $value['file'] : '';
+                    $tmp['file'] = $this->parseFilePath(isset($value['file']) ? $value['file'] : '');
+                    $tmp['realfile'] = isset($value['file']) ? $value['file'] : '';
                     $tmp['line'] = isset($value['line']) ? $value['line'] : '';
                     $tmp['function'] = isset($value['function']) ? $value['function'] : '';
                     $tmp['class'] = isset($value['class']) ? $value['class'] : '';
@@ -61,6 +75,7 @@ class UserException
         //堆栈里面没有发生错误的文件,所以先添加上
         $tarr = [];
         $tarr['file'] = $this->file;
+        $tarr['realfile'] = $this->realfile;
         $tarr['line'] = $this->line;
         $tarr['function'] = '';
         $tarr['class'] = '';
@@ -132,7 +147,7 @@ class UserException
             $tmp['class'] = $value['class'];
             $tmp['type'] = $value['type'];
             $tmp['args'] = $value['args'];
-            $tmp['contents'] = $this->getFileContents($value['file'], $value['line']);
+            $tmp['contents'] = $this->getFileContents($value['realfile'], $value['line']);
             $ret[] = $tmp;
         }
 
