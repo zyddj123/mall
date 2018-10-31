@@ -157,7 +157,7 @@ if(!defined('CO_BASE_CHECK')){
 		columnDefs: [{
 			targets: -1,
 			data: null,
-			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑属性模版</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center>',
+			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑属性模版</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
 			"orderable": false, "targets": [0,-1],
 		}],
@@ -186,6 +186,34 @@ if(!defined('CO_BASE_CHECK')){
 		$('#hidden_category_id').val(category_id);
 		ajax_get_tmp_key(category_id);
 	});
+
+	//编辑属性模版 编辑按钮操作(模态框内部)
+	$('body').on("click",".edit_tmp_key_btn",function(){
+		var td_tmp_key = $(this).closest('tr').find('.tmp_key');
+		var td_tmp_key_val = td_tmp_key.text();
+		var td_sort = $(this).closest('tr').find('.sort');
+		var td_sort_val = td_sort.text();
+		$(this).closest('tr').find('.edit_tmp_key_btn').attr('class','save_tmp_key_btn').html('<i class="fa fa-save"></i>保存');
+		td_tmp_key.empty().append('<input type="text" class="tmp_key_input" value="'+td_tmp_key_val+'">');
+		td_sort.empty().append('<input type="text" class="sort_input" value="'+td_sort_val+'">');
+		$('body').on('click','.save_tmp_key_btn',function(){
+			var tmp_key_id = $(this).closest('tr').attr('id');
+			var input_tmp_key = $(this).closest('tr').find('.tmp_key_input');
+			var input_sort = $(this).closest('tr').find('.sort_input');
+			var input_tmp_key_val = input_tmp_key.val();
+			var input_sort_val = input_sort.val();
+			if(input_tmp_key_val!=''&&input_sort_val!=''){
+				$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_edit_templet_key'?>",{"tmp_key_id":tmp_key_id,"tmp_key":input_tmp_key_val,"sort":input_sort_val},function(e){
+					console.log(e);
+				});
+			}else{
+				alert("输入不能为空！");
+			}
+		});
+
+	});
+
+	//属性模版的取值填充
 	function ajax_get_tmp_key(category_id){
 		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_category_get_templet_key_count'?>",{"category_id":category_id},function(tot){
 			tot = Number(tot);
@@ -203,9 +231,9 @@ if(!defined('CO_BASE_CHECK')){
 								str += '<tr id="'+e[v].id+'">';
 								str += '<td>'+i+'</td>';
 								str += '<td>'+e[v].category_name+'</td>';
-								str += '<td>'+e[v].tmp_key+'</td>';
-								str += '<td>'+e[v].sort+'</td>';
-								str += '<td><center><a href="#"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center></td>';
+								str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
+								str += '<td class="sort">'+e[v].sort+'</td>';
+								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center></td>';
 								str += '</tr>';
 								i++;
 							}

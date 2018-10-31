@@ -80,7 +80,7 @@ class GoodsModel extends CO_Model{
 		return $data;
 	}
 	/**
-	 * [get_templet 获取某seller下的商品规格的值]
+	 * [get_templet 获取某seller下的商品类别模版的键]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
@@ -91,13 +91,23 @@ class GoodsModel extends CO_Model{
 	}
 
 	/**
-	 * [get_templet 获取某seller下的商品规格的值]
+	 * [get_templet 获取某seller下的商品类别模版的键及模版类别名称]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
 	function category_get_templet_key($id,$category_id,$start,$ppc){
 		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` ORDER BY ".SellerConfig::TEMPLET_KEY.".`store_id` , ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
 		$data = $this->db->query($sql);
+		return $data;
+	}
+
+	/**
+	 * [get_templet 修改某seller下的商品类别模版的键]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function edit_templet_key($tmp_key_id,$tmp_key,$sort){
+		$data = $this->db->update(SellerConfig::TEMPLET_KEY,array('id'=>$tmp_key_id),array('tmp_key'=>$tmp_key,'sort'=>$sort));
 		return $data;
 	}
 

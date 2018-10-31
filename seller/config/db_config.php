@@ -37,7 +37,7 @@ $db_config['default'] = array(
 		'password' => 'zdj123456',
 		'charset' => 'utf8',
 		'db_name' => 'mall',
-		'log_type' => '1',
+		'log_type' => '2',
 		'log_path' => APP_LOG_PATH
 );
 ?>

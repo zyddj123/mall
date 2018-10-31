@@ -94,23 +94,33 @@ class GoodsController extends CO_Controller{
 			"id",
 			'category_name',
 			);
-		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => 'mall_category', "order" => $order, "where" => $where),'');
+		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => SellerConfig::CATEGORY, "order" => $order, "where" => $where),'');
 		// var_dump($a->output());
 		echo json_encode($a->output());
 	}
 
-	function ajax_category_get_templet_key_count(){
-		$category_id   = $this->input->post('category_id');
-		$data = $this->goods_model->get_templet_key($_SESSION['seller']['id'],$category_id);
-		echo count($data);
-	}
-
+	//ajax获取该用户下的商品类别下所有的商品属性模版键名称  分页
 	function ajax_category_get_templet_key(){
 		$category_id   = $this->input->post('category_id');
 		$start = $this->input->post('start');
 		$ppc = $this->input->post('ppc');
 		$data = $this->goods_model->category_get_templet_key($_SESSION['seller']['id'],$category_id,$start,$ppc);
 		echo json_encode($data);
+	}
+
+	//ajax获取该用户下的商品类别下所有的商品属性模版数量  分页
+	function ajax_category_get_templet_key_count(){
+		$category_id = $this->input->post('category_id');
+		$data = $this->goods_model->get_templet_key($_SESSION['seller']['id'],$category_id);
+		echo count($data);
+	}
+
+	//ajax修改商品属性模版键名称及排序
+	function ajax_edit_templet_key(){
+		$tmp_key_id = $this->input->post('tmp_key_id');
+		$tmp_key = $this->input->post('tmp_key');
+		$sort = $this->input->post('sort');
+		echo $this->goods_model->edit_templet_key($tmp_key_id,$tmp_key,$sort);
 	}
 
 
