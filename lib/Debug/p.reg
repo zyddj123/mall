@@ -1,0 +1,14 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\code] 
+@="URL:code Protocol" 
+"URLProtocol"=""  
+  
+[HKEY_CLASSES_ROOT\code\DefaultIcon] 
+  
+[HKEY_CLASSES_ROOT\code\shell] 
+  
+[HKEY_CLASSES_ROOT\code\shell\open] 
+ 
+[HKEY_CLASSES_ROOT\code\shell\open\command] 
+@="cmd /c set m=%1 & call set m=%%m:code:/=%% & call code -g %%m%%"

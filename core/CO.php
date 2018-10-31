@@ -256,10 +256,14 @@ class CO{
 		return $trace_stack;
 	}
 }
-
-//设置未捕获异常的处理情况
-set_exception_handler(array(CO::GetInstance(), 'exception_handler'));
-
 //类自动加载机制
 spl_autoload_register(array('CO_Autoloader', 'Load'), true);
+//设置未捕获异常的处理情况
+// set_exception_handler(array(CO::GetInstance(), 'exception_handler'));
+if (class_exists(Debug\Handler::class) && Debug\Handler::$debug) {
+    Debug\Handler::register();
+} else {
+    set_exception_handler(array(CO::GetInstance(), 'exception_handler'));
+}
+
 ?>

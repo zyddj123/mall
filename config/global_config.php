@@ -21,7 +21,7 @@ if (!defined('CO_BASE_CHECK')) exit;    //框架校验
 error_reporting(E_ALL ^ E_NOTICE);
 
 //是否将错误信息作为输出的一部分显示到屏幕，或者对用户隐藏而不显示。生产环境建议不开启
-ini_set('display_errors','Off');
+ini_set('display_errors','On');
 
 //设置是否将脚本运行的错误信息记录到服务器错误日志或者error_log之中。生产环境建议开启
 ini_set('log_errors','Off');
@@ -111,4 +111,5 @@ define('LANG_DEFAULT', 'zh-cn');
 
 //默认视图主题
 define('VIEW_DEFAULT_THEMES', 'default');
+define('APP_LOG_PATH', LOG_PATH.'/db/');
 ?>
