@@ -24,7 +24,7 @@ class Handler implements ExceptionHandler
     //应该显示的错误类型
     public $include = [E_ALL];
     //不需要的错误类型
-    public $exclude = [];
+    public $exclude = [E_NOTICE];
 
     private function __construction()
     {

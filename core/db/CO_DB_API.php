@@ -146,7 +146,9 @@ abstract class CO_DB_API{
 	 * @param	array $param 参数
 	 */
 	function __construct($db_full_name, $param){
+		
 		$this->full_name = $db_full_name;
+		$this->_database_config = array();
 		//var_dump($this->full_name);die;
 		$this->app_name = substr($this->full_name, 0, strpos($this->full_name, '\\'));
 		$this->name = substr($this->full_name, strrpos($this->full_name, '\\')+1);		
@@ -233,6 +235,8 @@ abstract class CO_DB_API{
 		$this->_last_query_execute_time = $query_time;
 		$this->_last_query_sql = $full_sql;
 		if($query_result===false){
+			// $log=new CO_Log(APP_LOG_PATH);
+			// $log->write(date("Y-M-D h:i:s",time()).$full_sql);
 			//查询失败，记录查询错误信息并做响应处理
 			if($this->_query_in_trans){
 				//在事务中查询运行失败，需要设置回滚

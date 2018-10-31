@@ -116,7 +116,13 @@ abstract class CO_DataForm extends CO_DB_Adapter{
 		}
 		return is_array($field_name)?true:$this->_co_dataform[$field_name];
 	}
-	
+	// static function GetDb($db_key='default'){
+	// 	return CO::GetDB($db_key);
+		
+	// 	if(is_array(static::$_DbLinkPools) && count(static::$_DbLinkPools) == 0) return CO::GetDB(RUNTIME_APP_NAME);    //如果未指定数据库，则使用运行期应用APP的默认数据库
+	// 	elseif(is_object(static::$_DbLinkPools[$db_key])) return static::$_DbLinkPools[$db_key];
+	// 	return null;
+	// }
 	/**
 	 * 加载数据表中的记录,并且初始化对象属性
 	 * 
@@ -159,6 +165,7 @@ abstract class CO_DataForm extends CO_DB_Adapter{
 	 */
 	protected static function _CODataformAdd($data){
 		$db = static::GetDb();
+		// $db=CO::GetDB("default");
 		if(is_null($db)) return false;    //数据库连接获取失败
 		//生成更新数据库用的数组
 		$_update_data=array();

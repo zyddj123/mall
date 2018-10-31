@@ -40,8 +40,6 @@ if(!defined('CO_BASE_CHECK')){
 			<!-- logo -->
 			<?php @include_once $this->getThemesPath().'/view/common/logo.php';?>
 			<div class="left-side-inner">
-				<!-- menu_user -->
-				<?php @include_once $this->getThemesPath().'/view/common/menu_user.php';?>
 				<!-- menu -->
 				<?php @include_once $this->getThemesPath().'/view/common/menu.php';?>   
 			</div>

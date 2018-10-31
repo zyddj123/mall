@@ -52,11 +52,9 @@ abstract class CO_DB_Adapter{
 	 * @return	object|null
 	 */
 	static function GetDb($db_key=''){
-		/*
+		
 		if(is_array(static::$_DbLinkPools) && count(static::$_DbLinkPools) == 0) return CO::GetDB(RUNTIME_APP_NAME);    //如果未指定数据库，则使用运行期应用APP的默认数据库
-		else
-		*/
-		if(is_object(static::$_DbLinkPools[$db_key])) return static::$_DbLinkPools[$db_key];
+		elseif(is_object(static::$_DbLinkPools[$db_key])) return static::$_DbLinkPools[$db_key];
 		return null;
 	}
 	

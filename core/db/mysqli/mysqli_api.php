@@ -311,7 +311,7 @@ class CO_DB_mysqli_api extends CO_DB_API{
 		//-----------------------------------select fields------------------------------------//
 		$select_field_list = array();
 		if(isset($param)){
-			if(is_array($param['select'])){
+			if(isset($param['select'])&&is_array($param['select'])){
 				$select_fields = $param['select'];
 				foreach($select_fields as $name => $alias){
 					if(is_numeric($name)){
@@ -323,7 +323,7 @@ class CO_DB_mysqli_api extends CO_DB_API{
 						else	 array_push($select_field_list, '`'.$name.'` AS `'.$alias.'`');
 					}
 				}
-			}elseif(is_string($param['select'])){
+			}elseif(isset($param['select'])&&is_string($param['select'])){
 				$select_field_list = array($param['select']);
 			}
 		}
@@ -339,7 +339,7 @@ class CO_DB_mysqli_api extends CO_DB_API{
 		}
 		//-----------------------------------order by---------------------------------------//
 		$order_field_list = array();
-		if(isset($param) && is_array($param['orderby'])){
+		if(isset($param) &&isset($param['orderby'])&& is_array($param['orderby'])){
 			$orderby = $param['orderby'];
 			foreach($orderby as $field => $order){
 				if(is_numeric($field)){
@@ -353,7 +353,7 @@ class CO_DB_mysqli_api extends CO_DB_API{
 		}
 		if(count($order_field_list)) $sql .= ' ORDER BY '.implode(', ', $order_field_list);
 		//-----------------------------------limit-------------------------------------------//
-		if(isset($param)  && is_array($param['limit'])){
+		if(isset($param)  &&isset($param['limit'])&& is_array($param['limit'])){
 			$limit_count = $param['limit'][0];
 			if(!isset($param['limit'][1])) $limit_start = 0;
 			else $limit_start = $param['limit'][1];

@@ -15,7 +15,7 @@
  * 3.CO框架自动扫描公共脚本目录(LIB_PATH)和公共核心目录(CORE_PATH)。
  * 
  * 4.自动加载支持命名空间(namespace)。根空间指向公共脚本目录(LIB_PATH)。如Class \a\b\C必须保存在LIB_PATH/a/b/C.php文件下。
- *
+ * 
  * @package	comnide(CO)
  * @author B.I.T.
  * @copyright Copyright (c) 2016-2017, B.I.T.
@@ -80,6 +80,7 @@ class CO_Autoloader{
 			if(!is_array($cache)) $cache=array($key => $value);
 			else $cache[$key] = $value;
 		}
+		if(!is_dir(dirname($cache_file))) mkdir(dirname($cache_file),0755,true);
 		file_put_contents($cache_file, json_encode($cache));
 	}
 	

@@ -103,7 +103,7 @@ class CO_AppLoader{
 		unset($custom_system_configs);
 		
 		//app_url_root
-		if(!isset($this->_custom_configs['app_url_root'])) $this->_custom_configs['app_url_root'] = HTTP_ROOT_PATH.'/'.$this->app_name.'/index.php?';    //默认值
+		if(!isset($this->_custom_configs['app_url_root']) || $this->_custom_configs['app_url_root']=='') $this->_custom_configs['app_url_root'] = HTTP_ROOT_PATH.'/'.$this->app_name.'/index.php?';    //默认值
 		$this->app_url_root = $this->_custom_configs['app_url_root'];
 				
 		//app_http_root;
@@ -118,13 +118,20 @@ class CO_AppLoader{
 		
 		//cos_config
 		$custom_socket_config = array();
-		@include $this->_base_config_path.'/cos_config.php';
+		if(file_exists($this->_base_config_path.'/cos_config.php')){
+			@include $this->_base_config_path.'/cos_config.php';
+		}
+		
 		$this->_cos_configs = $custom_socket_config;
 		unset($custom_socket_config);
 		
 		//logic config
 		$logic_map_config = array();
-		@include $this->_base_config_path.'/logic_map.php';
+		if(file_exists($this->_base_config_path.'/logic_map.php')){
+			@include $this->_base_config_path.'/logic_map.php';
+
+		}
+		
 		$this->_logic_map = $logic_map_config;
 		unset($logic_map_config);
 	}

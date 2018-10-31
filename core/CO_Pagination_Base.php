@@ -3,7 +3,7 @@
  * 分页虚类
  *
  * CO框架核心
- *
+ *	
  * @package	comnide(CO)
  * @author B.I.T.
  * @copyright Copyright (c) 2016-2017, B.I.T.

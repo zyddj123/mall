@@ -150,7 +150,7 @@ class CO_Input{
 				'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 
 				'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload');
 		if(is_array($str)){
-			foreach($str as $key => $val) $str[$key] = self::anti_XSS($val, ALLOWED_HTMLTAGS);
+			foreach($str as $key => $val) $str[$key] = self::anti_XSS($val, $allowedtags);
 		}else{
 			$str= preg_replace(
 				'/\s('.implode('|', $disabledattributes).').*?([\s\>])/',

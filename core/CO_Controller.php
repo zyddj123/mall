@@ -111,10 +111,10 @@ class CO_Controller{
     	
     	//应用名称
     	$this->app_name = $app_name;
-    
+    	
     	//初始化input对象
     	$this->input = new CO_Input();
-    
+    	
     	//加载配置
     	$this->config = CO_AppLoader::GetInstance($app_name);
     	
@@ -126,7 +126,7 @@ class CO_Controller{
     	 * 设置session
     	 * 应用(application)目录中的custom_config.php设置
     	* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-    	if($this->config->Get('session_start')=='1'){
+    	if($this->config->Get('session_start')=='1'&&!isset($_SESSION)){
     		//开启session
     		$custom_session=$this->config->Get('session_custom');
     		if($custom_session!=''){
@@ -134,13 +134,10 @@ class CO_Controller{
     			$handler = new $custom_session(array(
     					'lifetime'=>$this->config->Get('session_lifetime')
     					));
-    			
     			$handler->setDb($this->getDb());
     			session_set_save_handler($handler, true);
     		}
-    		
     		session_start();
-    		
     	}
     	$this->session = new CO_Session();
     	
@@ -212,7 +209,7 @@ class CO_Controller{
     /**
      * 析构函数
      */
-    function _destruct(){
+    function __destruct(){
     	
     }
     
@@ -278,6 +275,9 @@ class CO_Controller{
         if ($return === true) {
         	return $buffer;
         }else{
+            if(!$this->_output){
+                return true;
+            }
         	$this->_output->AppendOutputStream($buffer);
         	$this->_rendered = true;
         	return true;
@@ -344,15 +344,14 @@ class CO_Controller{
      * @return	object|null 加载的模型对象
      */
     function getModel($model_name, $param=array()){
-    	
     	//转化成匹配的模型文件
     	$class_name = CO::StrCamelize($model_name).'Model';
     	$class_file = ROOT_PATH.'/'.$this->app_name.'/'.MODEL_PATH_NAME."/".$class_name.'.php';
     	if(is_object($this->_models[$model_name])) return $this->_models[$model_name];
-    	elseif(file_exists($class_file)){	
+    	elseif(file_exists($class_file)){
     		//引入model文件，并生成对象
     		include_once $class_file;
-    		$model_object = $class_name::CreateFromController($this, $param);  
+    		$model_object = $class_name::CreateFromController($this, $param);
     		$this->_models[$model_name] = $model_object;
     		unset($model_object);
     		return $this->_models[$model_name];
@@ -367,6 +366,7 @@ class CO_Controller{
      * @throws	CO_DB_Exception 数据库连接异常
      */
     function getDb($db_name = 'default'){
+        $context='';
     	$context.= PHP_EOL.'---------- trace stack start ---------'.PHP_EOL;
     	$context.= 'app_name:['.$this->app_name.']'.PHP_EOL;
     	foreach(CO::Debug() as $debug){

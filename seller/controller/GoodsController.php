@@ -19,7 +19,7 @@ if (!defined('CO_BASE_CHECK')){
 include_once realpath(__DIR__.'/../').'/core/SELLER_Session.php';
 include_once realpath(__DIR__.'/../').'/core/common.php';
 // ------------------------------------------------------------------------
-class GoodsController extends CO_Contrller{
+class GoodsController extends CO_Controller{
 	
 	protected $goods_model;
 	

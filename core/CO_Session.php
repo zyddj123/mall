@@ -41,7 +41,7 @@ class CO_Session{
 		$vKeys = explode(':', $key);
 		for ($i = 0; $i < count($vKeys); $i++) {
 			if($i==count($vKeys)-1){
-				return $array_value[$vKeys[$i]];
+				return isset($array_value[$vKeys[$i]])?$array_value[$vKeys[$i]]:null;
 			}else{
 				if(!isset($array_value[$vKeys[$i]])) return null;
 				$array_value=& $array_value[$vKeys[$i]];

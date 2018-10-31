@@ -113,7 +113,7 @@ class Session_Handler_To_DB implements SessionHandlerInterface{
     	 * 刷新过期时间，并插入session记录
     	* ------------------------------------------------------------------------------------------------------------------------------*/
     	$new_expriy = $current_time + $this->_lifetime;
-    	if($this->_db->Select($this->_table, array('SESS_KEY' => $key), array('select'=>array(SESS_KEY))) === false){
+    	if($this->_db->Select($this->_table, array('SESS_KEY' => $key), array('select'=>array('SESS_KEY'))) === false){
     		$ins = $this->_db->Insert($this->_table, array(
     				"SESS_KEY"=>$key,
     				"SESS_VALUE"=>$val,

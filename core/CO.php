@@ -131,17 +131,13 @@ class CO{
 		* ---------------------------------------------------------------------------------------------------*/
 		$controller = self::StrCamelize($ctrl_name).'Controller';
 		$controller_file_path = ROOT_PATH.'/'.$app_name.'/'.CONTROLLER_PATH_NAME.'/'.$controller.'.php';
-			
 		if(!file_exists($controller_file_path)) return false;    //控制器不存在
-	
 		if(is_callable(array(array('Controller', $func_name)))){
 			//不允许调用控制器基类Controller的方法
 			return false;
 		}
 		include $controller_file_path;    //引入控制器文件
-		
 		$objCtrl = new $controller($app_name);		
-
 		$objCtrl->setOutput($output);    //绑定CO_Output输出对象		
 		if(method_exists($objCtrl, $func_name)){
 			//反射机制调用
@@ -258,12 +254,10 @@ class CO{
 }
 //类自动加载机制
 spl_autoload_register(array('CO_Autoloader', 'Load'), true);
-//设置未捕获异常的处理情况
 // set_exception_handler(array(CO::GetInstance(), 'exception_handler'));
 if (class_exists(Debug\Handler::class) && Debug\Handler::$debug) {
     Debug\Handler::register();
 } else {
     set_exception_handler(array(CO::GetInstance(), 'exception_handler'));
 }
-
 ?>

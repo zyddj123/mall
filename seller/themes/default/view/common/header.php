@@ -8,6 +8,4 @@
 <![endif]-->
 <script src="<?php echo $this->getThemesUrl();?>/js/jquery-1.10.2.min.js"></script>
 <script>
-var _REQUEST_HOST="<?php echo APP_URL_ROOT;?>";
-var _APPLICATION_HOST="<?php echo $this->config->get('application_url_host');?>";
 </script>
