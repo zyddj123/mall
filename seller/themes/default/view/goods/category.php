@@ -55,8 +55,12 @@ if(!defined('CO_BASE_CHECK')){
 						<section>
 							<div class="panel-body">
 								<div class="row">
-									<div class="col-lg-4 col-sm-4">
-										<button class="btn btn-warning" id="btn4" type="button">添加商品类别</button>
+									<div class="col-lg-8 col-sm-8" style="display: -webkit-box;">
+										<button class="btn btn-warning" id="add_category" type="button">添加商品类别</button>
+										<div id="add_category_div" class="form-inline" style="display: none">
+											<input style="margin-left: 30px;" type="text" class="form-control" id="input_category_name" placeholder="商品类别名称">&nbsp;&nbsp;
+											<button class="btn btn-warning" id="add_category_btn" type="button">添加</button>
+										</div>
 									</div>
 								</div><br>
 								<div class="row">
@@ -90,8 +94,13 @@ if(!defined('CO_BASE_CHECK')){
 							</div>
 							<div class="modal-body">
 								<div class="row">
-									<div class="col-lg-4 col-sm-4">
-										<button class="btn btn-warning" id="btn4" type="button">添加属性</button>
+									<div class="col-lg-10 col-sm-10" style="display: -webkit-box;">
+										<button class="btn btn-warning" id="add_attr" type="button">添加属性</button>
+										<div id="add_attr_div" class="form-inline" style="display: none">
+											<input style="margin-left: 30px;" type="text" class="form-control" id="input_attr_name" placeholder="属性名称">
+											<input style="margin-left: 30px;" type="number" class="form-control" id="input_attr_sort" placeholder="排序">&nbsp;&nbsp;
+											<button class="btn btn-warning" id="add_attr_btn" type="button">添加</button>
+										</div>
 									</div>
 								</div><br>
 								<div class="row" style="padding-left: 20px;padding-right: 20px;">
@@ -144,17 +153,13 @@ if(!defined('CO_BASE_CHECK')){
 			targets: 0
 		},{
 			data: "category_name",
-		},
-		// {
-		// 	data: "",
-		// },
-		{
+		},{
 			data: "null",
 		}],
 		columnDefs: [{
 			targets: -1,
 			data: null,
-			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑属性模版</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center>',
+			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑属性模版</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
 			"orderable": false, "targets": [0,-1],
 		}],
@@ -162,6 +167,7 @@ if(!defined('CO_BASE_CHECK')){
 			$(row).data('id', data.id);
 			// console.log($(row).data('id'));
 			// console.log(index);
+			console.log(row.columnDefs);
 		},
 		"fnDrawCallback": function(){
 			　　var api = this.api();
@@ -186,6 +192,7 @@ if(!defined('CO_BASE_CHECK')){
 
 	//编辑属性模版 编辑按钮操作(模态框内部)
 	$('body').on("click",".edit_tmp_key_btn",function(){
+		var category_id = $('#hidden_category_id').val();
 		var td_tmp_key = $(this).closest('tr').find('.tmp_key');
 		var td_tmp_key_val = td_tmp_key.text();
 		var td_sort = $(this).closest('tr').find('.sort');
@@ -207,6 +214,7 @@ if(!defined('CO_BASE_CHECK')){
 						td_tmp_key.empty().append(input_tmp_key_val);
 						td_sort.empty().append(input_sort_val);
 						td_save_tmp_key_btn.attr('class','edit_tmp_key_btn').html('<i class="fa fa-edit"></i>编辑');
+						ajax_get_tmp_key(category_id);
 					}else{
 						alert("修改失败，请重新保存");
 					}
@@ -238,7 +246,7 @@ if(!defined('CO_BASE_CHECK')){
 								str += '<td>'+e[v].category_name+'</td>';
 								str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
 								str += '<td class="sort">'+e[v].sort+'</td>';
-								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger"><i class="fa fa-trash-o"></i>删除</a></center></td>';
+								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a></center></td>';
 								str += '</tr>';
 								i++;
 							}
@@ -251,6 +259,61 @@ if(!defined('CO_BASE_CHECK')){
 			});
 		});
 	}
+
+	//添加商品类别事件
+	$('#add_category').click(function(){
+		$('#add_category_div').toggle('slow');
+	});
+	//商品类别按钮事件
+	$('#add_category_btn').click(function(){
+		var input_category_name = $('#input_category_name').val();
+		if(input_category_name!=''){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_category'?>",{"input_category_name":input_category_name},function(e){
+				if(e){
+					alert("添加成功");
+					$('#input_category_name').val('');
+					table.draw();
+				}else{
+					alert("添加失败，请重新添加！");
+				}
+			});
+		}
+	});
+	//添加商品属性事件
+	$('#add_attr').click(function(){
+		$('#add_attr_div').toggle('slow');
+	});
+	//商品属性按钮事件
+	$('#add_attr_btn').click(function(){
+		var input_attr_name = $('#input_attr_name').val();
+		var input_attr_sort = $('#input_attr_sort').val();
+		var category_id = $('#hidden_category_id').val();
+		if(input_attr_name!=''&&input_attr_sort!=''){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_tmp_key'?>",{"category_id":category_id,"input_attr_name":input_attr_name,"input_attr_sort":input_attr_sort},function(e){
+				if(e){
+					alert("添加成功");
+					$('#input_attr_name').val('');
+					$('#input_attr_sort').val('');
+					ajax_get_tmp_key(category_id);
+				}else{
+					alert("添加失败，请重新添加！");
+				}
+			});
+		}
+	});
+
+	//删除商品类别事件
+	$('body').on('click','.del_btn',function(){
+		var category_id = $(this).closest('tr').data('id');
+		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_category'?>",{"category_id":category_id},function(e){
+			if(e){
+				alert("删除成功");
+				table.draw();
+			}else{
+				alert("删除失败，请重新删除！");
+			}
+		});
+	});
 </script>
 </body>
 </html>

@@ -80,7 +80,7 @@ class GoodsModel extends CO_Model{
 		return $data;
 	}
 	/**
-	 * [get_templet 获取某seller下的商品类别模版的键]
+	 * [get_templet_key 获取某seller下的商品类别模版的键]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
@@ -91,18 +91,18 @@ class GoodsModel extends CO_Model{
 	}
 
 	/**
-	 * [get_templet 获取某seller下的商品类别模版的键及模版类别名称]
+	 * [category_get_templet_key 获取某seller下的商品类别模版的键及模版类别名称]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
 	function category_get_templet_key($id,$category_id,$start,$ppc){
-		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` ORDER BY ".SellerConfig::TEMPLET_KEY.".`store_id` , ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
+		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` ORDER BY ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
 		$data = $this->db->query($sql);
 		return $data;
 	}
 
 	/**
-	 * [get_templet 修改某seller下的商品类别模版的键]
+	 * [edit_templet_key 修改某seller下的商品类别模版的键]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
@@ -111,6 +111,24 @@ class GoodsModel extends CO_Model{
 		return $data;
 	}
 
+	/**
+	 * [add_category 添加某seller下的商品类别]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_category($input_category_name,$id){
+		$data = $this->db->insert(SellerConfig::CATEGORY,array('category_name'=>$input_category_name,'store_id'=>$id));
+		return $data;
+	}
+
+	/**
+	 * [add_tmp_key 添加某seller下的商品类别属性模版]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_tmp_key($data){
+		return $this->db->insert(SellerConfig::TEMPLET_KEY,$data);
+	}
 
 }
 ?>

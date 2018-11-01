@@ -87,7 +87,8 @@ class GoodsController extends CO_Controller{
 			);
 		$select = array(
 			"id",
-			'category_name'
+			'category_name',
+			'store_id'
 			);
 		$order = array(
 			"id",	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
@@ -121,6 +122,31 @@ class GoodsController extends CO_Controller{
 		$tmp_key = $this->input->post('tmp_key');
 		$sort = $this->input->post('sort');
 		echo $this->goods_model->edit_templet_key($tmp_key_id,$tmp_key,$sort);
+	}
+
+	//ajax add category
+	function ajax_add_category(){
+		$input_category_name = $this->input->post('input_category_name');
+		echo $this->goods_model->add_category($input_category_name,$_SESSION['seller']['id']);
+	}
+	//ajax add tmp_key
+	function ajax_add_tmp_key(){
+		$category_id = $this->input->post('category_id');
+		$input_attr_name = $this->input->post('input_attr_name');
+		$input_attr_sort = $this->input->post('input_attr_sort');
+		$data = array(
+			'category_id'=>$category_id,
+			'tmp_key'=>$input_attr_name,
+			'sort'=>$input_attr_sort,
+			'store_id'=>$_SESSION['seller']['id']
+		);
+		echo $this->goods_model->add_tmp_key($data);
+	}
+
+	//ajax delete category
+	function ajax_del_category(){
+		$category_id = $this->input->post('category_id');
+		echo $this->goods_model->del_category($category_id,$_SESSION['seller']['id']);
 	}
 
 
