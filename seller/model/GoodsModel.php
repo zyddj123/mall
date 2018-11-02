@@ -130,5 +130,23 @@ class GoodsModel extends CO_Model{
 		return $this->db->insert(SellerConfig::TEMPLET_KEY,$data);
 	}
 
+	/**
+	 * [del_category 删除某seller下的商品类别]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function del_category($category_id){
+		return $this->db->delete(SellerConfig::CATEGORY,array('id'=>$category_id));
+	}
+
+	/**
+	 * [del_attr_key 删除某seller下的商品类别属性模版]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function del_attr_key($attr_id){
+		return $this->db->delete(SellerConfig::TEMPLET_KEY,array('id'=>$attr_id));
+	}
+
 }
 ?>

@@ -146,10 +146,14 @@ class GoodsController extends CO_Controller{
 	//ajax delete category
 	function ajax_del_category(){
 		$category_id = $this->input->post('category_id');
-		echo $this->goods_model->del_category($category_id,$_SESSION['seller']['id']);
+		echo $this->goods_model->del_category($category_id);
 	}
 
-
+	//ajax delete attr_key
+	function ajax_del_attr_key(){
+		$attr_id = $this->input->post('attr_id');
+		echo $this->goods_model->del_attr_key($attr_id);
+	}
 
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();

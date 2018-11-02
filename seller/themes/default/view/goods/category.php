@@ -167,7 +167,9 @@ if(!defined('CO_BASE_CHECK')){
 			$(row).data('id', data.id);
 			// console.log($(row).data('id'));
 			// console.log(index);
-			console.log(row.columnDefs);
+			if(data.store_id==0){
+				$(row).find('.del_btn').attr('class','text-warning').css('cursor','default').css('text-decoration','none').attr('title','系统预设项不能删除').find('i').attr('class','fa fa-ban');
+			}
 		},
 		"fnDrawCallback": function(){
 			　　var api = this.api();
@@ -198,7 +200,8 @@ if(!defined('CO_BASE_CHECK')){
 		var td_sort = $(this).closest('tr').find('.sort');
 		var td_sort_val = td_sort.text();
 		var td_edit_tmp_key_btn = $(this).closest('tr').find('.edit_tmp_key_btn');
-		td_edit_tmp_key_btn.attr('class','save_tmp_key_btn').html('<i class="fa fa-save"></i>保存');
+		td_edit_tmp_key_btn.attr('class','save_tmp_key_btn').html('<i class="fa fa-check"></i>保存');
+		$(this).closest('tr').find('.del_tmp_key_btn').attr('class','cancel_edit_tmp_key_btn').html('<i class="fa fa-times"></i>取消');
 		td_tmp_key.empty().append('<input type="text" class="tmp_key_input" value="'+td_tmp_key_val+'">');
 		td_sort.empty().append('<input type="text" class="sort_input" value="'+td_sort_val+'">');
 		$('body').on('click','.save_tmp_key_btn',function(){
@@ -223,6 +226,12 @@ if(!defined('CO_BASE_CHECK')){
 				alert("输入不能为空！");
 			}
 		});
+		$('body').on('click','.cancel_edit_tmp_key_btn',function(){
+			td_tmp_key.empty().append(td_tmp_key_val);
+			td_sort.empty().append(td_sort_val);
+			$(this).closest('tr').find('.save_tmp_key_btn').attr('class','edit_tmp_key_btn').html('<i class="fa fa-edit"></i>编辑');
+			$(this).attr('class','del_tmp_key_btn').addClass('text-danger').html('<i class="fa fa-trash-o"></i>删除');
+		});
 
 	});
 
@@ -246,7 +255,13 @@ if(!defined('CO_BASE_CHECK')){
 								str += '<td>'+e[v].category_name+'</td>';
 								str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
 								str += '<td class="sort">'+e[v].sort+'</td>';
-								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a></center></td>';
+								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+								if(e[v].store_id==0){
+									str += '<a href="javascript:void(0)" class="text-warning" style="cursor:default;text-decoration:none;" title="系统预设项不能删除"><i class="fa fa-ban"></i>删除</a>';
+								}else{
+									str += '<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a>';
+								}
+								str += '</center></td>';
 								str += '</tr>';
 								i++;
 							}
@@ -305,14 +320,31 @@ if(!defined('CO_BASE_CHECK')){
 	//删除商品类别事件
 	$('body').on('click','.del_btn',function(){
 		var category_id = $(this).closest('tr').data('id');
-		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_category'?>",{"category_id":category_id},function(e){
-			if(e){
-				alert("删除成功");
-				table.draw();
-			}else{
-				alert("删除失败，请重新删除！");
-			}
-		});
+		if(confirm("确定删除该项吗？该操作不可逆")){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_category'?>",{"category_id":category_id},function(e){
+				if(e){
+					alert("删除成功");
+					table.draw();
+				}else{
+					alert("删除失败，请重新删除！");
+				}
+			});
+		}
+	});
+	//删除商品类别下的属性模版事件
+	$('body').on('click','.del_tmp_key_btn',function(){
+		var category_id = $('#hidden_category_id').val();
+		var attr_id = $(this).closest('tr').attr('id');
+		if(confirm("确定删除该项吗？该操作不可逆")){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_attr_key'?>",{"attr_id":attr_id},function(e){
+				if(e){
+					alert("删除成功");
+					ajax_get_tmp_key(category_id);
+				}else{
+					alert("删除失败，请重新删除！");
+				}
+			});
+		}
 	});
 </script>
 </body>
