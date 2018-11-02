@@ -70,11 +70,12 @@ class GoodsController extends CO_Controller{
 		$this->render('goods/index');
 	}
 
+	/**************************************商品类别管理*****************************************/
+
 	//商品类别管理
 	function goods_category(){
 		//导航定位
 		$this->session->set('left_menu_action', 'goods/goods_category');
-
 		$this->render('goods/category');
 	}
 
@@ -153,6 +154,41 @@ class GoodsController extends CO_Controller{
 	function ajax_del_attr_key(){
 		$attr_id = $this->input->post('attr_id');
 		echo $this->goods_model->del_attr_key($attr_id);
+	}
+
+	/**************************************商品品牌管理*****************************************/
+
+	//商品品牌管理
+	function goods_brand(){
+		//导航定位
+		$this->session->set('left_menu_action', 'goods/goods_brand');
+		$this->render('goods/brand');
+	}
+
+	//ajax获取商品类别
+	function ajax_goods_brand(){
+		$get   = $this->input->get();
+		$info  = array();
+		$where = array(
+			"or"=>array("id","brand_name","site_url"),
+			);
+		$select = array(
+			"id",
+			'brand_name',
+			'brand_logo',
+			'brand_desc',
+			'site_url',
+			'store_id'
+			);
+		$order = array(
+			"id",	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
+			"id",
+			'brand_name',
+			'site_url'
+			);
+		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => SellerConfig::BRAND, "order" => $order, "where" => $where),'');
+		// var_dump($a->output());
+		echo json_encode($a->output());
 	}
 
 	function getThemesUrl(){
