@@ -191,6 +191,12 @@ class GoodsController extends CO_Controller{
 		echo json_encode($a->output());
 	}
 
+	//ajax 添加商品类别
+	function ajax_add_brand(){
+		$data = $this->input->post('brand_name');
+		var_dump($_FILES);
+	}
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}

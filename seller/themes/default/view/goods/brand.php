@@ -14,6 +14,7 @@ if(!defined('CO_BASE_CHECK')){
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
 	<link href="<?php echo $this->getThemesUrl();?>/js/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl();?>/js/bootstrap-fileupload/bootstrap-fileupload.min.css" rel="stylesheet">
 	<style>
 	div.dataTables_wrapper div.dataTables_filter {
 		text-align: -webkit-auto;
@@ -63,7 +64,7 @@ if(!defined('CO_BASE_CHECK')){
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-8 col-sm-8" style="display: -webkit-box;">
-										<button class="btn btn-warning" id="add_category" type="button">添加商品品牌</button>
+										<a href="#brand_dialog" data-toggle="modal" class="btn btn-warning" id="add_brand">添加商品品牌</a>
 										<div id="add_category_div" class="form-inline" style="display: none">
 											<input style="margin-left: 30px;" type="text" class="form-control" id="input_category_name" placeholder="商品品牌名称">&nbsp;&nbsp;
 											<button class="btn btn-warning" id="add_category_btn" type="button">添加</button>
@@ -91,6 +92,65 @@ if(!defined('CO_BASE_CHECK')){
 								</div>
 							</div>
 						</section>
+						<!-- Modal -->
+						<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="brand_dialog" class="modal fade">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+										<h4 class="modal-title" id="modal_title"></h4>
+									</div>
+									<form class="form-horizontal" role="form" id="modal_form" method="post" action="" enctype="multipart/form-data">
+										<div class="modal-body">
+											<div class="row">
+												<div class="form-group">
+													<label for="brand_name" class="col-lg-2 col-sm-2 control-label">品牌名称</label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" name="brand_name" id="brand_name" placeholder="品牌名称">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="site_url" class="col-lg-2 col-sm-2 control-label">品牌站点</label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" name="site_url" id="site_url" placeholder="品牌站点">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-lg-2 col-sm-2 control-label">品牌描述</label>
+													<div class="col-sm-9">
+														<textarea rows="6" class="form-control" name="brand_desc" id="brand_desc"></textarea>
+													</div>
+												</div>
+												<div class="form-group last">
+													<label class="control-label col-lg-2 col-sm-2">品牌图标</label>
+													<div class="col-md-9">
+														<div class="fileupload fileupload-new" data-provides="fileupload">
+															<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+																<img id="brand_logo_img" src="" alt="">
+															</div>
+															<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+															<div>
+																<span class="btn btn-default btn-file">
+																	<span class="fileupload-new"><i class="fa fa-paper-clip"></i>选择图片</span>
+																	<span class="fileupload-exists"><i class="fa fa-undo"></i> 更改</span>
+																	<input type="file" class="default" name="brand_logo" id="brand_logo">
+																</span>
+																<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 移除</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+											<button type="submit" id="modal_btn" class="btn btn-success">保存</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- modal -->
 					</div>
 				</section>
 			</div>
@@ -102,6 +162,9 @@ if(!defined('CO_BASE_CHECK')){
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
 <script src="<?php echo $this->getThemesUrl();?>/js/datatable/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/datatable/js/dataTables.bootstrap.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/validate/jquery.validate.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/validate/messages_zh.min.js"></script>
 <script>
 	var table = $("#goods_brand").DataTable({
 		order:[],
@@ -132,7 +195,7 @@ if(!defined('CO_BASE_CHECK')){
 		columnDefs: [{
 			targets: -1,
 			data: null,
-			defaultContent: '<center><a href="#attr_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
+			defaultContent: '<center><a href="#brand_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
 			"orderable": false, "targets": [0,2,-1],
 		}],
@@ -169,10 +232,67 @@ if(!defined('CO_BASE_CHECK')){
 			tr.addClass('shown');
 		}
 	} );
-	/* Formatting function for row details - modify as you need */
+	//附加信息模版
 	function format ( d ) {
 		return '<div class="text-success" style="background-color: #eff0f4;font-size:20px;">'+d.brand_desc+'</div>';
 	}
+	//编辑按钮事件
+	$('body').on('click','.edit_btn',function(){
+		var tr = $(this).closest('tr');
+		var row = table.row( tr );
+		console.log(row.data());
+		view_data('编辑商品品牌','保存',row.data(),'<?php echo SellerConfig::BRAND_LOGO;?>'+row.data().brand_logo);
+	});
+	//添加按钮事件
+	$('#add_brand').click(function(){
+		var data=[];
+		view_data('添加商品品牌','添加',data,'<?php echo $this->getThemesUrl();?>/images/no_image.png');
+		//添加按钮操作
+		$('#add_brand_btn').click(function(){
+			var data = get_data();
+			console.log(data);
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_brand'?>",{"data":data},function(e){});
+		});
+	});
+
+	//数据视图绑定展示
+	function view_data(modal_title,modal_btn,data,brand_logo){
+		$('#modal_title').text(modal_title);
+		$('#modal_btn').text(modal_btn);
+		$('#brand_name').val(data.brand_name);
+		$('#site_url').val(data.site_url);
+		$('#brand_desc').val(data.brand_desc);
+		$('#brand_logo_img').attr('src',brand_logo);
+	}
+
+	$('#modal_form').validate({
+		submitHandler: function(form) {
+			var formobj =  document.getElementById("modal_form");
+			var res = new FormData(formobj);
+			$.ajax({
+				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_add_brand'?>",
+				type: "POST",
+				dataType:"json",            
+				data: res,
+				cache: false,
+				contentType: false,         
+				processData: false,
+				success: function(e) {
+					e = JSON.parse(e);
+					console.log(e);
+				}
+			});
+			return false;
+		},
+		rules: {
+			brand_name: "required",
+			brand_desc: "required",
+			site_url: {
+				required: true,
+				url: true
+			}
+		} 
+	});
 
 </script>
 </body>
