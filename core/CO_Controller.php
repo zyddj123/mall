@@ -36,7 +36,7 @@ class CO_Controller{
      * 
      * @var object
      */
-    private $_output;
+    public $output;
     
     /**
      * 视图文件路径
@@ -114,15 +114,17 @@ class CO_Controller{
     	
     	//初始化input对象
     	$this->input = new CO_Input();
-    	
+
+    	$this->output=new CO_Output();
+
     	//加载配置
     	$this->config = CO_AppLoader::GetInstance($app_name);
     	
     	//加载插件
     	$this->plugins = new CO_Plugins();
     	$this->plugins->app_name = $this->app_name;
-    	
-    	/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    	/* ---  ---------------------------------------------------------------------------------------------------------------------------------------------------------------
     	 * 设置session
     	 * 应用(application)目录中的custom_config.php设置
     	* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -154,7 +156,7 @@ class CO_Controller{
 	 * @return	object 页面输出对象
 	 */
 	public function getOutput() {
-		return $this->_output;
+		return $this->output;
 	}
 	
 	/**
@@ -164,7 +166,7 @@ class CO_Controller{
 	 * @return	boolean
 	 */
 	public function setOutput($output) {
-		$this->_output = $output;
+		$this->output = $output;
 		return true;
 	}
 
@@ -228,7 +230,7 @@ class CO_Controller{
      * @return	void
      */
     function display(){
-    	$this->_output->display();
+    	$this->output->display();
     }
 
     /**
@@ -269,16 +271,13 @@ class CO_Controller{
         /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------
          * 读取视图内容至输出对象
         * ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-        $buffer = ob_get_contents ();
-        @ob_end_clean ();
+        $buffer = ob_get_contents();
+        @ob_end_clean();
         //输出
         if ($return === true) {
         	return $buffer;
         }else{
-            if(!$this->_output){
-                return true;
-            }
-        	$this->_output->AppendOutputStream($buffer);
+        	$this->output->AppendOutputStream($buffer);
         	$this->_rendered = true;
         	return true;
         }

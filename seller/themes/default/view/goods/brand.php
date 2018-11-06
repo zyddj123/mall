@@ -103,6 +103,7 @@ if(!defined('CO_BASE_CHECK')){
 									<form class="form-horizontal" role="form" id="modal_form" method="post" action="" enctype="multipart/form-data">
 										<div class="modal-body">
 											<div class="row">
+												<input type="hidden" name="brand_id" id="brand_id">
 												<div class="form-group">
 													<label for="brand_name" class="col-lg-2 col-sm-2 control-label">品牌名称</label>
 													<div class="col-lg-9">
@@ -240,25 +241,19 @@ if(!defined('CO_BASE_CHECK')){
 	$('body').on('click','.edit_btn',function(){
 		var tr = $(this).closest('tr');
 		var row = table.row( tr );
-		console.log(row.data());
 		view_data('编辑商品品牌','保存',row.data(),'<?php echo SellerConfig::BRAND_LOGO;?>'+row.data().brand_logo);
 	});
 	//添加按钮事件
 	$('#add_brand').click(function(){
 		var data=[];
 		view_data('添加商品品牌','添加',data,'<?php echo $this->getThemesUrl();?>/images/no_image.png');
-		//添加按钮操作
-		$('#add_brand_btn').click(function(){
-			var data = get_data();
-			console.log(data);
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_brand'?>",{"data":data},function(e){});
-		});
 	});
 
 	//数据视图绑定展示
 	function view_data(modal_title,modal_btn,data,brand_logo){
 		$('#modal_title').text(modal_title);
 		$('#modal_btn').text(modal_btn);
+		$('#brand_id').val(data.id);
 		$('#brand_name').val(data.brand_name);
 		$('#site_url').val(data.site_url);
 		$('#brand_desc').val(data.brand_desc);
@@ -270,7 +265,7 @@ if(!defined('CO_BASE_CHECK')){
 			var formobj =  document.getElementById("modal_form");
 			var res = new FormData(formobj);
 			$.ajax({
-				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_add_brand'?>",
+				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_add_edit_brand'?>",
 				type: "POST",
 				dataType:"json",            
 				data: res,

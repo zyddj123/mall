@@ -120,78 +120,6 @@ function upload_img($path, $file_name, $file_size, $file_tmp, $post_id="", $post
 }
 
 /**
- * upload_model() 模型上传
- * @param  $path string 上传路径
- * @param  $model_name string 模型名称
- * @param  $model_size string 模型大小
- * @param  $model_tmp string 模型上传临时路径
- * @param  $max_size string 容量限制
- */
-function upload_model($path,$model_name,$model_size,$model_tmp,$max_size=''){
-	if($max_size==''){
-		$max=ini_get("post_max_size")*1024000;
-	}else{
-		$max=$max_size*1024000;
-	}
-	//模型格式
-	$suffix= strtolower(strstr($model_name, '.'));
-	if($suffix != '.gltf' && $suffix != '.fbx' && $suffix !='.bin'){
-		return false;    
-	}
-	if($model_size>$max){
-		return false;    //模型超过上传最大值
-	}
-	$upload_path=ROOT_PATH.'/'.$path;		//模型上传路径
-	if(!file_exists($upload_path)){
-		CO_Utils::CreateDir($upload_path,0755);
-	}
-
-	$pics = $model_name;
-	$pic_path = $upload_path.'/'.$pics;
-	$upload = move_uploaded_file($model_tmp, $pic_path);
-	if($upload){
-		return $pics;
-	}else{
-		return false;  //上传失败
-	}
-}
-
-/**
- * upload_map() 上传模型贴图
- * @param  $path string 上传路径
- * @param  $map_name string 贴图名称
- * @param  $map_size string 贴图大小
- * @param  $map_tmp string 贴图临时路径
- * @param  $max_size string 容量限制
- */
-function upload_map($path,$map_name,$map_size,$map_tmp,$max_size=''){
-	if($max_size==''){
-		$max=ini_get("post_max_size")*1024000;
-	}else{
-		$max=$max_size*1024000;
-	}
-	$suffix= strtolower(strstr($map_name, '.'));
-	if($suffix != '.jpg' && $suffix != '.jpeg' && $suffix != '.png' && $suffix != '.bmp'){
-		return false;    //图片格式错误
-	}
-	if($map_size>$max){
-		return false;    //图片超过上传最大值
-	}
-	$upload_path=ROOT_PATH.'/'.$path;		//上传路径
-	if(!file_exists($upload_path)){
-		CO_Utils::CreateDir($upload_path,0755);
-	}
-	$pics = $map_name;
-	$pic_path = $upload_path.'/'.$pics;
-	$upload = move_uploaded_file($map_tmp, $pic_path);
-	if($upload){
-		return $pics;
-	}else{
-		return false;  //上传失败
-	}
-}
-
-/**
  * upload_zip()  上传zip模型压缩包
  * @param  $path string 上传路径
  * @param  $zip_name string zip包名称
@@ -226,23 +154,6 @@ function upload_zip($path,$zip_name,$zip_size,$zip_tmp,$max_size=''){
 		return false;  //上传失败
 	}
 }
-
-
-//获取目录下的GLTF文件
-function getModelGltf($path){
-	$filesnames = scandir($path);
-	$model = '';
-	foreach ($filesnames as $file){
-		$suffix= strtolower(strstr($file, '.'));
-		if($suffix=='.gltf' || $suffix =='.GLTF'){
-			$model = $file;
-			break;
-		}
-	}
-	return $model;
-}
-
-
 
 /**
  * delDir()依次删除文件夹下的所有文件

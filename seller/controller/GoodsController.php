@@ -85,17 +85,17 @@ class GoodsController extends CO_Controller{
 		$info  = array();
 		$where = array(
 			"or"=>array("id","category_name"),
-			);
+		);
 		$select = array(
 			"id",
 			'category_name',
 			'store_id'
-			);
+		);
 		$order = array(
 			"id",	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
 			"id",
 			'category_name',
-			);
+		);
 		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => SellerConfig::CATEGORY, "order" => $order, "where" => $where),'');
 		// var_dump($a->output());
 		echo json_encode($a->output());
@@ -171,7 +171,7 @@ class GoodsController extends CO_Controller{
 		$info  = array();
 		$where = array(
 			"or"=>array("id","brand_name","site_url"),
-			);
+		);
 		$select = array(
 			"id",
 			'brand_name',
@@ -179,22 +179,47 @@ class GoodsController extends CO_Controller{
 			'brand_desc',
 			'site_url',
 			'store_id'
-			);
+		);
 		$order = array(
 			"id",	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
 			"id",
 			'brand_name',
 			'site_url'
-			);
+		);
 		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => SellerConfig::BRAND, "order" => $order, "where" => $where),'');
 		// var_dump($a->output());
 		echo json_encode($a->output());
 	}
 
-	//ajax 添加商品类别
-	function ajax_add_brand(){
-		$data = $this->input->post('brand_name');
-		var_dump($_FILES);
+	//ajax 添加或修改商品类别
+	function ajax_add_edit_brand(){
+		$data = $this->_post_info();
+		if(!is_null($data['brand_id'])&&$data['brand_id']!=''){
+			//编辑操作
+		}else{
+			//添加操作
+		}
+	// 	if($_FILES['brand_logo']['name']!=''){
+	// 		$path='';
+	// 		$upload=upload_img($path, $_FILES['brand_logo']['name'],$_FILES['brand_logo']['size'],$_FILES['brand_logo']['tmp_name'],$user_old_info['id'],$user_old_info['img']);
+	// 		if($upload){
+	// 			$user_info['img']=$upload;
+	// 		}
+	// 	}
+		var_dump($data);
+	}
+
+	/**
+	 * 获取提交数据
+	 * @return	array $_post来的数据
+	 */
+	protected function _post_info(){
+		$data=array();
+		$data['brand_id']=$this->input->post('brand_id');
+		if(!is_null($this->input->post('brand_name'))&&$this->input->post('brand_name')!='')	 $data['brand_name']=$this->input->post('brand_name');
+		if(!is_null($this->input->post('site_url'))&&$this->input->post('site_url')!='')	 $data['site_url']=$this->input->post('site_url');
+		if(!is_null($this->input->post('brand_desc'))&&$this->input->post('brand_desc')!='')	 $data['brand_desc']=$this->input->post('brand_desc');
+		return $data;
 	}
 
 	function getThemesUrl(){

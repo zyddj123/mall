@@ -68,6 +68,7 @@ class CO_Output {
 	function display($output=''){
 		if ($output == '') $output = & $this->_output;
 		echo $output;
+		exit();
 	}
 }
 ?>
