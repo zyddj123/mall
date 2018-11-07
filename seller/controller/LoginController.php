@@ -48,8 +48,8 @@ class LoginController extends CO_Controller{
 			'login',
 			array(
 				'cfg_login_auth_code'=>$this->_bln_login_auth_code
-				)
-			);
+			)
+		);
 	}
 
 	/**
@@ -68,11 +68,10 @@ class LoginController extends CO_Controller{
 			$this->session->set('id',$chk['id']);
 			$this->session->set('seller_name',$chk['seller_name']);
 			$this->session->set('seller_pwd',$chk['seller_pwd']);
-			$this->session->set('seller_sex',$chk['seller_sex']);
-			$this->session->set('seller_phone',$chk['seller_phone']);
-			$this->session->set('seller_img',$chk['seller_img']);
-			$this->session->set('seller_mail',$chk['seller_mail']);
-			$this->session->set('seller_status',$chk['seller_status']);
+			// $this->session->set('seller_sex',$chk['seller_sex']);
+			// $this->session->set('seller_phone',$chk['seller_phone']);
+			// $this->session->set('seller_img',$chk['seller_img']);
+			// $this->session->set('seller_mail',$chk['seller_mail']);
 			// 定向到入口页面
 			header('location:/Index');
 			//清除SESSION中的auth_code
@@ -121,8 +120,7 @@ class LoginController extends CO_Controller{
 		if(!$data){
 			return 0;
 		}else{
-			if($data['seller_status']=='0') return 0;
-			else return $data;
+			return $data;
 		}
 	}
 	

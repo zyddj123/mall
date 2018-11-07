@@ -7,6 +7,7 @@ class Test{
     ];
     public $acceptMethod=['GET'];
     public function handle($ctrl,$next){
+        // var_dump($ctrl->input->post($this->tokenName));
         if($this->isAcceptmethod($ctrl)||$this->isAcceptUrl($ctrl)||$this->isToken($ctrl)){
             setcookie($this->tokenName, $ctrl->session->token(), time() + 24 * 3600 * 7,'','',true,true);       
             return $next($ctrl);
@@ -16,13 +17,21 @@ class Test{
         }
         // return $next($ctrl);
     }
-    public function isToken($ctrl){
-        $input=$ctrl->input;
-        $token=$input->header($this->tokenName)??$input->get($this->tokenName)??$input->post($this->tokenName);
-        // var_dump($input);
-        // echo $token;
-        // exit();
-        return is_string($ctrl->session->token())&&is_string($token)&&$token===$ctrl->session->token();
+    public function isToken($ctrl)
+    {
+        $input = $ctrl->input;
+        $token = '';
+        if ($input->header($this->tokenName)) {
+            $token = $input->header($this->tokenName);
+        }
+        if ($input->get($this->tokenName)) {
+            $token = $input->get($this->tokenName);
+        }
+        if ($input->post($this->tokenName)) {
+            $token = $input->post($this->tokenName);
+        }
+
+        return is_string($ctrl->session->token()) && is_string($token) && $token === $ctrl->session->token();
     }
     /**
      * 检查url是不是在允许进入的名单 

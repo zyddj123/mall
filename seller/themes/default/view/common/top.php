@@ -9,7 +9,6 @@
 	<ul class="notification-menu">
 		<li>
 			<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-				<img src="<?php if($_SESSION['seller']['seller_img']!='') echo SellerConfig::UPLOAD_HEAD.$_SESSION['seller']['seller_img'];?>" alt="">
 				<?php echo $_SESSION['seller']['seller_name'];?>
 				<span class="caret"></span>
 			</a>

@@ -24,6 +24,7 @@ if(!defined('CO_BASE_CHECK')){
             <h1 class="sign-title">后台管理系统</h1>
         </div>
         <div class="login-wrap">
+            <input type="hidden" name="CSRF-TOKEN" value="<?php echo $this->session->token(); ?>">
             <input type="text" class="form-control" placeholder="<?php echo $this->language['login_label_id'];?>" autofocus name="uid">
             <input type="password" class="form-control" placeholder="<?php echo $this->language['login_label_pwd'];?>" name="password">
             <?php 
@@ -33,10 +34,6 @@ if(!defined('CO_BASE_CHECK')){
             		echo '<img src="'.APP_URL_ROOT.'/login/auth_code" title="'.$this->language['login_label_auth_code_again'].'" align="absmiddle" id="auth_img">';
             		echo '</a>';
             	}
-            ?>
-            <?php
-            	//登录信息提示 
-            	if($err_text!='') echo '<p class="danger">'.$err_text.'</p>';
             ?>
             <button class="btn btn-lg btn-login btn-block" type="submit">
                 <i class="fa fa-check"></i> <?php echo $this->language['login_button_login'];?>
@@ -49,7 +46,7 @@ if(!defined('CO_BASE_CHECK')){
 </body>
 <script>
 $("#auth_img").click(function(){
-    $(this).attr("src",'<?php echo APP_URL_ROOT?>/login/auth_code/&r=' + Math.random());
+    $(this).attr("src",'<?php echo $this->config->app_url_root;?>/login/auth_code/&r=' + Math.random());
   });
 </script>
 </html>

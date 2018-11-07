@@ -89,7 +89,7 @@ class Handler implements ExceptionHandler
             return true;
         }
         $err = error_get_last();
-        if (!isset($err)||!is_array($err)||!count($err) <= 0) {
+        if (!isset($err)||!is_array($err)||count($err) <= 0) {
             return true;
         }
         $trace = debug_backtrace();
