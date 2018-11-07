@@ -92,6 +92,16 @@ class Handler implements ExceptionHandler
         if (!isset($err)||!is_array($err)||count($err) <= 0) {
             return true;
         }
+        $no=$err['type'];
+        if (in_array(E_ALL, $this->include)) {
+            if (in_array($no, $this->exclude)) {
+                return false;
+            }
+        } elseif (!in_array($no, $this->include)) {
+            return false;
+        } elseif (in_array($no, $this->exclude)) {
+            return false;
+        }
         $trace = debug_backtrace();
         $this->msg="shutdown处理";
         $e = new UserException($err['type'], $err['message'], $err['file'], $err['line'], []);
