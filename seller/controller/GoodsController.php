@@ -194,20 +194,39 @@ class GoodsController extends CO_Controller{
 	//ajax 添加或修改商品类别
 	function ajax_add_edit_brand(){
 		$data = $this->_post_info();
-		if(!is_null($data['brand_id'])&&$data['brand_id']!=''){
+		if(!is_null($data['id'])&&$data['id']!=''){
 			//编辑操作
-		}else{
+			$pass = $this->goods_model->get_brand_by_id($data['id']);//获取原始数据
+			if($_FILES['brand_logo']['name']!=''){
+				$path=SellerConfig::BRAND_LOGO;
+				$upload=upload_img($path, $_FILES['brand_logo']['name'],$_FILES['brand_logo']['size'],$_FILES['brand_logo']['tmp_name']);
+				if($upload){
+					$data['brand_logo']=$upload;
+					if(@file_exists(ROOT_PATH.'/'.$path . $pass['brand_logo'])){ //file_exists 查询文件是否存在
+                        @unlink(ROOT_PATH.'/'.$path . $pass['brand_logo']); //unlink 先删除上传目录中的文件
+                    }
+                }
+            }else{
+            	$data['brand_logo']=$pass['brand_logo'];
+            }
+            $res = $this->goods_model->edit_brand_by_id($data['id'],$data);
+            $mes = $res?true:false;
+            echo json_encode(array('handle'=>'修改','mes'=>$mes));
+        }else{
 			//添加操作
-		}
-	// 	if($_FILES['brand_logo']['name']!=''){
-	// 		$path='';
-	// 		$upload=upload_img($path, $_FILES['brand_logo']['name'],$_FILES['brand_logo']['size'],$_FILES['brand_logo']['tmp_name'],$user_old_info['id'],$user_old_info['img']);
-	// 		if($upload){
-	// 			$user_info['img']=$upload;
-	// 		}
-	// 	}
-		var_dump($data);
-	}
+			if($_FILES['brand_logo']['name']!=''){
+				$path=SellerConfig::BRAND_LOGO;
+				$upload=upload_img($path, $_FILES['brand_logo']['name'],$_FILES['brand_logo']['size'],$_FILES['brand_logo']['tmp_name']);
+				$data['brand_logo'] = ($upload)?$upload:'';
+			}else{
+				$data['brand_logo'] = '';
+			}
+			$data['store_id'] = $_SESSION['seller']['id'];
+			$res = $this->goods_model->add_brand_by_id($data);
+			$mes = $res?true:false;
+            echo json_encode(array('handle'=>'添加','mes'=>$mes));
+        }
+    }
 
 	/**
 	 * 获取提交数据
@@ -215,7 +234,7 @@ class GoodsController extends CO_Controller{
 	 */
 	protected function _post_info(){
 		$data=array();
-		$data['brand_id']=$this->input->post('brand_id');
+		$data['id']=$this->input->post('brand_id');
 		if(!is_null($this->input->post('brand_name'))&&$this->input->post('brand_name')!='')	 $data['brand_name']=$this->input->post('brand_name');
 		if(!is_null($this->input->post('site_url'))&&$this->input->post('site_url')!='')	 $data['site_url']=$this->input->post('site_url');
 		if(!is_null($this->input->post('brand_desc'))&&$this->input->post('brand_desc')!='')	 $data['brand_desc']=$this->input->post('brand_desc');

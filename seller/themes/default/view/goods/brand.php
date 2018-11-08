@@ -103,6 +103,7 @@ if(!defined('CO_BASE_CHECK')){
 									<form class="form-horizontal" role="form" id="modal_form" method="post" action="" enctype="multipart/form-data">
 										<div class="modal-body">
 											<div class="row">
+												<div><center style="font-size: 20px;margin-bottom: 15px;color: darkgreen;font-style: oblique;"><span id="mes" style=""></span></center></div>
 												<input type="hidden" name="brand_id" id="brand_id">
 												<div class="form-group">
 													<label for="brand_name" class="col-lg-2 col-sm-2 control-label">品牌名称</label>
@@ -251,6 +252,7 @@ if(!defined('CO_BASE_CHECK')){
 
 	//数据视图绑定展示
 	function view_data(modal_title,modal_btn,data,brand_logo){
+		$('#mes').text('');
 		$('#modal_title').text(modal_title);
 		$('#modal_btn').text(modal_btn);
 		$('#brand_id').val(data.id);
@@ -273,8 +275,12 @@ if(!defined('CO_BASE_CHECK')){
 				contentType: false,         
 				processData: false,
 				success: function(e) {
-					e = JSON.parse(e);
-					console.log(e);
+					if(e.mes){
+						table.draw();
+						$('#mes').text(e.handle+"成功");
+					}else{
+						$('#mes').text(e.handle+"失败，请重新"+e.handle);
+					}
 				}
 			});
 			return false;

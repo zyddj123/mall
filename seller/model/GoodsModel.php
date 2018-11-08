@@ -148,5 +148,33 @@ class GoodsModel extends CO_Model{
 		return $this->db->delete(SellerConfig::TEMPLET_KEY,array('id'=>$attr_id));
 	}
 
+	/**************************************商品品牌管理*****************************************/
+	/**
+	 * [edit_brand_by_id 根据id获取品牌数据]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function get_brand_by_id($id){
+		$sql = "SELECT * FROM ".SellerConfig::BRAND. " WHERE `id` = ".$id;
+		return $this->db->getRow($sql);
+	}
+
+	/**
+	 * [add_brand_by_id 添加商品品牌数据]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_brand_by_id($data){
+		return $this->db->insert(SellerConfig::BRAND,$data);
+	}
+
+	/**
+	 * [edit_brand_by_id 根据id编辑品牌数据]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function edit_brand_by_id($id,$data){
+		return $this->db->update(SellerConfig::BRAND,array('id'=>$id),$data);
+	}
 }
 ?>

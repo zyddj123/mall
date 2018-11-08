@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-10-18 17:22:51
+Date: 2018-11-08 17:34:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,24 +61,27 @@ CREATE TABLE `mall_brand` (
   `brand_logo` varchar(80) NOT NULL DEFAULT '',
   `brand_desc` text NOT NULL,
   `site_url` varchar(255) NOT NULL DEFAULT '',
-  `store_id` varchar(255) NOT NULL DEFAULT '50',
+  `store_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mall_brand
 -- ----------------------------
-INSERT INTO `mall_brand` VALUES ('1', '诺基亚', '1240803062307572427.gif', '公司网站：http://www.nokia.com.cn/\n\n客服电话：400-880-0123', 'http://www.nokia.com.cn/', '0');
-INSERT INTO `mall_brand` VALUES ('2', '摩托罗拉', '1240802922410634065.gif', '官方咨询电话：4008105050\n售后网点：http://www.motorola.com.cn/service/carecenter/search.asp ', 'http://www.motorola.com.cn', '0');
-INSERT INTO `mall_brand` VALUES ('3', '多普达', '1240803144788047486.gif', '官方咨询电话：4008201668\n售后网点：http://www.dopod.com/pc/service/searchresult2.php ', 'http://www.dopod.com ', '0');
+INSERT INTO `mall_brand` VALUES ('1', '诺基亚', '1240803062307572427.gif', '公司网站：http://www.nokia.com.cn/\r\n\r\n客服电话：400-880-0123', 'http://www.nokia.com.cn/', '0');
+INSERT INTO `mall_brand` VALUES ('2', '摩托罗拉', '1240802922410634065.gif', '官方咨询电话：4008105050\r\n售后网点：http://www.motorola.com.cn/service/carecenter/search.asp ', 'http://www.motorola.com.cn', '0');
+INSERT INTO `mall_brand` VALUES ('3', '多普达', '1240803144788047486.gif', '官方咨询电话：4008201668\r\n售后网点：http://www.dopod.com/pc/service/searchresult2.php ', 'http://www.dopod.com ', '0');
 INSERT INTO `mall_brand` VALUES ('4', '飞利浦', '1240803247838195732.gif', '官方咨询电话：4008800008\n售后网点：http://www.philips.com.cn/service/mustservice/index.page ', 'http://www.philips.com.cn ', '0');
 INSERT INTO `mall_brand` VALUES ('5', '夏新', '1240803352280856940.gif', '官方咨询电话：4008875777\n售后网点：http://www.amobile.com.cn/service_fwyzc.asp ', 'http://www.amobile.com.cn', '0');
-INSERT INTO `mall_brand` VALUES ('6', '三星', '1240803412367015368.gif', '官方咨询电话：8008105858\n售后网点：http://cn.samsungmobile.com/cn/support/search_area_o.jsp ', 'http://cn.samsungmobile.com', '0');
-INSERT INTO `mall_brand` VALUES ('7', '索爱', '1240803482283160654.gif', '官方咨询电话：4008100000\n售后网点：http://www.sonyericsson.com/cws/common/contact?cc=cn&lc=zh ', 'http://www.sonyericsson.com.cn/', '0');
-INSERT INTO `mall_brand` VALUES ('8', 'LG', '1240803526904622792.gif', '官方咨询电话：4008199999\n售后网点：http://www.lg.com.cn/front.support.svccenter.retrieveCenter.laf?hrefId=9 ', 'http://cn.wowlg.com', '0');
+INSERT INTO `mall_brand` VALUES ('6', '三星', '1240803412367015368.gif', '官方咨询电话：8008105858\r\n售后网点：http://cn.samsungmobile.com/cn/support/search_area_o.jsp ', 'http://cn.samsungmobile.com', '0');
+INSERT INTO `mall_brand` VALUES ('7', '索爱', '1240803482283160654.gif', '官方咨询电话：4008100000\r\n售后网点：http://www.sonyericsson.com/cws/common/contact?cc=cn&lc=zh ', 'http://www.sonyericsson.com.cn/', '0');
+INSERT INTO `mall_brand` VALUES ('8', 'LG', '1240803526904622792.gif', '官方咨询电话：4008199999\r\n售后网点：http://www.lg.com.cn/front.support.svccenter.retrieveCenter.laf?hrefId=9 ', 'http://cn.wowlg.com', '0');
 INSERT INTO `mall_brand` VALUES ('9', '联想', '1240803578417877983.gif', '官方咨询电话：4008188818\n售后网点：http://www.lenovomobile.com/service/kf-wanglou.asp', 'http://www.lenovomobile.com/', '1');
-INSERT INTO `mall_brand` VALUES ('10', '金立', '', '官方咨询电话：4007796666\n售后网点：http://www.gionee.net/service.asp ', 'http://www.gionee.net', '1');
+INSERT INTO `mall_brand` VALUES ('10', '金立', '1240803689674648756.gif', '官方咨询电话：4007796666\n售后网点：http://www.gionee.net/service.asp http://www.gionee.netgfsdgdrs个人攻击的技术犯规i计算的房价根深蒂固分手快乐低价购房贷款来设计公司电力科技股份扩大粮食价格放开思路的价格浮动罗斯福高科技手段都开始磷肥价格快速打击各类锁定冠军联赛的开工建房快速路公交卡雷斯柯达晶格罗斯的国家森林的规范律师打官司', 'http://www.gionee.net', '1');
 INSERT INTO `mall_brand` VALUES ('11', '  恒基伟业', '1240803736391383580.gif', '官方咨询电话：4008899126\n售后网点：http://www.htwchina.com/htwt/wexiu.shtml ', 'http://www.htwchina.com', '0');
+INSERT INTO `mall_brand` VALUES ('12', '123', '20181108172821381.jpg', '12312312313131', 'http://www.motorola.com.cn', '1');
+INSERT INTO `mall_brand` VALUES ('13', '2222', '20181108173026152.jpg', '3333333', 'http://cn.samsungmobile.com', '1');
+INSERT INTO `mall_brand` VALUES ('14', '444', '', '4444', 'http://www.dopod.com ', '1');
 
 -- ----------------------------
 -- Table structure for mall_category
@@ -89,7 +92,7 @@ CREATE TABLE `mall_category` (
   `category_name` varchar(255) NOT NULL,
   `store_id` varchar(11) NOT NULL DEFAULT '0' COMMENT '店铺ID 管理员设置的category 为0 ；店铺设置的为店铺的ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='商品类别表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='商品类别表';
 
 -- ----------------------------
 -- Records of mall_category
@@ -101,6 +104,10 @@ INSERT INTO `mall_category` VALUES ('4', '外套', '0');
 INSERT INTO `mall_category` VALUES ('5', '大衣', '0');
 INSERT INTO `mall_category` VALUES ('6', '相机', '0');
 INSERT INTO `mall_category` VALUES ('7', '微波炉', '0');
+INSERT INTO `mall_category` VALUES ('8', '电脑', '1');
+INSERT INTO `mall_category` VALUES ('9', '显示器', '1');
+INSERT INTO `mall_category` VALUES ('13', '男装', '1');
+INSERT INTO `mall_category` VALUES ('14', '女装', '1');
 
 -- ----------------------------
 -- Table structure for mall_collect_goods
@@ -4239,8 +4246,14 @@ CREATE TABLE `mall_seller_session` (
 -- ----------------------------
 -- Records of mall_seller_session
 -- ----------------------------
-INSERT INTO `mall_seller_session` VALUES ('1j9df3tj5ndrtglnbnqv550pu3', '1539772866', 'seller|a:9:{s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:10:\"seller_sex\";N;s:12:\"seller_phone\";N;s:10:\"seller_img\";N;s:11:\"seller_mail\";N;s:13:\"seller_status\";N;s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_seller_session` VALUES ('bqtfncvcl5nqdeut4rfcfr74k1', '1539860664', 'seller|a:9:{s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:10:\"seller_sex\";N;s:12:\"seller_phone\";N;s:10:\"seller_img\";N;s:11:\"seller_mail\";N;s:13:\"seller_status\";N;s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('40dtc9r0ltcj77tnqqsgklp0d1', '1541676793', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"0826cb98b3\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_brand\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('7071kuhdm7fur4eqtk2jsfcnoh', '1541565327', 'seller|a:10:{s:10:\"csrf_token\";s:10:\"d928d41ecd\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:10:\"seller_sex\";N;s:12:\"seller_phone\";N;s:10:\"seller_img\";N;s:11:\"seller_mail\";N;s:13:\"seller_status\";N;s:16:\"left_menu_action\";s:17:\"goods/goods_brand\";}', '0000-00-00 00:00:00', '2130706433', '');
+INSERT INTO `mall_seller_session` VALUES ('8b5dh842j4c83ol26r3pcbdpf0', '1541562881', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"555c6e2526\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('c2fog0pm4b85bor2hhdks8p162', '1541562718', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"9662634db1\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('e28pnu7uuar83ipqanat7lct32', '1541563146', 'seller|a:4:{s:10:\"csrf_token\";s:10:\"69578e53a2\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('le7r116nmqk79usp45hh1v4un0', '1541590478', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"c337b29db9\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_brand\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('lrggi90p3etc4qhtr2f13u5qm3', '1541561253', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"1c09077cea\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('rn72k6t7cbfec916lp6grso213', '1541562887', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"6a4f3c6026\";}', '0000-00-00 00:00:00', '3232235901', '');
 
 -- ----------------------------
 -- Table structure for mall_sessions
@@ -4676,18 +4689,24 @@ CREATE TABLE `mall_templet_key` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL,
   `tmp_key` varchar(255) NOT NULL COMMENT '模版名称',
-  `sort` int(11) NOT NULL COMMENT '排序',
-  `store_id` varchar(255) DEFAULT NULL,
+  `sort` int(3) NOT NULL COMMENT '排序',
+  `store_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
 
 -- ----------------------------
 -- Records of mall_templet_key
 -- ----------------------------
 INSERT INTO `mall_templet_key` VALUES ('1', '1', '厂商', '0', '0');
-INSERT INTO `mall_templet_key` VALUES ('2', '1', '操作系统', '0', '0');
-INSERT INTO `mall_templet_key` VALUES ('3', '1', '屏幕材质', '0', '0');
+INSERT INTO `mall_templet_key` VALUES ('2', '1', '操作系统', '1', '1');
 INSERT INTO `mall_templet_key` VALUES ('4', '1', '网络制式', '0', '0');
+INSERT INTO `mall_templet_key` VALUES ('5', '1', '屏幕分辨率', '0', '1');
+INSERT INTO `mall_templet_key` VALUES ('6', '1', '摄像头', '1', '1');
+INSERT INTO `mall_templet_key` VALUES ('7', '9', '品牌', '0', '1');
+INSERT INTO `mall_templet_key` VALUES ('8', '9', '分辨率', '0', '1');
+INSERT INTO `mall_templet_key` VALUES ('9', '9', '尺寸', '0', '1');
+INSERT INTO `mall_templet_key` VALUES ('10', '9', '屏幕材质', '0', '1');
+INSERT INTO `mall_templet_key` VALUES ('11', '1', '内存', '0', '1');
 
 -- ----------------------------
 -- Table structure for mall_topic
