@@ -168,7 +168,7 @@ if(!defined('CO_BASE_CHECK')){
 			// console.log($(row).data('id'));
 			// console.log(index);
 			if(data.store_id==0){
-				$(row).find('.del_btn').attr('class','text-warning').css('cursor','default').css('text-decoration','none').attr('title','系统预设项不能删除').find('i').attr('class','fa fa-ban');
+				$(row).find('.del_btn').attr('class','text-warning').css('cursor','not-allowed').css('text-decoration','none').attr('title','系统预设项不能删除').find('i').attr('class','fa fa-ban');
 			}
 		},
 		"fnDrawCallback": function(){
