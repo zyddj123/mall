@@ -85,6 +85,7 @@ class GoodsController extends CO_Controller{
 		$info  = array();
 		$where = array(
 			"or"=>array("id","category_name"),
+			"and"=>array("status"=>1)
 		);
 		$select = array(
 			"id",
@@ -122,7 +123,8 @@ class GoodsController extends CO_Controller{
 		$tmp_key_id = $this->input->post('tmp_key_id');
 		$tmp_key = $this->input->post('tmp_key');
 		$sort = $this->input->post('sort');
-		echo $this->goods_model->edit_templet_key($tmp_key_id,$tmp_key,$sort);
+		$data = array("tmp_key"=>$tmp_key,"sort"=>$sort);
+		echo $this->goods_model->edit_templet_key($tmp_key_id,$data);
 	}
 
 	//ajax add category
@@ -147,13 +149,15 @@ class GoodsController extends CO_Controller{
 	//ajax delete category
 	function ajax_del_category(){
 		$category_id = $this->input->post('category_id');
-		echo $this->goods_model->del_category($category_id);
+		$data['status'] = 0;
+		echo $this->goods_model->edit_category($category_id,$data);
 	}
 
 	//ajax delete attr_key
 	function ajax_del_attr_key(){
 		$attr_id = $this->input->post('attr_id');
-		echo $this->goods_model->del_attr_key($attr_id);
+		$data['status'] = 0;
+		echo $this->goods_model->edit_templet_key($attr_id,$data);
 	}
 
 	/**************************************商品品牌管理*****************************************/
@@ -171,6 +175,7 @@ class GoodsController extends CO_Controller{
 		$info  = array();
 		$where = array(
 			"or"=>array("id","brand_name","site_url"),
+			"and"=>array("status"=>1)
 		);
 		$select = array(
 			"id",
@@ -202,17 +207,19 @@ class GoodsController extends CO_Controller{
 				$upload=upload_img($path, $_FILES['brand_logo']['name'],$_FILES['brand_logo']['size'],$_FILES['brand_logo']['tmp_name']);
 				if($upload){
 					$data['brand_logo']=$upload;
-					if(@file_exists(ROOT_PATH.'/'.$path . $pass['brand_logo'])){ //file_exists 查询文件是否存在
-                        @unlink(ROOT_PATH.'/'.$path . $pass['brand_logo']); //unlink 先删除上传目录中的文件
-                    }
-                }
-            }else{
-            	$data['brand_logo']=$pass['brand_logo'];
-            }
-            $res = $this->goods_model->edit_brand_by_id($data['id'],$data);
-            $mes = $res?true:false;
-            echo json_encode(array('handle'=>'修改','mes'=>$mes));
-        }else{
+					if($pass['brand_logo']!=''){
+						if(@file_exists(ROOT_PATH.'/'.$path . $pass['brand_logo'])){
+							@unlink(ROOT_PATH.'/'.$path . $pass['brand_logo']);
+						}
+					} 
+				}
+			}else{
+				$data['brand_logo']=$pass['brand_logo'];
+			}
+			$res = $this->goods_model->edit_brand_by_id($data['id'],$data);
+			$mes = $res?true:false;
+			echo json_encode(array('handle'=>'修改','mes'=>$mes));
+		}else{
 			//添加操作
 			if($_FILES['brand_logo']['name']!=''){
 				$path=SellerConfig::BRAND_LOGO;
@@ -224,9 +231,16 @@ class GoodsController extends CO_Controller{
 			$data['store_id'] = $_SESSION['seller']['id'];
 			$res = $this->goods_model->add_brand_by_id($data);
 			$mes = $res?true:false;
-            echo json_encode(array('handle'=>'添加','mes'=>$mes));
-        }
-    }
+			echo json_encode(array('handle'=>'添加','mes'=>$mes));
+		}
+	}
+
+	//ajax delete brand 其实并不是真的删除 是修改brand表的status项为0
+	function ajax_del_brand(){
+		$brand_id = $this->input->post('brand_id');
+		$data['status'] = 0;
+		echo $this->goods_model->edit_brand_by_id($brand_id,$data);
+	}
 
 	/**
 	 * 获取提交数据

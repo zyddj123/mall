@@ -96,7 +96,7 @@ class GoodsModel extends CO_Model{
 	 * @return array               [description]
 	 */
 	function category_get_templet_key($id,$category_id,$start,$ppc){
-		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` ORDER BY ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
+		$sql = "SELECT ".SellerConfig::TEMPLET_KEY.".*, ".SellerConfig::CATEGORY.".`category_name` FROM ".SellerConfig::TEMPLET_KEY.", ".SellerConfig::CATEGORY." WHERE (".SellerConfig::TEMPLET_KEY.".`store_id` = 0 OR ".SellerConfig::TEMPLET_KEY.".`store_id` = '".$id."') AND ".SellerConfig::TEMPLET_KEY.".`category_id` = '".$category_id."' AND ".SellerConfig::TEMPLET_KEY.".`category_id` = ".SellerConfig::CATEGORY.".`id` AND ".SellerConfig::TEMPLET_KEY.".`status` = 1 ORDER BY ".SellerConfig::TEMPLET_KEY.".`sort` LIMIT ".$start.",".$ppc;
 		$data = $this->db->query($sql);
 		return $data;
 	}
@@ -106,8 +106,8 @@ class GoodsModel extends CO_Model{
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
-	function edit_templet_key($tmp_key_id,$tmp_key,$sort){
-		$data = $this->db->update(SellerConfig::TEMPLET_KEY,array('id'=>$tmp_key_id),array('tmp_key'=>$tmp_key,'sort'=>$sort));
+	function edit_templet_key($tmp_key_id,$data){
+		$data = $this->db->update(SellerConfig::TEMPLET_KEY,array('id'=>$tmp_key_id),$data);
 		return $data;
 	}
 
@@ -131,21 +131,12 @@ class GoodsModel extends CO_Model{
 	}
 
 	/**
-	 * [del_category 删除某seller下的商品类别]
+	 * [del_category 编辑某seller下的商品类别]
 	 * @param  [type]  $id [description]
 	 * @return array               [description]
 	 */
-	function del_category($category_id){
-		return $this->db->delete(SellerConfig::CATEGORY,array('id'=>$category_id));
-	}
-
-	/**
-	 * [del_attr_key 删除某seller下的商品类别属性模版]
-	 * @param  [type]  $id [description]
-	 * @return array               [description]
-	 */
-	function del_attr_key($attr_id){
-		return $this->db->delete(SellerConfig::TEMPLET_KEY,array('id'=>$attr_id));
+	function edit_category($category_id,$data){
+		return $this->db->update(SellerConfig::CATEGORY,array('id'=>$category_id),$data);
 	}
 
 	/**************************************商品品牌管理*****************************************/

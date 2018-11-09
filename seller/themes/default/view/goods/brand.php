@@ -295,6 +295,23 @@ if(!defined('CO_BASE_CHECK')){
 		} 
 	});
 
+	//删除操作  并不是真的删除 只是brand表中的status项由 1变为 0
+	$('body').on('click','.del_btn',function(){
+		var tr = $(this).closest('tr');
+		var row = table.row( tr );
+		var brand_id = row.data().id;
+		if(confirm("确定删除该项吗？该操作不可逆")){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_brand'?>",{"brand_id":brand_id},function(e){
+				if(e){
+					alert("删除成功");
+					table.draw();
+				}else{
+					alert("删除失败，请重新删除！");
+				}
+			});
+		}
+	});
+
 </script>
 </body>
 </html>
