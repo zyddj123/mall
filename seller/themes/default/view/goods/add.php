@@ -521,15 +521,6 @@ if(!defined('CO_BASE_CHECK')){
 				});
 			});
 			// case 4:
-			// for(var x in a['arr1']){
-			// 	for(var y in a['arr2']){
-			// 		for(var z in a['arr3']){
-			// 			var res = [];
-			// 			res[x+y+z] = a['arr1'][x]+a['arr2'][y]+a['arr3'][z];
-			// 			dad.push(res);
-			// 		}
-			// 	}
-			// }
 			default:
 			
 		}
