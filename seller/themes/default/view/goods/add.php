@@ -69,7 +69,7 @@ if(!defined('CO_BASE_CHECK')){
 							<div id="top_tabby" class="block-tabby">
 							</div>
 						</div>
-						<form id="stepy_form" action="">
+						<form id="stepy_form" enctype="multipart/form-data">
 							<fieldset title="第一步">
 								<legend>通用信息</legend>
 								<div class="form-group">
@@ -88,7 +88,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-4 col-sm-4">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品品牌</label>
 													<div class="col-lg-6">
-														<select class="form-control">
+														<select class="form-control" name="goods_brand" id="goods_brand">
 															<option value="">请选择</option>
 															<?php foreach($brand as $key => $value) :?>
 																<option value="<?php echo $value['id'];?>"><?php echo $value['brand_name'];?></option>
@@ -104,54 +104,18 @@ if(!defined('CO_BASE_CHECK')){
 											</div>
 											<div class="row">
 												<div class="col-lg-4 col-sm-4">
-													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品货号</label>
-													<div class="col-lg-8">
-														<input type="text" class="form-control" name="goods_name" id="goods_name" placeholder="">
-														<p class="goods_name"></p>
-													</div>
-												</div>
-
-												<div class="col-lg-4 col-sm-4">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>上架下架</label>
 													<div class="col-lg-6" style="display: inline-flex;">
 														<div class="flat-yellow single-row">
 															<div class="radio ">
-																<input tabindex="3" type="radio" checked="checked"  name="demo-radio">
+																<input tabindex="3" type="radio" checked="checked" value="1"  name="is_on_sale">
 																<label>上架</label>
 															</div>
 														</div>
 														<div class="flat-red single-row">
 															<div class="radio ">
-																<input tabindex="3" type="radio"  name="demo-radio">
+																<input tabindex="3" type="radio" value="0"  name="is_on_sale">
 																<label>下架</label>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-									<!--单位-->
-									<section>
-										<header class="panel-heading"> 单位 </header>
-										<div class="panel-body">
-											<div class="row">
-												<div class="col-lg-4 col-sm-4">
-													<label style="float:left; margin-top: 7px;"><span class="star">*</span>添加库存</label>
-													<div class="col-lg-8">
-														<div id="kucun">
-															<div class="input-group" style="width:150px;">
-																<div class="spinner-buttons input-group-btn">
-																	<button type="button" class="btn spinner-up btn-primary">
-																		<i class="fa fa-plus"></i>
-																	</button>
-																</div>
-																<input type="text" class="spinner-input form-control" maxlength="3">
-																<div class="spinner-buttons input-group-btn">
-																	<button type="button" class="btn spinner-down btn-warning">
-																		<i class="fa fa-minus"></i>
-																	</button>
-																</div>
 															</div>
 														</div>
 													</div>
@@ -159,7 +123,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-4 col-sm-4">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>选择单位</label>
 													<div class="col-lg-6">
-														<select class="form-control">
+														<select class="form-control" name="goods_unit" id="goods_unit">
 															<option value="">请选择</option>
 															<?php foreach($unit as $key => $value) :?>
 																<option value="<?php echo $value['id'];?>"><?php echo $value['unit_name'];?></option>
@@ -262,7 +226,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-4 col-sm-4">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品类别</label>
 													<div class="col-lg-6">
-														<select class="form-control" id="goods_category">
+														<select class="form-control" name="goods_category" id="goods_category">
 															<option value="">请选择</option>
 															<?php foreach($category as $key => $value) :?>
 																<option value="<?php echo $value['id'];?>"><?php echo $value['category_name'];?></option>
@@ -302,7 +266,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-8 col-sm-8">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>简单描述</label>
 													<div class="col-lg-8">
-														<textarea rows="6" class="form-control"></textarea>
+														<textarea rows="6" class="form-control" name="goods_brief"></textarea>
 													</div>
 												</div>
 											</div>
@@ -316,7 +280,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-8 col-sm-8">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>详细描述</label>
 													<div class="col-lg-8">
-														<textarea rows="10" class="form-control"></textarea>
+														<textarea rows="10" class="form-control" name="goods_desc"></textarea>
 													</div>
 												</div>
 											</div>
@@ -335,11 +299,12 @@ if(!defined('CO_BASE_CHECK')){
 	</div>
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
-<script src="<?php echo $this->getThemesUrl();?>/js/spinner/js/spinner.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/select2/select2.full.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/select2/zh-CN.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/iCheck/jquery.icheck.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/jquery.stepy.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/validate/jquery.validate.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/validate/messages_zh.min.js"></script>
 <script>
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
 
@@ -437,13 +402,14 @@ if(!defined('CO_BASE_CHECK')){
 				for( var k in mm){
 					var key = k.split('_');
 					var value = mm[k].split('_');
-					str += '<tr>';
+					// console.log(key);
+					str += '<tr attr_value_id_arr='+key+'>';
 					// str += '<td>'+t+'</td>';
 					for(var j in key){
 						str += '<td>'+value[j]+'</td>';
 					}
-					str += '<td style="width:10%"><input type="text" class="stock" name="stock"></td>';
-					str += '<td style="width:10%"><input type="text" class="price" name="price"></td>';
+					str += '<td style="width:10%"><input type="text" class="stock"></td>';
+					str += '<td style="width:10%"><input type="text" class="price"></td>';
 					str += '<td style="display:-webkit-box;height:47px;"><input type="file" class="attr_img" value="上传"><div class="result" style="margin-top:-10px;margin-bottom:-10px;height:45px;"></div></td>';
 					str += '<td><center><button class="btn btn-danger btn-xs remove_btn" type="button">移除</button></center></td>';
 					str += '</tr>';
@@ -593,6 +559,60 @@ if(!defined('CO_BASE_CHECK')){
 		}else{
 			$('#tmp').empty();	
 		}
+	});
+
+	console.log(JSON);
+	$('#stepy_form').validate({
+		submitHandler: function(form) {
+			var formobj =  document.getElementById("stepy_form");
+			var res = new FormData(formobj);
+			var attr_value_id_arr = []; 		//第一步商品规格详情 table内的数据包
+			$('#table_data_tbody tr').each(function(){
+				var aa = {};
+				aa.attr_value_id = $(this).attr('attr_value_id_arr'); //  "3,7"
+				aa.stock = $(this).find('.stock').val();
+				aa.price = $(this).find('.price').val();
+				// aa.img
+				attr_value_id_arr.push(aa);
+			});
+			console.log(attr_value_id_arr);
+			var tmp_value_arr = [];                  //第二步商品类型数据包
+			// $('#tmp input').each(function(){
+			// 	// var bb = [];
+			// 	// var tmp_value_id = '';
+			// 	var tmp_value_id = '"tmp_value_id_'+$(this).attr('id')+'"';
+			// 	tmp_value[tmp_value_id] = $(this).val();
+			// 	// tmp_value.push(bb);
+			// });
+			$('#tmp input').each(function(){
+				var bb = {};
+				bb.tmp_value_id = $(this).attr('id');
+				bb.tmp_value = $(this).val();
+				tmp_value_arr.push(bb);
+			});
+			console.log(tmp_value_arr);
+
+			res.append('goods_sku',JSON.stringify(attr_value_id_arr));
+			res.append('goods_tmp',JSON.stringify(tmp_value_arr));
+			$.ajax({
+				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_add'?>",
+				type: "POST",
+				dataType:"json",
+				data: res,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success:function(){
+
+				},
+				error:function(){
+
+				},
+			});
+		},
+		rules: {
+
+		} 
 	});
 
 </script>

@@ -52,6 +52,93 @@ class GoodsController extends CO_Controller{
 		$this->render('goods/add',$data);
 	}
 
+	function ajax_goods_add(){
+		// var_dump($_POST);
+		// array(8) {
+		// 	["goods_name"]=>
+		// 	string(12) "耐克男鞋"
+		// 	["goods_brand"]=>
+		// 	string(1) "2"
+		// 	["is_on_sale"]=>
+		// 	string(1) "1"
+		// 	["goods_unit"]=>
+		// 	string(1) "1"
+		// 	["goods_brief"]=>
+		// 	string(5) "qqqqq"
+		// 	["goods_desc"]=>
+		// 	string(26) "qqqqqqqqqqqqqqqqqqqqqqqqqq"
+		// 	["goods_sku"]=>
+		// 	string(157) "[{"attr_value_id":"1,5","stock":"12","price":"4334"},{"attr_value_id":"1,6","stock":"12","price":"4334"},{"attr_value_id":"1,7","stock":"12","price":"4334"}]"
+		// 	["goods_tmp"]=>
+		// 	string(249) "[{"tmp_value_id":"1","tmp_value":"ssdf"},{"tmp_value_id":"4","tmp_value":"gds"},{"tmp_value_id":"5","tmp_value":"jdf"},{"tmp_value_id":"11","tmp_value":"dsdgfgfs"},{"tmp_value_id":"2","tmp_value":"dfgdsg"},{"tmp_value_id":"6","tmp_value":"hdfghdf"}]"
+		// }
+		$goods_data = array();
+		$goods_data['goods_name'] = $this->input->post('goods_name');
+		$goods_data['brand_id'] = $this->input->post('goods_brand');
+		$goods_data['goods_unit'] = $this->input->post('goods_unit');
+		$goods_data['goods_category'] = $this->input->post('goods_category');
+		$goods_data['is_on_sale'] = $this->input->post('is_on_sale');
+		$goods_data['goods_brief'] = $this->input->post('goods_brief');
+		$goods_data['goods_desc'] = $this->input->post('goods_desc');
+
+		$goods_sku = json_decode($_POST['goods_sku']);
+		$sku_data = array();
+		foreach ($goods_sku as $key => $value) {
+			$arr = array();
+			$arr['attr_value_id'] = $value->attr_value_id;
+			$arr['stock'] = $value->stock;
+			$arr['price'] = $value->price;
+			array_push($sku_data, $arr);
+		}
+		// array(2) {
+		//   [0]=>
+		//   object(stdClass)#23 (3) {
+		//     ["attr_value_id"]=>
+		//     string(3) "1,5"
+		//     ["stock"]=>
+		//     string(2) "12"
+		//     ["price"]=>
+		//     string(4) "4334"
+		//   }
+		//   [1]=>
+		//   object(stdClass)#24 (3) {
+		//     ["attr_value_id"]=>
+		//     string(3) "1,6"
+		//     ["stock"]=>
+		//     string(2) "12"
+		//     ["price"]=>
+		//     string(4) "4334"
+		//   }
+		// }
+		$goods_tmp = json_decode($_POST['goods_tmp']);
+		$tmp_data = array();
+		foreach ($goods_tmp as $key => $value) {
+			$arr = array();
+			$arr['tmp_key_id'] = $value->tmp_value_id;
+			$arr['value'] = $value->tmp_value;
+			array_push($tmp_data, $arr);
+		}
+		// array(2) {
+		//   [0]=>
+		//   object(stdClass)#26 (2) {
+		//     ["tmp_value_id"]=>
+		//     string(1) "1"
+		//     ["tmp_value"]=>
+		//     string(4) "ssdf"
+		//   }
+		//   [1]=>
+		//   object(stdClass)#27 (2) {
+		//     ["tmp_value_id"]=>
+		//     string(1) "4"
+		//     ["tmp_value"]=>
+		//     string(3) "gds"
+		//   }
+		// }
+
+		var_dump($sku_data);
+		var_dump($tmp_data);
+	}
+
 	function ajax_get_attr_value(){
 		$attr_key_id = $this->input->post('attr_id');
 		$data = $this->goods_model->get_attrs_value($_SESSION['seller']['id'],$attr_key_id);
