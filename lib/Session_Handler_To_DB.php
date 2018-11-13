@@ -95,7 +95,7 @@ class Session_Handler_To_DB implements SessionHandlerInterface{
     	* ------------------------------------------------------------------------------------------------------------------------------*/
     	if(is_array($query) && count($query)>0){
     		return $query[0]['SESS_VALUE'];
-    	}else return false;
+    	}else return "";
     }
     
     /**
