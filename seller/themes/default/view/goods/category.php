@@ -255,11 +255,11 @@ if(!defined('CO_BASE_CHECK')){
 								str += '<td>'+e[v].category_name+'</td>';
 								str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
 								str += '<td class="sort">'+e[v].sort+'</td>';
-								str += '<td><center><a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+								str += '<td><center>';
 								if(e[v].store_id==0){
-									str += '<a href="javascript:void(0)" class="text-warning" style="cursor:default;text-decoration:none;" title="系统预设项不能删除"><i class="fa fa-ban"></i>删除</a>';
+									str += '<a href="javascript:void(0)" style="cursor:not-allowed;text-decoration:none;" class="text-warning" title="系统预设项不能编辑"><i class="fa fa-ban"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-warning" style="cursor:not-allowed;text-decoration:none;" title="系统预设项不能删除"><i class="fa fa-ban"></i>删除</a>';
 								}else{
-									str += '<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a>';
+									str += '<a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a>';
 								}
 								str += '</center></td>';
 								str += '</tr>';

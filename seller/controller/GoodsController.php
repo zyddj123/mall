@@ -42,6 +42,8 @@ class GoodsController extends CO_Controller{
 	function run(){	
 		$this->goods_index();
 	}
+
+	/**************************************添加商品*****************************************/
 	function goods_add(){
 		//导航定位
 		$this->session->set('left_menu_action', 'goods/goods_add');
@@ -72,71 +74,47 @@ class GoodsController extends CO_Controller{
 		// 	["goods_tmp"]=>
 		// 	string(249) "[{"tmp_value_id":"1","tmp_value":"ssdf"},{"tmp_value_id":"4","tmp_value":"gds"},{"tmp_value_id":"5","tmp_value":"jdf"},{"tmp_value_id":"11","tmp_value":"dsdgfgfs"},{"tmp_value_id":"2","tmp_value":"dfgdsg"},{"tmp_value_id":"6","tmp_value":"hdfghdf"}]"
 		// }
-		$goods_data = array();
-		$goods_data['goods_name'] = $this->input->post('goods_name');
-		$goods_data['brand_id'] = $this->input->post('goods_brand');
-		$goods_data['goods_unit'] = $this->input->post('goods_unit');
-		$goods_data['goods_category'] = $this->input->post('goods_category');
-		$goods_data['is_on_sale'] = $this->input->post('is_on_sale');
-		$goods_data['goods_brief'] = $this->input->post('goods_brief');
-		$goods_data['goods_desc'] = $this->input->post('goods_desc');
-
-		$goods_sku = json_decode($_POST['goods_sku']);
-		$sku_data = array();
-		foreach ($goods_sku as $key => $value) {
-			$arr = array();
-			$arr['attr_value_id'] = $value->attr_value_id;
-			$arr['stock'] = $value->stock;
-			$arr['price'] = $value->price;
-			array_push($sku_data, $arr);
-		}
-		// array(2) {
-		//   [0]=>
-		//   object(stdClass)#23 (3) {
-		//     ["attr_value_id"]=>
-		//     string(3) "1,5"
-		//     ["stock"]=>
-		//     string(2) "12"
-		//     ["price"]=>
-		//     string(4) "4334"
-		//   }
-		//   [1]=>
-		//   object(stdClass)#24 (3) {
-		//     ["attr_value_id"]=>
-		//     string(3) "1,6"
-		//     ["stock"]=>
-		//     string(2) "12"
-		//     ["price"]=>
-		//     string(4) "4334"
-		//   }
-		// }
-		$goods_tmp = json_decode($_POST['goods_tmp']);
-		$tmp_data = array();
-		foreach ($goods_tmp as $key => $value) {
-			$arr = array();
-			$arr['tmp_key_id'] = $value->tmp_value_id;
-			$arr['value'] = $value->tmp_value;
-			array_push($tmp_data, $arr);
-		}
-		// array(2) {
-		//   [0]=>
-		//   object(stdClass)#26 (2) {
-		//     ["tmp_value_id"]=>
-		//     string(1) "1"
-		//     ["tmp_value"]=>
-		//     string(4) "ssdf"
-		//   }
-		//   [1]=>
-		//   object(stdClass)#27 (2) {
-		//     ["tmp_value_id"]=>
-		//     string(1) "4"
-		//     ["tmp_value"]=>
-		//     string(3) "gds"
-		//   }
-		// }
-
-		var_dump($sku_data);
-		var_dump($tmp_data);
+		try{
+			$db = $this->getDb();
+			$goods_data = array();
+			$goods_data['goods_name'] = $this->input->post('goods_name');
+			$goods_data['brand_id'] = $this->input->post('goods_brand');
+			$goods_data['goods_unit'] = $this->input->post('goods_unit');
+			$goods_data['goods_category'] = $this->input->post('goods_category');
+			$goods_data['is_on_sale'] = $this->input->post('is_on_sale');
+			$goods_data['goods_brief'] = $this->input->post('goods_brief');
+			$goods_data['goods_desc'] = $this->input->post('goods_desc');
+			$goods_data['store_id'] = $_SESSION['seller']['id'];
+			//添加事务起始
+			$db->transStart();
+			$goods_id = $this->goods_model->add_goods($goods_data);
+			if($goods_id){
+				$goods_sku = json_decode($_POST['goods_sku']);
+				foreach ($goods_sku as $key => $value) {
+					$arr = array();
+					$arr['goods_id'] = $goods_id;
+					$arr['attr_value_id'] = $value->attr_value_id;
+					$arr['stock'] = $value->stock;
+					$arr['price'] = $value->price;
+					$arr['store_id'] = $_SESSION['seller']['id'];
+					$this->goods_model->add_goods_sku($arr);
+				}
+				$goods_tmp = json_decode($_POST['goods_tmp']);
+				foreach ($goods_tmp as $key => $value) {
+					$arr = array();
+					$arr['goods_id'] = $goods_id;
+					$arr['tmp_key_id'] = $value->tmp_value_id;
+					$arr['value'] = $value->tmp_value;
+					$arr['store_id'] = $_SESSION['seller']['id'];
+					$this->goods_model->add_goods_tmp_value($arr);
+				}
+			}else{
+				echo false;
+			}
+			//事务结束
+			$flag = $db->transFinish();
+			echo ($flag)?true:false;
+		}catch(Exception $e){}
 	}
 
 	function ajax_get_attr_value(){

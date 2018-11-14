@@ -34,7 +34,7 @@ class GoodsModel extends CO_Model{
 	 * @return array               [description]
 	 */
 	function get_brands($id){
-		$sql = "SELECT * FROM ".SellerConfig::BRAND." WHERE `store_id` = 0 OR `store_id` = '".$id."' ORDER BY `store_id` ASC";
+		$sql = "SELECT * FROM ".SellerConfig::BRAND." WHERE `status` = 1 AND (`store_id` = 0 OR `store_id` = '".$id."') ORDER BY `store_id` ASC";
 		$data = $this->db->query($sql);
 		return $data;
 	}
@@ -44,7 +44,7 @@ class GoodsModel extends CO_Model{
 	 * @return array               [description]
 	 */
 	function get_units($id){
-		$sql = "SELECT * FROM ".SellerConfig::UNIT." WHERE `store_id` = 0 OR `store_id` = '".$id."' ORDER BY `store_id` ASC";
+		$sql = "SELECT * FROM ".SellerConfig::UNIT." WHERE `status` = 1 AND (`store_id` = 0 OR `store_id` = '".$id."') ORDER BY `store_id` ASC";
 		$data = $this->db->query($sql);
 		return $data;
 	}
@@ -54,7 +54,7 @@ class GoodsModel extends CO_Model{
 	 * @return array               [description]
 	 */
 	function get_attrs_key($id){
-		$sql = "SELECT * FROM ".SellerConfig::ATTRS_KEY." WHERE `store_id` = 0 OR `store_id` = '".$id."' ORDER BY `store_id` ASC";
+		$sql = "SELECT * FROM ".SellerConfig::ATTRS_KEY." WHERE `status` = 1 AND (`store_id` = 0 OR `store_id` = '".$id."') ORDER BY `store_id` ASC";
 		$data = $this->db->query($sql);
 		return $data;
 	}
@@ -75,7 +75,7 @@ class GoodsModel extends CO_Model{
 	 * @return array               [description]
 	 */
 	function get_categorys($id){
-		$sql = "SELECT * FROM ".SellerConfig::CATEGORY." WHERE `store_id` = 0 OR `store_id` = '".$id."' ORDER BY `store_id` ASC";
+		$sql = "SELECT * FROM ".SellerConfig::CATEGORY." WHERE `status` = 1 AND (`store_id` = 0 OR `store_id` = '".$id."') ORDER BY `store_id` ASC";
 		$data = $this->db->query($sql);
 		return $data;
 	}
@@ -137,6 +137,33 @@ class GoodsModel extends CO_Model{
 	 */
 	function edit_category($category_id,$data){
 		return $this->db->update(SellerConfig::CATEGORY,array('id'=>$category_id),$data);
+	}
+
+	/**
+	 * [add_goods 添加商品信息到商品表]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_goods($data){
+		return $this->db->insert(SellerConfig::GOODS,$data);
+	}
+
+	/**
+	 * [add_goods_sku 添加商品规格sku信息到goods_sku表]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_goods_sku($data){
+		return $this->db->insert(SellerConfig::GOODS_SKU,$data);
+	}
+
+	/**
+	 * [add_goods_tmp_value 添加商品属性模版信息到templet_value表]
+	 * @param  [type]  $id [description]
+	 * @return array               [description]
+	 */
+	function add_goods_tmp_value($data){
+		return $this->db->insert(SellerConfig::TEMPLET_VALUE,$data);
 	}
 
 	/**************************************商品品牌管理*****************************************/

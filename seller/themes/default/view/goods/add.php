@@ -225,7 +225,7 @@ if(!defined('CO_BASE_CHECK')){
 												<div class="col-lg-4 col-sm-4"></div>
 												<div class="col-lg-4 col-sm-4">
 													<label style="float:left; margin-top: 7px;"><span class="star">*</span>商品类别</label>
-													<div class="col-lg-6">
+													<div class="col-lg-6" style="margin-left: 12px;">
 														<select class="form-control" name="goods_category" id="goods_category">
 															<option value="">请选择</option>
 															<?php foreach($category as $key => $value) :?>
@@ -385,7 +385,7 @@ if(!defined('CO_BASE_CHECK')){
 				
 				//处理数据
 				var mm = data_handle(attr_data,attr_count-1);
-				console.log(mm);
+				// console.log(mm);
 				var str = '';
 				str += '<thead><tr>';
 				// str += '<th>#</th>';
@@ -433,8 +433,7 @@ if(!defined('CO_BASE_CHECK')){
 		var reader = new FileReader();
     	//将文件以Data URL形式读入页面  
     	reader.readAsDataURL(file);  
-    	reader.onload=function(e){  
-    		console.log(res_div);
+    	reader.onload=function(e){
     		$(res_div).next('.result').empty().append('<img style="height:45px;width:45px" src="' + this.result +'" alt="" />');
     	}
     });
@@ -561,7 +560,6 @@ if(!defined('CO_BASE_CHECK')){
 		}
 	});
 
-	console.log(JSON);
 	$('#stepy_form').validate({
 		submitHandler: function(form) {
 			var formobj =  document.getElementById("stepy_form");
@@ -575,22 +573,15 @@ if(!defined('CO_BASE_CHECK')){
 				// aa.img
 				attr_value_id_arr.push(aa);
 			});
-			console.log(attr_value_id_arr);
+			// console.log(attr_value_id_arr);
 			var tmp_value_arr = [];                  //第二步商品类型数据包
-			// $('#tmp input').each(function(){
-			// 	// var bb = [];
-			// 	// var tmp_value_id = '';
-			// 	var tmp_value_id = '"tmp_value_id_'+$(this).attr('id')+'"';
-			// 	tmp_value[tmp_value_id] = $(this).val();
-			// 	// tmp_value.push(bb);
-			// });
 			$('#tmp input').each(function(){
 				var bb = {};
 				bb.tmp_value_id = $(this).attr('id');
 				bb.tmp_value = $(this).val();
 				tmp_value_arr.push(bb);
 			});
-			console.log(tmp_value_arr);
+			// console.log(tmp_value_arr);
 
 			res.append('goods_sku',JSON.stringify(attr_value_id_arr));
 			res.append('goods_tmp',JSON.stringify(tmp_value_arr));
@@ -602,17 +593,19 @@ if(!defined('CO_BASE_CHECK')){
 				cache: false,
 				contentType: false,
 				processData: false,
-				success:function(){
-
-				},
-				error:function(){
-
-				},
+				success:function(e){
+					if(e){
+						alert("添加成功");
+						window.location.href = '<?php echo $this->config->app_url_root.'/Goods/goods_index'?>';
+					}else{
+						alert("添加失败，请重新添加");
+					}
+				}
 			});
 		},
 		rules: {
 
-		} 
+		}
 	});
 
 </script>
