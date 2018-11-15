@@ -117,6 +117,37 @@ class GoodsController extends CO_Controller{
 		}catch(Exception $e){}
 	}
 
+	//ajax goods 列表
+	function ajax_goods_index(){
+		$get   = $this->input->get();
+		$info  = array();
+		$where = array(
+			"or"=>array("goods_name","category_name","unit_name"),
+			"and"=>array("store_id"=>$_SESSION['seller']['id'])
+		);
+		$select = array(
+			'id',
+			'goods_name',
+			'category_name',
+			'min_price',
+			'max_price',
+			'sum_stock',
+			'unit_name',
+		);
+		$order = array(
+			'id',	//相当于占位，为了保证序号列设置为可排序而发生的错误，如不设置则排序错乱，设置为表里不存在字段则取不到相应数据
+			'goods_name',
+			'category_name',
+			'min_price',
+			'max_price',
+			'sum_stock',
+			'unit_name',
+		);
+		$a = new DataTable($this->getDb(),$get, array("select" => $select, "sum" => "id", "table" => SellerConfig::VIEW_GOODS, "order" => $order, "where" => $where),'');
+		// var_dump($a->output());
+		echo json_encode($a->output());
+	}
+
 	function ajax_get_attr_value(){
 		$attr_key_id = $this->input->post('attr_id');
 		$data = $this->goods_model->get_attrs_value($_SESSION['seller']['id'],$attr_key_id);

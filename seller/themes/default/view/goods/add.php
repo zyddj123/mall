@@ -452,44 +452,70 @@ if(!defined('CO_BASE_CHECK')){
 	});
 
 	//处理数据
-	function data_handle(data,attr_count){
-		var dad = [];
-		$.each(data.attr_value,function(index, el) {
-			dad.push(el);
-		});
-		var tmp_a = [];
-		tmp_a = dad[0];
-		var res = [];
-		switch(attr_count){
-			case 1:
-			res = tmp_a;
-			break;
-			case 2:
-			var tmp_b = [];
-			tmp_b = dad[1];
-			$.each(tmp_a,function(index, el) {
-				$.each(tmp_b,function(x, e) {
-					res[index+'_'+x] = el+'_'+e;
-				});
+	// function data_handle(data,attr_count){
+	// 	var dad = [];
+	// 	$.each(data.attr_value,function(index, el) {
+	// 		dad.push(el);
+	// 	});
+	// 	var tmp_a = [];
+	// 	tmp_a = dad[0];
+	// 	var res = [];
+	// 	switch(attr_count){
+	// 		case 1:
+	// 		res = tmp_a;
+	// 		break;
+	// 		case 2:
+	// 		var tmp_b = [];
+	// 		tmp_b = dad[1];
+	// 		$.each(tmp_a,function(index, el) {
+	// 			$.each(tmp_b,function(x, e) {
+	// 				res[index+'_'+x] = el+'_'+e;
+	// 			});
+	// 		});
+	// 		break;
+	// 		case 3:
+	// 		var tmp_b = [];
+	// 		tmp_b = dad[1];
+	// 		var tmp_c = [];
+	// 		tmp_c = dad[2];
+	// 		$.each(tmp_a,function(index, el) {
+	// 			$.each(tmp_b,function(x, e) {
+	// 				$.each(tmp_c,function(k, v) {
+	// 					res[index+'_'+x+'_'+k] = el+'_'+e+'_'+v;
+	// 				});
+	// 			});
+	// 		});
+	// 		// case 4:
+	// 		default:
+	// 	}
+	// 	return res;
+	// }
+	
+	//处理数据
+	function data_handle(data){
+		function had(){
+			var args=arguments;
+			var ret=[];
+			for(var i=0;i<args.length;i++){
+				ret.push(args[i]);
+			}
+			return ret.reduce(function (a,b){
+				var ret=[];
+				for (var i in a) {
+					for (var j in b) {
+						var tmp=i+'_'+j;
+						ret[tmp]=a[i]+'_'+b[j];	
+					}		
+				}
+				return ret;
 			});
-			break;
-			case 3:
-			var tmp_b = [];
-			tmp_b = dad[1];
-			var tmp_c = [];
-			tmp_c = dad[2];
-			$.each(tmp_a,function(index, el) {
-				$.each(tmp_b,function(x, e) {
-					$.each(tmp_c,function(k, v) {
-						res[index+'_'+x+'_'+k] = el+'_'+e+'_'+v;
-					});
-				});
-			});
-			// case 4:
-			default:
-			
 		}
-		return res;
+		var mm =data.attr_value;
+		var ret=[];
+		for(var i in mm){
+			ret.push(mm[i]);
+		}
+		return had.apply(this,ret);	
 	}
 
 	//ajax获取规格值

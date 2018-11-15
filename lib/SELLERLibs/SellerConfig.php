@@ -14,7 +14,7 @@
 
 class SellerConfig{
 	/*------------------------------数据库表-------------------------------*/
-	//seller用户表
+	//数据库表
 	const SELLER = 'mall_seller';
 	const BRAND = 'mall_brand';
 	const UNIT = 'mall_unit';
@@ -25,6 +25,9 @@ class SellerConfig{
 	const GOODS = 'mall_goods';
 	const GOODS_SKU = 'mall_goods_sku';
 	const TEMPLET_VALUE = 'mall_templet_value';
+
+	//数据库视图
+	const VIEW_GOODS = 'mall_view_goods';
 
 	/*---------------------------------路径--------------------------------*/
 	const UPLOAD_HEAD = '/upload/head/';//头像上传路径

@@ -66,9 +66,11 @@ if(!defined('CO_BASE_CHECK')){
 												<tr>
 													<th>#</th>
 													<th>商品名称</th>
-													<th>品牌图标</th>
-													<th>品牌站点</th>
-													<th>描述</th>
+													<th>商品类别</th>
+													<th>最低价格</th>
+													<th>最高价格</th>
+													<th>库存</th>
+													<th>单位</th>
 													<th>操作</th>
 												</tr>
 											</thead>
@@ -107,15 +109,15 @@ if(!defined('CO_BASE_CHECK')){
 		},{
 			"data": "goods_name",
 		},{
-			"class": "brand_logo",
-			"data": "brand_logo",
+			"data": "category_name",
 		},{
-			data: "site_url",
+			"data": "min_price",
 		},{
-			"class": 'details-control',
-			"orderable": false,
-			"data": null,
-			"defaultContent": ''
+			"data": "max_price",
+		},{
+			"data": "sum_stock",
+		},{
+			"data": "unit_name",
 		},{
 			"data": null,
 		}],
@@ -124,7 +126,7 @@ if(!defined('CO_BASE_CHECK')){
 			data: null,
 			defaultContent: '<center><a href="#brand_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
-			"orderable": false, "targets": [0,2,-1],
+			"orderable": false, "targets": [0,-1],
 		}],
 		createdRow: function(row, data, index) {
 			$(row).data('id', data.id);
