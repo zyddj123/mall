@@ -1,21 +1,21 @@
 <?php
-if(!defined('CO_BASE_CHECK')){
-	header("HTTP/1.1 404 Not Found");
-	header("Status: 404 Not Found");
-	exit();
-};
+if (!defined('CO_BASE_CHECK')) {
+    header('HTTP/1.1 404 Not Found');
+    header('Status: 404 Not Found');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<!-- meta -->
-	<?php @include_once $this->getThemesPath().'/view/common/meta.php';?>
-	<title><?php echo $this->language['index_title']?></title>
+	<?php @include_once $this->getThemesPath().'/view/common/meta.php'; ?>
+	<title><?php echo $this->language['index_title']; ?></title>
 	<!-- header -->
-	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
-	<link href="<?php echo $this->getThemesUrl();?>/js/select2/select2.min.css" rel="stylesheet">
-	<link href="<?php echo $this->getThemesUrl();?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
-	<link href="<?php echo $this->getThemesUrl();?>/css/jquery.stepy.css" rel="stylesheet">
+	<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
+	<link href="<?php echo $this->getThemesUrl(); ?>/js/select2/select2.min.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl(); ?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl(); ?>/css/jquery.stepy.css" rel="stylesheet">
 	<style>
 	.star{
 		color: #ff0000;
@@ -38,16 +38,16 @@ if(!defined('CO_BASE_CHECK')){
 	<section>
 		<div class="left-side sticky-left-side">
 			<!-- logo -->
-			<?php @include_once $this->getThemesPath().'/view/common/logo.php';?>
+			<?php @include_once $this->getThemesPath().'/view/common/logo.php'; ?>
 			<div class="left-side-inner">
 				<!-- menu -->
-				<?php @include_once $this->getThemesPath().'/view/common/menu.php';?>   
+				<?php @include_once $this->getThemesPath().'/view/common/menu.php'; ?>   
 			</div>
 		</div>
 		<div class="main-content" >
 
 			<!-- top -->
-			<?php @include_once $this->getThemesPath().'/view/common/top.php';?>
+			<?php @include_once $this->getThemesPath().'/view/common/top.php'; ?>
 			<div class="page-heading">
 				<h3>商品管理</h3>
 				<ul class="breadcrumb">
@@ -90,9 +90,9 @@ if(!defined('CO_BASE_CHECK')){
 													<div class="col-lg-6">
 														<select class="form-control" name="goods_brand" id="goods_brand">
 															<option value="">请选择</option>
-															<?php foreach($brand as $key => $value) :?>
-																<option value="<?php echo $value['id'];?>"><?php echo $value['brand_name'];?></option>
-															<?php endforeach;?>
+															<?php foreach ($brand as $key => $value) :?>
+																<option value="<?php echo $value['id']; ?>"><?php echo $value['brand_name']; ?></option>
+															<?php endforeach; ?>
 														</select>
 													</div>
 													<div class="col-lg-4">
@@ -125,9 +125,9 @@ if(!defined('CO_BASE_CHECK')){
 													<div class="col-lg-6">
 														<select class="form-control" name="goods_unit" id="goods_unit">
 															<option value="">请选择</option>
-															<?php foreach($unit as $key => $value) :?>
-																<option value="<?php echo $value['id'];?>"><?php echo $value['unit_name'];?></option>
-															<?php endforeach;?>
+															<?php foreach ($unit as $key => $value) :?>
+																<option value="<?php echo $value['id']; ?>"><?php echo $value['unit_name']; ?></option>
+															<?php endforeach; ?>
 														</select>
 													</div>
 													<div class="col-lg-4">
@@ -160,9 +160,9 @@ if(!defined('CO_BASE_CHECK')){
 														<div class="col-lg-8 col-sm-8 select2_d1">
 															<select class="select2 form-control attr_select1" style="width:60%">
 																<option value="">请选择</option>
-																<?php foreach($attr_key as $key => $value) :?>
-																	<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>
-																<?php endforeach;?>
+																<?php foreach ($attr_key as $key => $value) :?>
+																	<option value="<?php echo $value['id']; ?>"><?php echo $value['attr_key_name']; ?></option>
+																<?php endforeach; ?>
 															</select>
 														</div>
 														<div class="col-lg-8 col-sm-8 attr_value1">
@@ -228,9 +228,9 @@ if(!defined('CO_BASE_CHECK')){
 													<div class="col-lg-6" style="margin-left: 12px;">
 														<select class="form-control" name="goods_category" id="goods_category">
 															<option value="">请选择</option>
-															<?php foreach($category as $key => $value) :?>
-																<option value="<?php echo $value['id'];?>"><?php echo $value['category_name'];?></option>
-															<?php endforeach;?>
+															<?php foreach ($category as $key => $value) :?>
+																<option value="<?php echo $value['id']; ?>"><?php echo $value['category_name']; ?></option>
+															<?php endforeach; ?>
 														</select><br>
 														<p style="color: #65cea7">请选择商品类型完善商品属性</p><br>
 													</div>
@@ -295,16 +295,16 @@ if(!defined('CO_BASE_CHECK')){
 			</div>
 		</div>
 		<!-- footer -->
-		<?php @include_once $this->getThemesPath().'/view/common/footer.php';?>
+		<?php @include_once $this->getThemesPath().'/view/common/footer.php'; ?>
 	</div>
 </section>
-<?php @include_once $this->getThemesPath().'/view/common/commonjs.php';?>
-<script src="<?php echo $this->getThemesUrl();?>/js/select2/select2.full.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/select2/zh-CN.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/iCheck/jquery.icheck.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/jquery.stepy.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/validate/jquery.validate.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/validate/messages_zh.min.js"></script>
+<?php @include_once $this->getThemesPath().'/view/common/commonjs.php'; ?>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/select2/select2.full.min.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/select2/zh-CN.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/iCheck/jquery.icheck.min.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/jquery.stepy.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/validate/jquery.validate.min.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/validate/messages_zh.min.js"></script>
 <script>
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
 
@@ -328,9 +328,9 @@ if(!defined('CO_BASE_CHECK')){
 		str += '<div class="col-lg-8 col-sm-8 select2_d'+id+'">';
 		str += '<select class="select2 form-control attr_select'+id+'" style="width:60%">';
 		str += '<option value="">请选择</option>';
-		str += '<?php foreach($attr_key as $key => $value) :?>';
-		str += '<option value="<?php echo $value['id'];?>"><?php echo $value['attr_key_name'];?></option>';
-		str += '<?php endforeach;?>';
+		str += '<?php foreach ($attr_key as $key => $value) :?>';
+		str += '<option value="<?php echo $value['id']; ?>"><?php echo $value['attr_key_name']; ?></option>';
+		str += '<?php endforeach; ?>';
 		str += '</select></div>';
 		str += '<div class="col-lg-8 col-sm-8 attr_value'+id+'">';
 		str += '</div></div>';
@@ -612,7 +612,7 @@ if(!defined('CO_BASE_CHECK')){
 			res.append('goods_sku',JSON.stringify(attr_value_id_arr));
 			res.append('goods_tmp',JSON.stringify(tmp_value_arr));
 			$.ajax({
-				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_add'?>",
+				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_add'; ?>",
 				type: "POST",
 				dataType:"json",
 				data: res,
@@ -622,7 +622,7 @@ if(!defined('CO_BASE_CHECK')){
 				success:function(e){
 					if(e){
 						alert("添加成功");
-						window.location.href = '<?php echo $this->config->app_url_root.'/Goods/goods_index'?>';
+						window.location.href = '<?php echo $this->config->app_url_root.'/Goods/goods_index'; ?>';
 					}else{
 						alert("添加失败，请重新添加");
 					}
