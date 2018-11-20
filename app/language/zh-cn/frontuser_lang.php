@@ -1,0 +1,43 @@
+<?php
+	$lang['frontuser_title']="前台用户";
+	$lang['frontuser_add_text']="创建";
+	$lang['frontuser_title']="前台用户";
+	$lang['frontuser_label_id']="真实姓名";
+	$lang['frontuser_label_sex']="性别";
+	$lang['frontuser_label_email']="电子邮箱";
+	$lang['frontuser_label_phone']="手机号";
+	$lang['frontuser_label_status']="状态";
+	$lang['frontuser_edit_text']="编辑";
+	$lang['frontuser_button_add']="添加用户";
+	$lang['frontuser_button_pass']="批量通过";
+	$lang['frontuser_button_freeze']="批量冻结";
+	$lang['frontuser_button_pass_one']="通过";
+	$lang['frontuser_button_freeze_one']="冻结";
+	$lang['frontuser_span_all']="全部";
+	$lang['frontuser_span_pass']="已通过";
+	$lang['frontuser_span_freeze']="未通过";
+	$lang['frontuser_span_check']="审核中";
+	$lang['frontuser_span_will_check']="未审核";
+	$lang['frontuser_span_man']="男";
+	$lang['frontuser_span_woman']="女";
+	$lang['frontuser_add_text']="创建前台用户";
+	$lang['frontuser_span_message']="详细信息";
+	$lang['frontuser_span_message_title']="信息审核";
+	$lang['frontuser_span_profession_status_on']="在职";
+	$lang['frontuser_span_profession_status_off']="离职";
+	$lang['frontuser_span_id']="真实姓名";
+	$lang['frontuser_span_sex']="性别";
+	$lang['frontuser_span_email']="电子邮箱";
+	$lang['frontuser_span_phone']="手机号";
+	$lang['frontuser_span_birth_addr']="出生所在地";
+	$lang['frontuser_span_now_addr']="当前所在地";
+	$lang['frontuser_span_highest_edu']="最高学历";
+	$lang['frontuser_span_highest_school']="毕业院校";
+	$lang['frontuser_span_specialty']="主修专业";
+	$lang['frontuser_span_profession']="职业名称";
+	$lang['frontuser_span_profession_attr']="职业属性";
+	$lang['frontuser_span_profession_status']="当前状态";
+	$lang['frontuser_span_language']="语言";
+	$lang['frontuser_span_person_descript']="个人说明";
+
+?>

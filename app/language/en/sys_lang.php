@@ -1,0 +1,73 @@
+<?php
+	
+	//选择页面
+	$lang['sys_select_page_title']='请选择';
+	$lang['sys_select_page_already_selected']='已选';
+	$lang['sys_select_page_col_already_selected']='已选栏目';
+	$lang['sys_select_page_tag_already_selected']='已选标签';
+	$lang['sys_select_page_post_fixed']='置顶文章';
+	$lang['sys_select_page_button_confirm']='确定';
+	$lang['sys_select_page_button_cancel']='取消';
+	
+	//顶部top
+	$lang['sys_top_quick_bar']='快捷操作';
+	$lang['sys_top_quick_bar_add_post']='创建文章';
+	$lang['sys_top_quick_bar_add_page']='创建复合页面';
+	$lang['sys_top_quick_bar_add_fragment']='创建独立页面';
+	$lang['sys_top_quick_bar_add_framework']='创建框架';
+	$lang['sys_top_quick_bar_add_distribution']='创建布局';
+	$lang['sys_top_quick_bar_add_column']='创建栏目';
+	$lang['sys_top_quick_bar_add_tag']='添加标签';
+	
+	//左侧导航
+	$lang['sys_left_menu_index']='后台数据';
+	$lang['sys_left_menu_post']='文章创建';
+	$lang['sys_left_menu_post_add']='通用编辑器';
+	$lang['sys_left_menu_post_trash']='回收站';
+	$lang['sys_left_menu_post_draft']='草稿列表';
+	$lang['sys_left_menu_post_publish']='已发布列表';
+	$lang['sys_left_menu_post_all']='所有文章';
+	$lang['sys_left_menu_media']='媒体资源池';
+	$lang['sys_left_menu_datasource']='数据筛选器';
+	$lang['sys_left_menu_page']='页面管理';
+	$lang['sys_left_menu_fragment_all']='独立页面';
+	$lang['sys_left_menu_page_all']='复合页面';
+	$lang['sys_left_menu_menu']='导航菜单管理';
+	$lang['sys_left_menu_menu_all']='导航列表';
+	$lang['sys_left_menu_menuitem_all']='菜单列表';
+	$lang['sys_left_menu_frmmgr']='框架布局管理';
+	$lang['sys_left_menu_framework_all']='框架列表';
+	$lang['sys_left_menu_distribution_all']='布局列表';
+	$lang['sys_left_menu_template']='模版管理';
+	$lang['sys_left_menu_template_all']='模版列表';
+	$lang['sys_left_menu_plugins']='插件管理';
+	$lang['sys_left_menu_plugins_all']='插件列表';
+	$lang['sys_left_menu_conmgr']='后台管理';
+	$lang['sys_left_menu_site']='站点设置';
+	$lang['sys_left_menu_subsite']='子站点设置';
+	$lang['sys_left_menu_column']='栏目设置';
+	$lang['sys_left_menu_tag']='标签设置';
+	$lang['sys_left_menu_adminuser']='后台人员管理';
+	$lang['sys_left_menu_moouser']='前台人员管理';
+	$lang['sys_left_menu_adminuser_add']='创建用户';
+	$lang['sys_left_menu_adminuser_all']='用户列表';
+	$lang['sys_left_menu_adminuser_profile']='个人资料';
+	$lang['sys_left_menu_role']='权限角色';
+	$lang['sys_left_menu_task']='工作任务';
+	$lang['sys_left_menu_task_add']='创建任务';
+	$lang['sys_left_menu_task_all']='任务列表';
+	$lang['sys_left_menu_task_my']='我的任务';
+	$lang['sys_left_menu_comment']='评论管理';
+	$lang['sys_left_menu_comment_draft']='待审评论';
+	$lang['sys_left_menu_comment_approve']='已审评论';
+	$lang['sys_left_menu_comment_trash']='作废评论';
+	$lang['sys_left_menu_comment_report']='举报投诉';
+	$lang['sys_left_menu_comment_keyword']='敏感词设置';
+	$lang['sys_left_menu_comment_forbidip']='屏蔽IP';
+	$lang['sys_left_menu_comment_forbiduser']='屏蔽用户';
+	$lang['sys_left_menu_logout']='退出';
+	
+	$lang['sys_search_confirm']='搜索';
+	$lang['sys_search_back']='还原';
+	$lang['sys_search_all']='全部';
+?>
