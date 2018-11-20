@@ -288,7 +288,7 @@ if (!defined('CO_BASE_CHECK')) {
 									</section>
 								</div>
 							</fieldset>
-							<button type="submit" class="finish btn btn-info btn-extend"> 提交 </button>
+							<button type="submit" id="sub_btn" class="finish btn btn-info btn-extend"> 提交 </button>
 						</form>
 					</div>
 				</section>
@@ -429,7 +429,11 @@ if (!defined('CO_BASE_CHECK')) {
 		if(!/image\/\w+/.test(file.type)){  
 			alert("看清楚，这个需要图片！");  
 			return false;
-		}  
+		}
+		if(file.size>10485760){
+			alert("图片不能超过10M");
+			return false;
+		}
 		var reader = new FileReader();
     	//将文件以Data URL形式读入页面  
     	reader.readAsDataURL(file);  
@@ -529,39 +533,6 @@ if (!defined('CO_BASE_CHECK')) {
 		return (data)?data:false;
 	}
 
-	$(function() {
-		$('#stepy_form').stepy({
-			backLabel: '上一步',
-			nextLabel: '下一步',
-			errorImage: true,
-			block: true,
-			description: true,
-			legend: false,
-			titleClick: true,
-			titleTarget: '#top_tabby',
-			// validate: true
-		});
-		// $('#stepy_form').validate({
-		// 	errorPlacement: function(error, element) {
-		// 		$('#stepy_form div.stepy-error').append(error);
-		// 	},
-		// 	rules: {
-		// 		'name': 'required',
-		// 		'email': 'required'
-		// 	},
-		// 	messages: {
-		// 		'name': {
-		// 			required: 'Name field is required!'
-		// 		},
-		// 		'email': {
-		// 			required: 'Email field is requerid!'
-		// 		}
-		// 	}
-		// });
-	});
-
-	
-
 	/******************第二步 商品属性*****************************/
 	$('#goods_category').change(function(){
 		var category_id = $('#goods_category').val();
@@ -586,54 +557,67 @@ if (!defined('CO_BASE_CHECK')) {
 		}
 	});
 
-	$('#stepy_form').validate({
-		submitHandler: function(form) {
-			var formobj =  document.getElementById("stepy_form");
-			var res = new FormData(formobj);
-			var attr_value_id_arr = []; 		//第一步商品规格详情 table内的数据包
-			$('#table_data_tbody tr').each(function(){
-				var aa = {};
-				aa.attr_value_id = $(this).attr('attr_value_id_arr'); //  "3,7"
-				aa.stock = $(this).find('.stock').val();
-				aa.price = $(this).find('.price').val();
-				// aa.img
-				attr_value_id_arr.push(aa);
-			});
-			// console.log(attr_value_id_arr);
-			var tmp_value_arr = [];                  //第二步商品类型数据包
-			$('#tmp input').each(function(){
-				var bb = {};
-				bb.tmp_value_id = $(this).attr('id');
-				bb.tmp_value = $(this).val();
-				tmp_value_arr.push(bb);
-			});
-			// console.log(tmp_value_arr);
-
-			res.append('goods_sku',JSON.stringify(attr_value_id_arr));
-			res.append('goods_tmp',JSON.stringify(tmp_value_arr));
-			$.ajax({
-				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_add'; ?>",
-				type: "POST",
-				dataType:"json",
-				data: res,
-				cache: false,
-				contentType: false,
-				processData: false,
-				success:function(e){
-					if(e){
-						alert("添加成功");
-						window.location.href = '<?php echo $this->config->app_url_root.'/Goods/goods_index'; ?>';
-					}else{
-						alert("添加失败，请重新添加");
+	$(function() {
+		$('#stepy_form').stepy({
+			backLabel: '上一步',
+			nextLabel: '下一步',
+			errorImage: true,
+			block: true,
+			description: true,
+			legend: false,
+			titleClick: true,
+			titleTarget: '#top_tabby',
+			validate: true
+		});
+		
+		$('#stepy_form').validate({
+			rules: {
+				
+			},
+			submitHandler: function(form) {
+				var formobj =  document.getElementById("stepy_form");
+				var res = new FormData(formobj);
+				var attr_value_id_arr = []; 		//第一步商品规格详情 table内的数据包
+				$('#table_data_tbody tr').each(function(){
+					var aa = {};
+					aa.attr_value_id = $(this).attr('attr_value_id_arr'); //  "3,7"
+					aa.stock = $(this).find('.stock').val();
+					aa.price = $(this).find('.price').val();
+					aa.img = $(this).find('img').attr('src');
+					if(typeof aa.img=='undefined'){
+						aa.img = '';
 					}
-				}
-			});
-		},
-		rules: {
-
-		}
+					attr_value_id_arr.push(aa);
+				});
+				var tmp_value_arr = [];                  //第二步商品类型数据包
+				$('#tmp input').each(function(){
+					var bb = {};
+					bb.tmp_value_id = $(this).attr('id');
+					bb.tmp_value = $(this).val();
+					tmp_value_arr.push(bb);
+				});
+				res.append('goods_sku',JSON.stringify(attr_value_id_arr));
+				res.append('goods_tmp',JSON.stringify(tmp_value_arr));
+				$.ajax({
+					url: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_add'; ?>",
+					type: "POST",
+					dataType:"json",
+					data: res,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success:function(e){
+						if(e){
+							alert("添加成功");
+							window.location.href = '<?php echo $this->config->app_url_root.'/Goods/goods_index'; ?>';
+						}else{
+							alert("添加失败，请重新添加");
+						}
+					}
+				});
+			},
+		});
 	});
-
 </script>
 </body>
 </html>

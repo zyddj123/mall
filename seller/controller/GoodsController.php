@@ -95,6 +95,7 @@ class GoodsController extends CO_Controller
             $goods_id = $this->goods_model->add_goods($goods_data);
             if ($goods_id) {
                 $goods_sku = json_decode($_POST['goods_sku']);
+                // var_dump($goods_sku);
                 foreach ($goods_sku as $key => $value) {
                     $arr = array();
                     $arr['goods_id'] = $goods_id;
@@ -102,6 +103,9 @@ class GoodsController extends CO_Controller
                     $arr['stock'] = $value->stock;
                     $arr['price'] = $value->price;
                     $arr['store_id'] = $_SESSION['seller']['id'];
+                    $base_img= $value->img;
+                    $arr['goods_img'] = ('' != $base_img)?CO_Utils::base64_to_image_save($base_img,SellerConfig::UPLOAD_GOODS.$_SESSION['seller']['id']):'';
+                    // var_dump($arr['goods_img']);
                     $this->goods_model->add_goods_sku($arr);
                 }
                 $goods_tmp = json_decode($_POST['goods_tmp']);

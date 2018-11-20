@@ -32,4 +32,5 @@ class SellerConfig{
 	/*---------------------------------路径--------------------------------*/
 	const UPLOAD_HEAD = '/upload/head/';//头像上传路径
 	const BRAND_LOGO = '/upload/brand_logo/';//品牌logo上传路径
+	const UPLOAD_GOODS = '/upload/goods/'; //商品图片路径
 }
