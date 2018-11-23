@@ -46,7 +46,7 @@ class IndexController extends CO_Controller{
 	function index(){
 		$db = $this->getDb();
 		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
-		$data['sku'] = $db->getAll("select sku.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::ATTRS_VALUE." AS gav where goods_id = 48 and sku.attr_value_id = gav.id");
+		$data['sku'] = $db->getAll("select fk_as.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
 		var_dump($data);
 		// $this->render('goods/detail');
 	}

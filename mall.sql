@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-11-21 09:32:42
+Date: 2018-11-23 16:35:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -161,6 +161,33 @@ INSERT INTO `mall_comment` VALUES ('1', '0', '12', 'ecshop@ecshop.com', 'ecshop'
 INSERT INTO `mall_comment` VALUES ('2', '0', '22', 'ecshop@ecshop.com', 'ecshop', '这个我不是很适合我', '5', '1242107295', '0.0.0.0', '0', '0', '1');
 
 -- ----------------------------
+-- Table structure for mall_fk_attr_sku
+-- ----------------------------
+DROP TABLE IF EXISTS `mall_fk_attr_sku`;
+CREATE TABLE `mall_fk_attr_sku` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) NOT NULL,
+  `sku_id` int(11) NOT NULL,
+  `attrs_key_id` int(11) NOT NULL,
+  `attrs_key_name` varchar(255) NOT NULL,
+  `attrs_value_id` int(11) NOT NULL,
+  `attrs_value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mall_fk_attr_sku
+-- ----------------------------
+INSERT INTO `mall_fk_attr_sku` VALUES ('1', '48', '56', '1', '颜色', '1', '银色');
+INSERT INTO `mall_fk_attr_sku` VALUES ('2', '48', '56', '2', '内存', '5', '32G');
+INSERT INTO `mall_fk_attr_sku` VALUES ('3', '48', '57', '1', '颜色', '1', '银色');
+INSERT INTO `mall_fk_attr_sku` VALUES ('4', '48', '57', '2', '内存', '6', '64G');
+INSERT INTO `mall_fk_attr_sku` VALUES ('5', '48', '58', '2', '颜色', '2', '黑色');
+INSERT INTO `mall_fk_attr_sku` VALUES ('6', '48', '58', '2', '内存', '5', '32G');
+INSERT INTO `mall_fk_attr_sku` VALUES ('7', '48', '59', '1', '颜色', '2', '黑色');
+INSERT INTO `mall_fk_attr_sku` VALUES ('8', '48', '59', '2', '内存', '6', '64G');
+
+-- ----------------------------
 -- Table structure for mall_goods
 -- ----------------------------
 DROP TABLE IF EXISTS `mall_goods`;
@@ -184,16 +211,12 @@ CREATE TABLE `mall_goods` (
   `add_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '添加时间',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常 0已经删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of mall_goods
 -- ----------------------------
-INSERT INTO `mall_goods` VALUES ('36', '', '诺基亚5730XM', '0', '1', '1', '', '诺基亚小手机', '诺基亚小手机诺基亚小手机诺基亚小手机诺基亚小手机诺基亚小手机', '', '1', '1', '0', '0', '1', '2', '0', '1');
-INSERT INTO `mall_goods` VALUES ('37', '', 'iphone6', '0', '1', '15', '', '苹果小手机', '苹果小手机苹果小手机苹果小手机苹果小手机苹果小手机苹果小手机', '', '1', '1', '0', '0', '1', '2', '0', '1');
-INSERT INTO `mall_goods` VALUES ('43', '', '锤子手机', '0', '1', '2', '', '好规范化的', '豆腐干贵航股份还是', '', '1', '1', '0', '0', '1', '2', '0', '1');
-INSERT INTO `mall_goods` VALUES ('44', '', '大师法', '0', '9', '3', '', '电话费更好的', '富国汇即发疾风岗家附近反', '', '1', '1', '0', '0', '1', '1', '0', '1');
-INSERT INTO `mall_goods` VALUES ('45', '', '大师法', '0', '9', '3', '', '电话费更好的', '富国汇即发疾风岗家附近反', '', '1', '1', '0', '0', '1', '1', '0', '1');
+INSERT INTO `mall_goods` VALUES ('48', '', '商品一', '0', '9', '3', '', '商品一', '商品一商品一商品一商品一商品一商品一', '', '1', '1', '0', '0', '1', '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for mall_goods_attrs_key
@@ -251,37 +274,21 @@ DROP TABLE IF EXISTS `mall_goods_sku`;
 CREATE TABLE `mall_goods_sku` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL,
-  `attr_value_id` int(11) NOT NULL COMMENT '属性搭配方式',
+  `attr_value_id` varchar(11) NOT NULL COMMENT '属性搭配方式',
   `price` decimal(10,0) NOT NULL COMMENT '价格',
   `stock` varchar(255) NOT NULL COMMENT '库存',
   `goods_img` varchar(255) NOT NULL COMMENT '此规格的商品图片',
   `store_id` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COMMENT='商品规格、规格值、数量、价格关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='商品规格、规格值、数量、价格关系表';
 
 -- ----------------------------
 -- Records of mall_goods_sku
 -- ----------------------------
-INSERT INTO `mall_goods_sku` VALUES ('1', '36', '1', '5700', '1200', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('2', '36', '1', '5900', '1100', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('3', '36', '4', '5300', '900', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('4', '36', '4', '5700', '800', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('5', '37', '1', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('6', '37', '1', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('7', '37', '2', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('8', '37', '2', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('9', '37', '4', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('10', '37', '4', '6300', '1000', '', '1');
-INSERT INTO `mall_goods_sku` VALUES ('38', '43', '1', '3000', '100', '20181120135949309.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('39', '43', '1', '3000', '100', '20181120135949454.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('40', '43', '2', '3000', '100', '20181120135949348.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('41', '43', '2', '3000', '100', '20181120135949252.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('42', '44', '5', '54', '12', '20181120140255326.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('43', '44', '6', '34', '12', '20181120140255649.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('44', '44', '7', '23', '12', '20181120140255528.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('45', '45', '5', '54', '12', '20181120140404353.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('46', '45', '6', '34', '12', '20181120140404904.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('47', '45', '7', '23', '12', '20181120140404917.jpeg', '1');
+INSERT INTO `mall_goods_sku` VALUES ('56', '48', '1,5', '1200', '120', '20181122151735492.jpeg', '1');
+INSERT INTO `mall_goods_sku` VALUES ('57', '48', '1,6', '1300', '130', '20181122151735685.jpeg', '1');
+INSERT INTO `mall_goods_sku` VALUES ('58', '48', '2,5', '1400', '140', '20181122151735908.jpeg', '1');
+INSERT INTO `mall_goods_sku` VALUES ('59', '48', '2,6', '1500', '150', '20181122151735765.jpeg', '1');
 
 -- ----------------------------
 -- Table structure for mall_keywords
@@ -4222,11 +4229,16 @@ CREATE TABLE `mall_seller_session` (
 -- ----------------------------
 -- Records of mall_seller_session
 -- ----------------------------
+INSERT INTO `mall_seller_session` VALUES ('9tb5kk9gi8o2kqpdc7ch2vhh27', '1542878113', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"e8820c835b\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_brand\";}', '0000-00-00 00:00:00', '3232235786', '');
+INSERT INTO `mall_seller_session` VALUES ('g0juqunjj6larq7bd73oseduk0', '1542961128', 'csrf_token|s:10:\"415349871a\";', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('g81kloqdk3l6u3dt1r3j1evqg3', '1542706387', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"0cee2ab221\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_seller_session` VALUES ('i0h6355s1j9fbsg2m7aoksful6', '1542770876', 'csrf_token|s:10:\"8b01e77a3b\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('hk612fb8mbkp8i24a84qojl0n5', '1542961298', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"c2ba8c9d47\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('i0h6355s1j9fbsg2m7aoksful6', '1542796078', 'csrf_token|s:10:\"1429346baf\";', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('jgs696fktir8qogbngnfr97kh1', '1542711868', 'csrf_token|s:10:\"e9d0d13180\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('q0b24tmlu5p3voas1cdmgaga43', '1542881838', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"e2a35d8242\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('qa3abnclj2pir8rkg27ic5dsr2', '1542709603', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"07e50c1269\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_brand\";}', '0000-00-00 00:00:00', '3232235786', '');
-INSERT INTO `mall_seller_session` VALUES ('vrlc2rl1kb6hue9r3te8d6hnq6', '1542770373', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"910f4418b8\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('un4prq2m7ftqrtksoioivhlet7', '1542883884', 'csrf_token|s:10:\"801470ba26\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('vrlc2rl1kb6hue9r3te8d6hnq6', '1542800341', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"910f4418b8\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
 
 -- ----------------------------
 -- Table structure for mall_sessions
@@ -4666,7 +4678,7 @@ CREATE TABLE `mall_templet_key` (
   `store_id` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1为正常 0为已经删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='商品展示模版表';
 
 -- ----------------------------
 -- Records of mall_templet_key
@@ -4694,7 +4706,7 @@ CREATE TABLE `mall_templet_value` (
   `store_id` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常 0已经移除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mall_templet_value
@@ -4725,6 +4737,18 @@ INSERT INTO `mall_templet_value` VALUES ('35', '45', '7', '代付', '1', '1');
 INSERT INTO `mall_templet_value` VALUES ('36', '45', '8', '个', '1', '1');
 INSERT INTO `mall_templet_value` VALUES ('37', '45', '9', '风格', '1', '1');
 INSERT INTO `mall_templet_value` VALUES ('38', '45', '10', '合法', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('39', '46', '7', '品牌一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('40', '46', '8', '分辨率一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('41', '46', '9', '尺寸一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('42', '46', '10', '材质一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('43', '47', '7', '品牌一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('44', '47', '8', '分辨率一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('45', '47', '9', '尺寸一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('46', '47', '10', '材质一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('47', '48', '7', '品牌一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('48', '48', '8', '分辨率一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('49', '48', '9', '尺寸一', '1', '1');
+INSERT INTO `mall_templet_value` VALUES ('50', '48', '10', '材质一', '1', '1');
 
 -- ----------------------------
 -- Table structure for mall_topic
