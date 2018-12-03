@@ -47,8 +47,8 @@ class IndexController extends CO_Controller{
 		$db = $this->getDb();
 		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
 		$data['sku'] = $db->getAll("select fk_as.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
-		var_dump($data);
-		// $this->render('goods/detail');
+		// var_dump($data);
+		$this->render('goods/detail');
 	}
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();

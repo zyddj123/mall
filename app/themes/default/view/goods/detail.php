@@ -138,33 +138,39 @@
 						
 						<div class="col-md-3 col-sm-4">
 							<!-- .product-panel -->
-							<div class="product-panel" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+							<div class="product-panel" id="sku" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 								<link itemprop="availability" href="http://schema.org/InStock" />
 								<p class="status text-uppercase secondary-text">Availability: <span>in stock</span></p>
-							
 								<meta itemprop="priceCurrency" content="USD" />
-								<div class="price"><span class="currency">$</span><span itemprop="price">125.00</span></div>
+								<div class="price"><span class="currency">$</span><span itemprop="price">{{money}}</span></div>
 								
 								<form id="add-to-cart">
 									<div class="form-group">
 										<label class="secondary-text" for="item-count">Quantity</label>
 										
 										<div class="input-group input-group-radius count-input">
-											<input type="text" class="form-control input-sm" name="item-count" id="item-count" value="1" />
+											<input type="text" class="form-control input-sm" v-model="count" value="1" />
 											<div class="input-group-btn">
 												<button class="btn btn-sm btn-input" data-value="minus"><i class="fa fa-minus"></i></button>
 												<button class="btn btn-sm btn-input" data-value="plus"><i class="fa fa-plus"></i></button>
 											</div>
 										</div>
 										
-										<label class="secondary-text" for="item-color">Color</label>
+										<label class="secondary-text" for="item-color">颜色</label>
 										
 										<div class="select-sm select-radius">
-											<select class="input-select" name="item-color" id="item-color">
-												<option value="1">Dark blue</option>
-												<option value="2">Black</option>
-												<option value="3">White</option>
-												<option value="4">Red</option>
+											<select class="form-control" v-model="color">
+												<option value="1">银色</option>
+												<option value="2">黑色</option>
+											</select>
+										</div>
+										<br>
+
+										<label class="secondary-text" for="item-color">内存</label>
+										<div class="select-sm select-radius">
+											<select class="form-control" v-model="neicun">
+												<option value="1">32G</option>
+												<option value="2">64G</option>
 											</select>
 										</div>
 									</div>
@@ -574,7 +580,35 @@
 		<!-- Counter up -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.counterup.min.js"></script>
 		
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
 		<!-- Custom JS -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#sku',
+				data: {
+					list: [
+						{
+							attrs_key_id:1,
+							attrs_key_name:'颜色',
+							attrs_value_id:1,
+							attrs_value:'银色'
+						},
+					],
+					count: '1',
+					stock: '',
+					color: '1',
+					neicun: '1'
+				},
+				methods: {
+
+				},
+				computed: {
+					money: function(){
+						return this.count*this.color
+					}
+				}
+			});
+		</script>
 	</body>
 </html>
