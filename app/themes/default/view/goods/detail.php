@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<meta name="csrf-token" content="<?php echo $this->session->token(); ?>">
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -12,6 +13,8 @@
 		<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $this->getThemesUrl(); ?>/images/favicons/apple-touch-icon-144x144.png" />
 		<link rel="stylesheet" href="<?php echo $this->getThemesUrl(); ?>/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="<?php echo $this->getThemesUrl(); ?>/css/style.css" />
+		<script src="<?php echo $this->getThemesUrl();?>/js/jquery-1.10.2.min.js"></script>
+		<script src="<?php echo $this->getThemesUrl();?>/js/app.js"></script>
 		<!--[if lt IE 9]>
 			<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/html5shiv.min.js"></script>
 		<![endif]-->
@@ -151,8 +154,8 @@
 										<div class="input-group input-group-radius count-input">
 											<input type="text" class="form-control input-sm" v-model="count" value="1" />
 											<div class="input-group-btn">
-												<button class="btn btn-sm btn-input" data-value="minus"><i class="fa fa-minus"></i></button>
-												<button class="btn btn-sm btn-input" data-value="plus"><i class="fa fa-plus"></i></button>
+												<button class="btn btn-sm btn-input" @click.prevent="countCut" data-value="minus"><i class="fa fa-minus"></i></button>
+												<button class="btn btn-sm btn-input" @click.prevent="countAdd" data-value="plus"><i class="fa fa-plus"></i></button>
 											</div>
 										</div>
 										
@@ -533,6 +536,7 @@
 			</div>
 			<!-- /.container.modal-sm -->
 		</section>
+		<?php var_dump($sku); ?>
 		<!-- /.remodal.modal-section -->
 		
 		<!-- .footer -->
@@ -540,11 +544,10 @@
 		<!-- /.footer -->
 		
 		<!-- JS library -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.min.js"></script>
 		<!-- HTML/CSS/JS framework -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/bootstrap.min.js"></script>
 		<!-- Google Map API -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxYi_Sk25cIlLkMEQlM7I-jAqWYTDQj64"></script>
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxYi_Sk25cIlLkMEQlM7I-jAqWYTDQj64"></script> -->
 		<!-- Form validation -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.form-validator.min.js"></script>
 		<!-- Viewport checker -->
@@ -570,7 +573,7 @@
 		<!-- Masonry -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/masonry.pkgd.min.js"></script>
 		<!-- Custom select -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script>
+		<!-- <script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script> -->
 		<!-- Bar rating -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.barrating.min.js"></script>
 		<!-- Range slider -->
@@ -582,26 +585,56 @@
 		
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
 		<!-- Custom JS -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.min.js"></script>
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
 		<script>
+			var data = <?php echo $sku?>;
+			console.log(data);
 			var vm = new Vue({
 				el: '#sku',
 				data: {
-					list: [
-						{
-							attrs_key_id:1,
-							attrs_key_name:'颜色',
-							attrs_value_id:1,
-							attrs_value:'银色'
-						},
-					],
+					list: data,
 					count: '1',
 					stock: '',
 					color: '1',
 					neicun: '1'
 				},
+				beforeCreate: function(){
+					// this.$el.append("<h1>dsafasfsfsd</h1>");
+					// console.log(this);
+				},
+				created: function(){
+					// $('.input-select').selectric({
+					// 	responsive: true,
+					// 	customClass: {
+					// 		prefix: 'custom-select'
+					// 	}
+					// });
+					$.ajax({
+						url: "<?php echo $this->config->app_url_root.'/Index/ajax_data'; ?>",
+						type: "POST",
+						dataType:"json",
+						cache: false,
+						contentType: false,
+						processData: false,
+						success:function(e){
+							// e = JSON.parse(e);
+							console.log(e);
+						}
+					});
+				},
+				mounted: function(){
+					$(this.$el).append("<h1>dsafasfsfsd</h1>");
+					console.log(this.$el);
+				},
 				methods: {
-
+					countCut(){
+						if(parseInt(this.count)>1){
+							this.count = parseInt(this.count) - 1;
+						}
+					},
+					countAdd(){
+						this.count = parseInt(this.count) + 1;
+					}
 				},
 				computed: {
 					money: function(){
@@ -609,6 +642,17 @@
 					}
 				}
 			});
+
+			//数组去重
+			function unique(arr){
+				var hash=[];
+				for (var i = 0; i < arr.length; i++) {
+					if(hash.indexOf(arr[i])==-1){
+					hash.push(arr[i]);
+					}
+				}
+				return hash;
+			}
 		</script>
 	</body>
 </html>

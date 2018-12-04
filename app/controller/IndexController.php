@@ -46,9 +46,16 @@ class IndexController extends CO_Controller{
 	function index(){
 		$db = $this->getDb();
 		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
-		$data['sku'] = $db->getAll("select fk_as.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
+		$data = $db->getAll("select fk_as.*,sku.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
 		// var_dump($data);
-		$this->render('goods/detail');
+		// var_dump($_SESSION);
+		$this->render('goods/detail',array('sku'=>json_encode($data)));
+	}
+	function ajax_data(){
+		$db = $this->getDb();
+		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
+		$data = $db->getAll("select fk_as.*,sku.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
+		echo json_encode($data);
 	}
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();

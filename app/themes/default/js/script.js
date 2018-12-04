@@ -30,7 +30,6 @@
 			fn.Masonry();
 			fn.Countdown();
 			fn.CounterUp();
-			fn.CountInput();
 			fn.RangeSlider();
 			fn.Progressbars();
 			fn.Map();
@@ -508,31 +507,6 @@
 		
 		
 		/*
-			Input with count button
-		*/
-		
-		CountInput: function () {
-			$('.count-input').on('click', '.btn', function(event) {
-				event.preventDefault();
-
-				var $button			= $(this),
-					$formControl	= $button.closest('.count-input').find('.form-control'),
-					$oldValue		= $formControl.val(),
-					$newValue		= 0;
-
-				if ($button.data('value') == 'plus') {
-					$newValue = parseFloat($oldValue) + 1;
-				} else if ($oldValue > 0) {
-					$newValue = parseFloat($oldValue) - 1;
-				}
-
-				$formControl.val($newValue);
-			});
-		},
-		
-		
-		
-		/*
 			Counter Up
 		*/
 		
@@ -806,13 +780,13 @@
 				$.fn.matchHeight._update();
 			});
 			
-			// Custom select
-			$('.input-select').selectric({
-				responsive: true,
-				customClass: {
-					prefix: 'custom-select'
-				}
-			});
+			// // Custom select
+			// $('.input-select').selectric({
+			// 	responsive: true,
+			// 	customClass: {
+			// 		prefix: 'custom-select'
+			// 	}
+			// });
 			
 			// Rating
 			$('.rating-input').barrating({

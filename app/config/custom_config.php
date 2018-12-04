@@ -82,7 +82,7 @@ $custom_system_configs['themes'] = 'default';
  * 		c).修改自定义会话存取类配置session_lifetime值为session_handler。
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $custom_system_configs['session_start'] = '1';
-$custom_system_configs['session_custom'] = 'SellerSession';
+$custom_system_configs['session_custom'] = 'AppSession';
 $custom_system_configs['session_lifetime'] = '7200';
 
 /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------
