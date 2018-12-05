@@ -13,8 +13,8 @@
 		<link rel="apple-touch-icon" sizes="144x144" href="<?php echo $this->getThemesUrl(); ?>/images/favicons/apple-touch-icon-144x144.png" />
 		<link rel="stylesheet" href="<?php echo $this->getThemesUrl(); ?>/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="<?php echo $this->getThemesUrl(); ?>/css/style.css" />
-		<script src="<?php echo $this->getThemesUrl();?>/js/jquery-1.10.2.min.js"></script>
-		<script src="<?php echo $this->getThemesUrl();?>/js/app.js"></script>
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/jquery-1.10.2.min.js"></script>
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/app.js"></script>
 		<!--[if lt IE 9]>
 			<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/html5shiv.min.js"></script>
 		<![endif]-->
@@ -158,24 +158,15 @@
 												<button class="btn btn-sm btn-input" @click.prevent="countAdd" data-value="plus"><i class="fa fa-plus"></i></button>
 											</div>
 										</div>
-										
-										<label class="secondary-text" for="item-color">颜色</label>
-										
-										<div class="select-sm select-radius">
-											<select class="form-control" v-model="color">
-												<option value="1">银色</option>
-												<option value="2">黑色</option>
-											</select>
+										<div v-for="(item,index) in attr_list">
+											<label class="secondary-text" for="item-color">{{item.attrs_key_name}}</label>
+											<div class="select-sm select-radius">
+												<select class="form-control" v-model="attr[index]">
+													<option v-for="key in item.attr_value" v-bind:value="key.attrs_value_id">{{key.attrs_value}}</option>
+												</select>
+											</div>
 										</div>
-										<br>
 
-										<label class="secondary-text" for="item-color">内存</label>
-										<div class="select-sm select-radius">
-											<select class="form-control" v-model="neicun">
-												<option value="1">32G</option>
-												<option value="2">64G</option>
-											</select>
-										</div>
 									</div>
 									
 									<div class="form-group text-center">
@@ -573,7 +564,7 @@
 		<!-- Masonry -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/masonry.pkgd.min.js"></script>
 		<!-- Custom select -->
-		<!-- <script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script> -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script>
 		<!-- Bar rating -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.barrating.min.js"></script>
 		<!-- Range slider -->
@@ -587,44 +578,88 @@
 		<!-- Custom JS -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
 		<script>
-			var data = <?php echo $sku?>;
-			console.log(data);
+			var data = <?php echo $sku; ?>;
+			var tmp = [];
+			if(data){
+				for(var x in data){
+					var qq = {};
+					if(JSON.stringify(tmp).indexOf(JSON.stringify(data[x].attrs_key_name))==-1){
+						qq.attrs_key_id = data[x].attrs_key_id;
+						qq.attrs_key_name = data[x].attrs_key_name;
+						qq.attr_value = [];
+						var aa = {};
+						aa.attrs_value_id = data[x].attrs_value_id;
+						aa.attrs_value = data[x].attrs_value;
+						qq.attr_value.push(aa);
+						tmp.push(qq);
+					}else{
+						for(var y in tmp){
+							var ww = {};
+							if(tmp[y].attrs_key_name == data[x].attrs_key_name){
+								if(JSON.stringify(tmp[y].attr_value).indexOf(JSON.stringify(data[x].attrs_value))==-1){
+									ww.attrs_value_id = data[x].attrs_value_id;
+									ww.attrs_value = data[x].attrs_value;
+									tmp[y].attr_value.push(ww);
+								}
+							}
+						}
+					}
+				}
+			}
+			console.log(JSON.stringify(tmp));
+
+
+			// 默认规格显示  数组 同时也为了select数据双向绑定
+			var attr_default = [];
+			for(var i in tmp) {
+				attr_default.push(tmp[i].attr_value[0].attrs_value_id);
+			}
 			var vm = new Vue({
 				el: '#sku',
 				data: {
 					list: data,
+		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
+		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
+					attr_list: tmp,
+					attr: attr_default,
 					count: '1',
-					stock: '',
-					color: '1',
-					neicun: '1'
+					choosed: {},
+					money:0
 				},
 				beforeCreate: function(){
 					// this.$el.append("<h1>dsafasfsfsd</h1>");
 					// console.log(this);
 				},
 				created: function(){
-					// $('.input-select').selectric({
-					// 	responsive: true,
-					// 	customClass: {
-					// 		prefix: 'custom-select'
+					
+
+					// $.ajax({
+					// 	url: "<?php echo $this->config->app_url_root.'/Index/ajax_data'; ?>",
+					// 	type: "POST",
+					// 	dataType:"json",
+					// 	cache: false,
+					// 	contentType: false,
+					// 	processData: false,
+					// 	success:function(e){
+					// 		// e = JSON.parse(e);
+					// 		// console.log(e);
 					// 	}
 					// });
-					$.ajax({
-						url: "<?php echo $this->config->app_url_root.'/Index/ajax_data'; ?>",
-						type: "POST",
-						dataType:"json",
-						cache: false,
-						contentType: false,
-						processData: false,
-						success:function(e){
-							// e = JSON.parse(e);
-							console.log(e);
+
+					this.getChoosed();
+					console.log(this.choosed);
+
+				},
+				updated: function(){
+					this.getChoosed();
+					this.money=this.choosed.price*this.count;
+					console.log(this.choosed);
+					$('.input-select').selectric({
+						responsive: true,
+						customClass: {
+							prefix: 'custom-select'
 						}
 					});
-				},
-				mounted: function(){
-					$(this.$el).append("<h1>dsafasfsfsd</h1>");
-					console.log(this.$el);
 				},
 				methods: {
 					countCut(){
@@ -634,12 +669,37 @@
 					},
 					countAdd(){
 						this.count = parseInt(this.count) + 1;
+					},
+					getChoosed(){
+						for(var i in this.list){
+							if(this.list[i].attr_value_id==this.attr.toString()){
+								this.choosed.store_id = this.list[i].store_id;
+								this.choosed.goods_id = this.list[i].goods_id;
+								this.choosed.price = this.list[i].price;
+								this.choosed.stock = this.list[i].stock;
+								this.choosed.goods_img = this.list[i].goods_img;
+								this.choosed.sku_id = this.list[i].sku_id;
+							}
+						}
+					}
+				},
+				watch: {
+					attr:function(a,b){
+						this.money=this.choosed.price*this.count;
+					},
+					count:function(a,b){
+						this.money=this.choosed.price*b;	
 					}
 				},
 				computed: {
-					money: function(){
-						return this.count*this.color
-					}
+					
+					// money: function(){
+					// 	return this.choosed.price*this.count;
+					// }
+				},
+				mounted(){
+					
+					this.money=this.choosed.price*this.count;
 				}
 			});
 
