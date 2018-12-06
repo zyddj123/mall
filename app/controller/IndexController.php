@@ -33,7 +33,7 @@ class IndexController extends CO_Controller{
 		// checkonline($_SESSION['seller']['id']);
 		// $this->index_model = $this->GetModel('Index');
 		//加载语言包
-		$this->GetLang('sys')->GetLang('index');
+		// $this->GetLang('sys')->GetLang('index');
 	}
 	
 	/**
@@ -44,19 +44,17 @@ class IndexController extends CO_Controller{
 	}
 
 	function index(){
+		$id = $this->input->get('id');
 		$db = $this->getDb();
-		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
-		$data = $db->getAll("select fk_as.*,sku.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
-		// var_dump($data);
-		// var_dump($_SESSION);
-		$this->render('goods/detail',array('sku'=>json_encode($data)));
+		$goods = $db->getRow("select * from " .AppConfig::GOODS ." where id = ?",array($id));
+		$data = $db->getAll("select fk_as.*,sku.* from " .AppConfig::GOODS_SKU ." AS sku, ".AppConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = ? and sku.id = fk_as.sku_id",array($id));
+		if($goods){
+			$this->render('goods/detail',array('sku'=>json_encode($data),'goods'=>$goods));
+		}else{
+			$this->render('404');
+		}
 	}
-	function ajax_data(){
-		$db = $this->getDb();
-		// $data['goods'] = $db->getRow("select * from " .SellerConfig::GOODS ." where id = 48");
-		$data = $db->getAll("select fk_as.*,sku.* from " .SellerConfig::GOODS_SKU ." AS sku, ".SellerConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = 48 and sku.id = fk_as.sku_id");
-		echo json_encode($data);
-	}
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}

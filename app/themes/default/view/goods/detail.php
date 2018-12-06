@@ -45,38 +45,23 @@
 		
 		<!-- .section.bg-secondary -->
 		<section class="section bg-secondary">
-			<div class="container">
+			<div class="container" id="goods">
 			
 				<!-- .product-section -->
-				<div class="product-section" itemscope itemtype="http://schema.org/Product">
+				<div class="product-section" itemscope>
 					<div class="row">
 						<div class="col-md-9 col-sm-8">
 							<div class="row">
 								<div class="col-md-6 col-sm-5">
 									<figure class="product-carousel-image">
-										<a href="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1-large.jpg" data-lightbox="product">
-											<img itemprop="image" data-gallery-id="product-gallery" src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1-large.jpg" alt="" />
+										<a :href="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" data-lightbox="product">
+											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" :src="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" alt="" />
 										</a>
 									</figure>
 									
 									<div id="product-gallery" class="product-carousel-nav bottom-space">
-										<a class="active" href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-1-thumb.jpg" alt="" />
-										</a>
-										<a href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-2-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-2-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-2-thumb.jpg" alt="" />
-										</a>
-										<a href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-3-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-3-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-3-thumb.jpg" alt="" />
-										</a>
-										<a href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-4-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-4-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-4-thumb.jpg" alt="" />
-										</a>
-										<a href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-5-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-5-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-5-thumb.jpg" alt="" />
-										</a>
-										<a href="#" data-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-6-large.jpg" data-zoom-image="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-6-large.jpg">
-											<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-3-6-thumb.jpg" alt="" />
+										<a v-for="key in images" class="active" href="#" :data-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key">
+											<img style="width:70px;height:70px;" :src="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key" alt="" />
 										</a>
 									</div>
 								</div>
@@ -84,21 +69,7 @@
 								<div class="col-lg-5 col-md-6 col-sm-7">
 									<h3 class="category-title text-uppercase secondary-text">Elegant watches</h3>
 									
-									<h1 class="product-title" itemprop="name">Golden <strong>women dress</strong></h1>
-									
-									<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-										<meta itemprop="ratingValue" content="4.4" />
-										
-										<select class="rating-input">
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
-										
-										<span class="text-uppercase secondary-text">Review (<span itemprop="reviewCount">5</span>)</span>
-									</div>
+									<h1 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h1>
 									
 									<!-- .content -->
 									<div class="content">
@@ -108,8 +79,7 @@
 										</p>
 										
 										<div itemprop="description">
-											<p>Lorem ipsum dolor sit amet, consectetuer dolorado adipiscing elit diam, sed diam
-											nonumy consectetuer dolorado adipiscing elit diam.</p>
+											<p><?php echo $goods['goods_brief']?></p>
 										</div>
 									
 										<div class="row small-gap">
@@ -143,7 +113,7 @@
 							<!-- .product-panel -->
 							<div class="product-panel" id="sku" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 								<link itemprop="availability" href="http://schema.org/InStock" />
-								<p class="status text-uppercase secondary-text">Availability: <span>in stock</span></p>
+								<p class="status text-uppercase secondary-text">库存: <span>{{choosed.stock}}</span></p>
 								<meta itemprop="priceCurrency" content="USD" />
 								<div class="price"><span class="currency">$</span><span itemprop="price">{{money}}</span></div>
 								
@@ -196,7 +166,7 @@
 				</div>
 				<!-- /.product-section -->
 				
-				<div class="row" data-animate>
+				<div class="row" data-animate style="visibility:visible">
 					
 					<div class="col-md-3 col-sm-4">
 						<!-- .sb-block -->
@@ -218,46 +188,9 @@
 						<div class="tab-content content-section">
 							<!-- #product-desc -->
 							<div role="tabpanel" class="tab-pane fade in active" id="product-desc">
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-								tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-								nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-								Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
-								vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim
-								qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+								<p><?php echo $goods['goods_desc']?></p>
 
-								<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
-								vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim
-								qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi
-								tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-								nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat
-								tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-
-								<h5 class="text-uppercase">Elegant <strong>colors</strong></h5>
-
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-								euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-
-								<div class="row">
-									<div class="col-md-3 col-sm-6">
-										<ul class="list-icon text-uppercase weight-bold">
-											<li><i class="fa fa-check"></i> Pure platinum</li>
-											<li><i class="fa fa-check"></i> Precious stone</li>
-											<li><i class="fa fa-check"></i> Cheracom</li>
-											<li><i class="fa fa-check"></i> Stainless steel</li>
-											<li><i class="fa fa-check"></i> Rolesor</li>
-										</ul>
-									</div>
-
-									<div class="col-md-3 col-sm-6">
-										<ul class="list-icon text-uppercase weight-bold">
-											<li><i class="fa fa-check"></i> Pure platinum</li>
-											<li><i class="fa fa-check"></i> Precious stone</li>
-											<li><i class="fa fa-check"></i> Cheracom</li>
-											<li><i class="fa fa-check"></i> Stainless steel</li>
-											<li><i class="fa fa-check"></i> Rolesor</li>
-										</ul>
-									</div>
-								</div>
+								
 							</div>
 							<!-- /#product-desc -->
 
@@ -527,7 +460,6 @@
 			</div>
 			<!-- /.container.modal-sm -->
 		</section>
-		<?php var_dump($sku); ?>
 		<!-- /.remodal.modal-section -->
 		
 		<!-- .footer -->
@@ -537,42 +469,14 @@
 		<!-- JS library -->
 		<!-- HTML/CSS/JS framework -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/bootstrap.min.js"></script>
-		<!-- Google Map API -->
-		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxYi_Sk25cIlLkMEQlM7I-jAqWYTDQj64"></script> -->
-		<!-- Form validation -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.form-validator.min.js"></script>
 		<!-- Viewport checker -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.viewportchecker.min.js"></script>
-		<!-- Filter and sort layouts -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/isotope.pkgd.min.js"></script>
-		<!-- Modal -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/remodal.min.js"></script>
-		<!-- Images loaded -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/imagesloaded.pkgd.min.js"></script>
 		<!-- Image zoom -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.elevateZoom-3.0.8.min.js"></script>
 		<!-- Lightbox -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/lightbox.min.js"></script>
-		<!-- Scroll navigation -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/sly.min.js"></script>
 		<!-- Carousel -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/slick.min.js"></script>
-		<!-- Responsive equal heights -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.matchHeight-min.js"></script>
-		<!-- Countdown-->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.countdown.min.js"></script>
-		<!-- Masonry -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/masonry.pkgd.min.js"></script>
-		<!-- Custom select -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script>
-		<!-- Bar rating -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.barrating.min.js"></script>
-		<!-- Range slider -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/nouislider.min.js"></script>
-		<!-- Number formatting -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/wNumb.js"></script>
-		<!-- Counter up -->
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.counterup.min.js"></script>
 		
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
 		<!-- Custom JS -->
@@ -580,8 +484,11 @@
 		<script>
 			var data = <?php echo $sku; ?>;
 			var tmp = [];
+			var img_arr_tmp = [];
+			var img_arr = [];
 			if(data){
 				for(var x in data){
+					img_arr_tmp.push(data[x].goods_img);
 					var qq = {};
 					if(JSON.stringify(tmp).indexOf(JSON.stringify(data[x].attrs_key_name))==-1){
 						qq.attrs_key_id = data[x].attrs_key_id;
@@ -606,33 +513,31 @@
 					}
 				}
 			}
-			console.log(JSON.stringify(tmp));
-
-
+			img_arr = unique(img_arr_tmp);
+			// console.log(JSON.stringify(tmp));
+			// console.log(img_arr);
 			// 默认规格显示  数组 同时也为了select数据双向绑定
 			var attr_default = [];
 			for(var i in tmp) {
 				attr_default.push(tmp[i].attr_value[0].attrs_value_id);
 			}
 			var vm = new Vue({
-				el: '#sku',
+				el: '#goods',
 				data: {
 					list: data,
+		// tmp = 
 		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
 		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
 					attr_list: tmp,
 					attr: attr_default,
 					count: '1',
-					choosed: {},
-					money:0
-				},
-				beforeCreate: function(){
-					// this.$el.append("<h1>dsafasfsfsd</h1>");
-					// console.log(this);
+					choosed: {}, //{"store_id":"1","goods_id":"48","stock":"120","sku_id":"56"}
+					price: '',
+					store_id: '',
+					images: img_arr,
+					goods_img: ''
 				},
 				created: function(){
-					
-
 					// $.ajax({
 					// 	url: "<?php echo $this->config->app_url_root.'/Index/ajax_data'; ?>",
 					// 	type: "POST",
@@ -645,21 +550,13 @@
 					// 		// console.log(e);
 					// 	}
 					// });
-
 					this.getChoosed();
-					console.log(this.choosed);
-
 				},
 				updated: function(){
 					this.getChoosed();
-					this.money=this.choosed.price*this.count;
-					console.log(this.choosed);
-					$('.input-select').selectric({
-						responsive: true,
-						customClass: {
-							prefix: 'custom-select'
-						}
-					});
+					var ss = '<?php echo SellerConfig::UPLOAD_GOODS;?>'+ this.store_id + '/' + this.goods_img;
+					var asd = $('#product-gallery').find('img[src="'+ss+'"]');
+					asd.click();
 				},
 				methods: {
 					countCut(){
@@ -673,33 +570,21 @@
 					getChoosed(){
 						for(var i in this.list){
 							if(this.list[i].attr_value_id==this.attr.toString()){
-								this.choosed.store_id = this.list[i].store_id;
+								this.store_id = this.list[i].store_id;
 								this.choosed.goods_id = this.list[i].goods_id;
-								this.choosed.price = this.list[i].price;
+								this.price = this.list[i].price;
 								this.choosed.stock = this.list[i].stock;
-								this.choosed.goods_img = this.list[i].goods_img;
+								this.goods_img = this.list[i].goods_img;
 								this.choosed.sku_id = this.list[i].sku_id;
 							}
 						}
 					}
 				},
-				watch: {
-					attr:function(a,b){
-						this.money=this.choosed.price*this.count;
-					},
-					count:function(a,b){
-						this.money=this.choosed.price*b;	
-					}
-				},
 				computed: {
 					
-					// money: function(){
-					// 	return this.choosed.price*this.count;
-					// }
-				},
-				mounted(){
-					
-					this.money=this.choosed.price*this.count;
+					money: function(){
+						return this.price*this.count;
+					}
 				}
 			});
 
@@ -713,6 +598,48 @@
 				}
 				return hash;
 			}
+			
+			// Gallery with zoom
+			var galleryImage = $('[data-gallery-id]');
+			
+			galleryImage.each(function() {
+				var $this		= $(this),
+					galleryId	= $this.data('gallery-id');
+				
+				$this.elevateZoom({
+					zoomType: 'lens',
+					easing: 'zoom',
+					cursor: 'pointer',
+					responsive: true,
+					gallery: galleryId,
+					galleryActiveClass: 'active',
+				});
+			});
+			
+			galleryImage.closest('a').on('click', function() {
+				var $this		= $(this),
+					galleryId	= $this.find('img').data('gallery-id'),
+					currentImg	= $('#' + galleryId).find('.active').data('zoom-image');
+				$this.attr('href', currentImg);
+			});
+
+
+			// Product thumbnails
+			$('.product-carousel-nav').slick({
+				slidesToShow: 5,
+				slidesToScroll: 1,
+				dots: false,
+				focusOnSelect: true,
+				responsive: [
+					{
+						breakpoint: 992,
+						settings: {
+							slidesToShow: 3,
+						}
+					}
+				]
+			});
+
 		</script>
 	</body>
 </html>
