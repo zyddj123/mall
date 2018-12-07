@@ -572,6 +572,15 @@
 						}
 					}
 				},
+				watch: {
+					count: function (val, oldVal) {
+      					if(parseInt(this.count)>parseInt(this.choosed.stock)){
+							this.count = this.choosed.stock;
+						}else{
+							this.count = val;
+						}
+    				},
+				},
 				computed: {
 					money: function(){
 						return this.price*this.count;
