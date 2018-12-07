@@ -390,7 +390,7 @@ if (!defined('CO_BASE_CHECK')) {
 				str += '<thead><tr>';
 				// str += '<th>#</th>';
 				for(var p in attr_data.attr_key){
-					str += '<th>'+attr_data.attr_key[p]+'</th>';
+					str += '<th class="attr_key_aaa" attr_key_id='+p+'>'+attr_data.attr_key[p]+'</th>';
 				}
 				str += '<th>库存</th>';
 				str += '<th>售价</th>';
@@ -402,8 +402,7 @@ if (!defined('CO_BASE_CHECK')) {
 				for( var k in mm){
 					var key = k.split('_');
 					var value = mm[k].split('_');
-					// console.log(key);
-					str += '<tr attr_value_id_arr='+key+'>';
+					str += '<tr attr_value_id_arr='+key+' attr_value_arr='+value+'>';
 					// str += '<td>'+t+'</td>';
 					for(var j in key){
 						str += '<td>'+value[j]+'</td>';
@@ -578,9 +577,18 @@ if (!defined('CO_BASE_CHECK')) {
 				var formobj =  document.getElementById("stepy_form");
 				var res = new FormData(formobj);
 				var attr_value_id_arr = []; 		//第一步商品规格详情 table内的数据包
+				var attr_key_id_arr_tmp = [];
+				var attr_key_name_arr_tmp = [];
+				$('.attr_key_aaa').each(function(){
+					attr_key_id_arr_tmp.push($(this).attr('attr_key_id'));
+					attr_key_name_arr_tmp.push($(this).text());
+				});
 				$('#table_data_tbody tr').each(function(){
 					var aa = {};
 					aa.attr_value_id = $(this).attr('attr_value_id_arr'); //  "3,7"
+					aa.attr_value_arr = $(this).attr('attr_value_arr'); //   "银色,32G"
+					aa.attr_key_id_arr = attr_key_id_arr_tmp;
+					aa.attr_key_name_arr = attr_key_name_arr_tmp;
 					aa.stock = $(this).find('.stock').val();
 					aa.price = $(this).find('.price').val();
 					aa.img = $(this).find('img').attr('src');

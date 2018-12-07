@@ -44,6 +44,11 @@ class IndexController extends CO_Controller{
 	}
 
 	function index(){
+		echo "这是首页";
+	}
+
+	//根据商品id获取商品详细信息并展示商品
+	function good(){
 		$id = $this->input->get('id');
 		$db = $this->getDb();
 		$goods = $db->getRow("select * from " .AppConfig::GOODS ." where id = ?",array($id));

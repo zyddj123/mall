@@ -140,7 +140,7 @@
 									</div>
 									
 									<div class="form-group text-center">
-										<button data-remodal-target="add-to-cart" class="btn btn-radius btn-simple-to-border btn-primary" type="submit">Add to cart</button>
+										<button data-remodal-target="add-to-cart" class="btn btn-radius btn-simple-to-border btn-primary" type="submit">添加购物车</button>
 									</div>
 									
 									<div class="form-feedback on-valid alert alert-small alert-success text-center" role="alert">
@@ -149,18 +149,6 @@
 								</form>
 							</div>
 							<!-- /.product-panel -->
-							
-							<div class="social-list">
-								<div class="title">Share this:</div>
-								
-								<ul class="list-inline">
-									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-behance"></i></a></li>
-									<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								</ul>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -559,13 +547,17 @@
 					asd.click();
 				},
 				methods: {
+					//数量减少按钮点击操作
 					countCut(){
 						if(parseInt(this.count)>1){
 							this.count = parseInt(this.count) - 1;
 						}
 					},
+					//数量添加按钮点击操作
 					countAdd(){
-						this.count = parseInt(this.count) + 1;
+						if(parseInt(this.choosed.stock)>parseInt(this.count)){
+							this.count = parseInt(this.count) + 1;
+						}
 					},
 					getChoosed(){
 						for(var i in this.list){
@@ -581,7 +573,6 @@
 					}
 				},
 				computed: {
-					
 					money: function(){
 						return this.price*this.count;
 					}
@@ -601,11 +592,9 @@
 			
 			// Gallery with zoom
 			var galleryImage = $('[data-gallery-id]');
-			
 			galleryImage.each(function() {
-				var $this		= $(this),
-					galleryId	= $this.data('gallery-id');
-				
+				var $this = $(this),
+				galleryId = $this.data('gallery-id');
 				$this.elevateZoom({
 					zoomType: 'lens',
 					easing: 'zoom',
@@ -615,31 +604,25 @@
 					galleryActiveClass: 'active',
 				});
 			});
-			
 			galleryImage.closest('a').on('click', function() {
-				var $this		= $(this),
-					galleryId	= $this.find('img').data('gallery-id'),
-					currentImg	= $('#' + galleryId).find('.active').data('zoom-image');
+				var $this = $(this),
+				galleryId = $this.find('img').data('gallery-id'),
+				currentImg	= $('#' + galleryId).find('.active').data('zoom-image');
 				$this.attr('href', currentImg);
 			});
-
-
 			// Product thumbnails
 			$('.product-carousel-nav').slick({
 				slidesToShow: 5,
 				slidesToScroll: 1,
 				dots: false,
 				focusOnSelect: true,
-				responsive: [
-					{
-						breakpoint: 992,
-						settings: {
-							slidesToShow: 3,
-						}
+				responsive: [{
+					breakpoint: 992,
+					settings: {
+						slidesToShow: 3,
 					}
-				]
+				}]
 			});
-
 		</script>
 	</body>
 </html>

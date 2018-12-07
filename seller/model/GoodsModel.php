@@ -217,6 +217,18 @@ class GoodsModel extends CO_Model
     }
 
     /**
+     * [add_attr_sku 添加商品规格sku信息到fk_attr_sku表].
+     *
+     * @param [type] $id [description]
+     *
+     * @return array [description]
+     */
+    public function add_attr_sku($data)
+    {
+        return $this->db->insert(SellerConfig::FK_ATTR_SKU, $data);
+    }
+
+    /**
      * [add_goods_tmp_value 添加商品属性模版信息到templet_value表].
      *
      * @param [type] $id [description]

@@ -75,7 +75,7 @@ class GoodsController extends CO_Controller
         // 	["goods_desc"]=>
         // 	string(26) "qqqqqqqqqqqqqqqqqqqqqqqqqq"
         // 	["goods_sku"]=>
-        // 	string(157) "[{"attr_value_id":"1,5","stock":"12","price":"4334"},{"attr_value_id":"1,6","stock":"12","price":"4334"},{"attr_value_id":"1,7","stock":"12","price":"4334"}]"
+        // 	string(157) "[{"attr_value_id":"1,5","attr_value_arr":"银色,32G","attr_key_id_arr":["1","2"],"attr_key_name_arr":["颜色","内存"],"stock":"12","price":"4334"},{"attr_value_id":"1,6","attr_value_arr":"银色,64G","attr_key_id_arr":["1","2"],"attr_key_name_arr":["颜色","内存"],"stock":"12","price":"4334"},{"attr_value_id":"1,7","attr_value_arr":"银色,128G","attr_key_id_arr":["1","2"],"attr_key_name_arr":["颜色","内存"],"stock":"12","price":"4334"}]"
         // 	["goods_tmp"]=>
         // 	string(249) "[{"tmp_value_id":"1","tmp_value":"ssdf"},{"tmp_value_id":"4","tmp_value":"gds"},{"tmp_value_id":"5","tmp_value":"jdf"},{"tmp_value_id":"11","tmp_value":"dsdgfgfs"},{"tmp_value_id":"2","tmp_value":"dfgdsg"},{"tmp_value_id":"6","tmp_value":"hdfghdf"}]"
         // }
@@ -93,20 +93,38 @@ class GoodsController extends CO_Controller
             //添加事务起始
             $db->transStart();
             $goods_id = $this->goods_model->add_goods($goods_data);
+            // $goods_id=100;
             if ($goods_id) {
                 $goods_sku = json_decode($_POST['goods_sku']);
                 // var_dump($goods_sku);
                 foreach ($goods_sku as $key => $value) {
                     $arr = array();
                     $arr['goods_id'] = $goods_id;
-                    $arr['attr_value_id'] = $value->attr_value_id;
                     $arr['stock'] = $value->stock;
                     $arr['price'] = $value->price;
                     $arr['store_id'] = $_SESSION['seller']['id'];
                     $base_img= $value->img;
+                    $arr['attr_value_id'] = $value->attr_value_id;
+                    $attr_value_arr = $value->attr_value_arr;
+                    $attr_key_id_arr_tmp = $value->attr_key_id_arr;
+                    $attr_key_name_arr_tmp = $value->attr_key_name_arr;
                     $arr['goods_img'] = ('' != $base_img)?CO_Utils::base64_to_image_save($base_img,SellerConfig::UPLOAD_GOODS.$_SESSION['seller']['id']):'';
-                    // var_dump($arr['goods_img']);
-                    $this->goods_model->add_goods_sku($arr);
+                    // var_dump($arr);
+                    $sku_id = $this->goods_model->add_goods_sku($arr);
+                    // $sku_id = 56;
+                    $attr_value_id_tmp = explode(",",$arr['attr_value_id']); //array(0 =>'1' ,1 => '6')
+                    $attr_value_tmp = explode(",",$attr_value_arr);  //array(0 =>'银色' ,1 => '64G')
+                    foreach ($attr_value_id_tmp as $k => $v) {
+                        $fk_attr_sku = array(
+                            'goods_id'=>$goods_id,
+                            'sku_id'=>$sku_id,
+                            'attrs_key_id'=>$attr_key_id_arr_tmp[$k],
+                            'attrs_key_name'=>$attr_key_name_arr_tmp[$k],
+                            'attrs_value_id'=>$v,
+                            'attrs_value'=>$attr_value_tmp[$k]
+                        );
+                       $this->goods_model->add_attr_sku($fk_attr_sku);
+                    }
                 }
                 $goods_tmp = json_decode($_POST['goods_tmp']);
                 foreach ($goods_tmp as $key => $value) {
