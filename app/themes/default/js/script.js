@@ -23,6 +23,14 @@ function init() {
 		trigger: 'hover'
 	});
 
+	// Custom select
+	$('.input-select').selectric({
+		responsive: true,
+		customClass: {
+			prefix: 'custom-select'
+		}
+	});
+
 
 	// Accordion
 	var $accordion = $('.accordion');

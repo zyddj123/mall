@@ -44,7 +44,7 @@ class IndexController extends CO_Controller{
 	}
 
 	function index(){
-		echo "这是首页";
+		$this->render('goods/index');
 	}
 
 	//根据商品id获取商品详细信息并展示商品
@@ -58,6 +58,42 @@ class IndexController extends CO_Controller{
 		}else{
 			$this->render('404');
 		}
+	}
+
+	function test_ajax_data(){
+		if($this->input->post('p')){
+			$p=$this->input->post('p');// 当前页码数 默认第1页
+		}else{
+			$p=1;
+		}
+		$ppc=2;// 每页显示多少条
+		$start=($p-1)*$ppc;  //第几条开始查询
+		$arrRet=array();
+		$data = $this->user_page_data($start,$ppc);
+		$count = $this->uesr_page_data_count();
+		$arrRet['data']=$data;//数据
+		$arrRet['p']=$p;//当前页
+		$arrRet['ppc']=$ppc;	//每页显示数
+		$arrRet['all']=$count;//总条数
+		$arrRet['entries']=ceil($count/$ppc);//总页数
+		echo json_encode($arrRet);
+	}
+
+	function user_page_data($start,$ppc){
+		// $res = $this->db->Query("select * from user order by id DESC limit ".$start.",".$ppc);
+		// $res = is_array($res)?$res:array();
+		// return $res;
+		$db = $this->getDb();
+		$sql = "select * from mall_brand order by id DESC limit ?,?";
+		$query = $db->GetAll($sql,array($start,$ppc));
+		return $query;
+	}
+	function uesr_page_data_count(){
+		// return $this->db->Query("select count('id') AS count from user");
+		$db = $this->getDb();
+		$sql = "select * from mall_brand";
+		$query = $db->GetAll($sql);
+		return count($query);
 	}
 
 	function getThemesUrl(){
