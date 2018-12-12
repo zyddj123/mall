@@ -368,14 +368,14 @@
 							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-2.jpg" alt="" /></a>';
 							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-3.jpg" alt="" /></a>';
 							str += '</div>';
-							str += '<div class="description">Go to details</div>';
+							str += '<div class="description">查看详细</div>';
 							str += '</div>';
 							str += '<div class="box-options clearfix">';
 							str += '<div class="pull-left">';
-							str += '<a class="option button" href="#" rel="tooltip" data-placement="top" title="Like"><span class="sr-only">Like</span> <i class="fa fa-heart-o"></i></a>';
+							str += '<a class="option button" href="javascript:void(0);" rel="tooltip" data-placement="top" title="Like"><span class="sr-only">Like</span> <i class="fa fa-heart-o"></i></a>';
 							str += '</div>';
 							str += '<div class="pull-right has-separator">';
-							str += '<a class="option button bg-selected" data-remodal-target="add-to-cart" href="#">+ ADD <i class="fi flaticon-paper-bag"></i></a>';
+							str += '<a class="option button bg-selected" data-remodal-target="add-to-cart" href="javascript:void(0);">+ ADD <i class="fi flaticon-paper-bag"></i></a>';
 							str += '</div>';
 							str += '</div>';
 							str += '<div class="box-info">';
