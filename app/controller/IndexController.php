@@ -66,7 +66,7 @@ class IndexController extends CO_Controller{
 		}else{
 			$p=1;
 		}
-		$ppc=2;// 每页显示多少条
+		$ppc=6;// 每页显示多少条
 		$start=($p-1)*$ppc;  //第几条开始查询
 		$arrRet=array();
 		$data = $this->user_page_data($start,$ppc);
@@ -80,20 +80,16 @@ class IndexController extends CO_Controller{
 	}
 
 	function user_page_data($start,$ppc){
-		// $res = $this->db->Query("select * from user order by id DESC limit ".$start.",".$ppc);
-		// $res = is_array($res)?$res:array();
-		// return $res;
 		$db = $this->getDb();
-		$sql = "select * from mall_brand order by id DESC limit ?,?";
+		$sql = "select * from ". AppConfig::GOODS ." order by id DESC limit ?,?";
 		$query = $db->GetAll($sql,array($start,$ppc));
 		return $query;
 	}
 	function uesr_page_data_count(){
-		// return $this->db->Query("select count('id') AS count from user");
 		$db = $this->getDb();
-		$sql = "select * from mall_brand";
-		$query = $db->GetAll($sql);
-		return count($query);
+		$sql = "select count(id) AS total from ". AppConfig::GOODS;
+		$query = $db->query($sql);
+		return $query[0]['total'];
 	}
 
 	function getThemesUrl(){

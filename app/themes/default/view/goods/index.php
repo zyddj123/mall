@@ -274,22 +274,17 @@
 					<article class="col-md-9 col-sm-8">
 					
 						<div id="item-view-container">
-                            <div style ="width: 800px; margin: 0 auto;text-align: center">
-                                <table id="datatable" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>id</th>
-                                            <th>name</th>
-                                            <th>操作</th>
-                                        </tr>
-                                    </thead>
-                    
-                                    <tbody id="user">
-                                        <!-- <tr><td><img id="loading" src="<?php echo APP_HTTP_ROOT.$this->GetThemes(); ?>/images/loading.gif" width="25px" height="25px" alt=""></td></tr> -->
-                                    </tbody>
-                                </table>
-		                        <div id="Pagination" class="pagination"></div>
-	                        </div>
+
+							<!-- .container-fluid -->
+							<div class="container-fluid">
+								<!-- .filter-section.portfolio -->
+								<div id="goods" class="row filter-section">
+									
+								</div>
+								<center><div id="Pagination" class="pagination"></div></center>
+								<!-- /.filter-section.portfolio -->
+							</div>
+							<!-- /.container-fluid -->
                         </div>
 						
 					</article>
@@ -314,7 +309,14 @@
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/nouislider.min.js"></script>
         <!-- Number formatting -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/wNumb.js"></script>
+		<!-- Images loaded -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/imagesloaded.pkgd.min.js"></script>
+		<!-- pagination -->
         <script src="<?php echo $this->getThemesUrl(); ?>/js/pagination/jquery.pagination.js"></script>
+		<!-- Masonry -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/masonry.pkgd.min.js"></script>
+		<!-- Carousel -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/slick.min.js"></script>
 		<!-- Custom JS -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
         <script>
@@ -324,15 +326,12 @@
 				var slider = rangeSlider[i],
 					min = parseInt(slider.getAttribute('data-min')),
 					max = parseInt(slider.getAttribute('data-max'));
-
 				if(slider.getAttribute('data-before')) {
 					var before = slider.getAttribute('data-before');
 				}
-
 				if(slider.getAttribute('data-after')) {
 					var after = slider.getAttribute('data-after');
 				}
-
 				noUiSlider.create(slider, {
 					start: [ min, max ],
 					step: 1,
@@ -350,26 +349,62 @@
 					})
 				});
 			};
+			
             //pagination
-            function user_data(status,p){
+            function goods_data(status,p){
                 if(typeof status== 'undefined') status=0;//获取值
                 if(typeof p== 'undefined') p=1; //获取当前页数
                 $.post('/Index/test_ajax_data',{"status":status,"p":p},function(e){
-                    $('#user').empty();//清空所有数据
+                    $('#goods').empty();//清空所有数据
                     var e = JSON.parse(e);
                     if(e.data){
                         var str='';						
                         $.each(e.data,function(i,d){
-                            str +='<tr id="type'+d.id+'">';
-                            str +='<td>'+d.id+'</td>';
-                            str +='<td>'+d.brand_name+'</td>';
-                            str +='<td class="actions"><div class="btn-group">';
-                            str +='<a href="/Test/hehe?&sid='+d.id+'" class="btn btn-default"><i class="fa fa-search"></i> 查看</a>';
-                            str +='<a href="/Test/haha?&sid='+d.id+'" class="btn btn-default"><i class="fa fa-cogs"></i> 编辑</a>';
-                            str +='<a href="javascript:void(0)" onclick="delete_item(\''+d.id+'\')" class="btn btn-default"><i class="fa fa-trash-o"></i> 删除</a>';
-                            str +='</div></td></tr>';
+                            str += '<div class="col-lg-up-4 col-lg-4 col-md-4 col-sm-6 col-xs-12">';
+							str += '<article data-animate class="media-box dark">';
+							str += '<div class="box-content">';
+							str += '<div class="figure item-slider" data-slider-nav="item-slider-nav-1" data-slider-arrows>';
+							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-1.jpg" alt="" /></a>';
+							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-2.jpg" alt="" /></a>';
+							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-3.jpg" alt="" /></a>';
+							str += '</div>';
+							str += '<div class="description">Go to details</div>';
+							str += '</div>';
+							str += '<div class="box-options clearfix">';
+							str += '<div class="pull-left">';
+							str += '<a class="option button" href="#" rel="tooltip" data-placement="top" title="Like"><span class="sr-only">Like</span> <i class="fa fa-heart-o"></i></a>';
+							str += '</div>';
+							str += '<div class="pull-right has-separator">';
+							str += '<a class="option button bg-selected" data-remodal-target="add-to-cart" href="#">+ ADD <i class="fi flaticon-paper-bag"></i></a>';
+							str += '</div>';
+							str += '</div>';
+							str += '<div class="box-info">';
+							str += '<h4 class="name" title="Black Denim Dress"><a href="Index/good?id='+d.id+'">'+d.goods_name+'</a></h4>';
+							str += '<div class="price"><ins>$'+d.id+'</ins> <del>$20.00</del></div>';
+							str += '</div>';
+							str += '</article>';
+							str += '</div>';
                         });
-                        $("#user").html(str);   //把数据填到ID中
+                        $("#goods").html(str);   //把数据填到ID中
+						// Item box  商品展示样式
+						$('.item-slider').each(function() {
+							var $this			= $(this),
+								$itemSliderNav	= $this.data('slider-nav'),
+								$showArrows		= (typeof $this.data('slider-arrows') !== 'undefined') ? true : false;
+							$this.on('init reInit afterChange', function (event, slick, currentSlide, nextSlide) {
+								var i = (currentSlide ? currentSlide : 0) + 1;
+								$('#' + $itemSliderNav).attr('data-slide-count', (i + '/' + slick.slideCount + ' '));
+							});
+							$this.slick({
+								slidesToShow: 1,
+								slidesToScroll: 1,
+								arrows: $showArrows,
+								dots: true,
+								//autoplay: true,
+								//autoplaySpeed: (15 + Math.floor(Math.random() * 26)) * 500,
+								appendDots: $('#' + $itemSliderNav)
+							});
+						});
                         if(status!=1){
                             initPagination(e.entries);//总页数
                         }
@@ -381,13 +416,13 @@
                     }
                 });		
 		    }
-            function search_user_data(){
-                user_data();
+            function search_goods_data(){
+                goods_data();
             }		
             //固定Pagination 分页
             function pageselectCallback(page_index, jq){
                 var p = page_index+1;			//当前页码数
-                user_data(1,p);
+                goods_data(1,p);
             }
             function initPagination(page) {
                 var num_entries = page;
@@ -411,9 +446,9 @@
                 });
             };	
             $(function(){ //执行这个方法
-                user_data();
-                // console.log($('#user'));
-                // console.log($('#user').get(0).offsetHeight);
+                goods_data();
+                // console.log($('#goods'));
+                // console.log($('#goods').get(0).offsetHeight);
             });
         </script>
 	</body>
