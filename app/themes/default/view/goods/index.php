@@ -354,6 +354,7 @@
             function goods_data(status,p){
                 if(typeof status== 'undefined') status=0;//获取值
                 if(typeof p== 'undefined') p=1; //获取当前页数
+				$('#goods').empty().append('<center><img src="<?php echo $this->getThemesUrl(); ?>/images/loading.gif" /></center>');
                 $.post('/Index/test_ajax_data',{"status":status,"p":p},function(e){
                     $('#goods').empty();//清空所有数据
                     var e = JSON.parse(e);
