@@ -169,13 +169,13 @@ if(!defined('CO_BASE_CHECK')){
 <script src="<?php echo $this->getThemesUrl();?>/js/validate/messages_zh.min.js"></script>
 <script>
 	var table = $("#goods_brand").DataTable({
-		order:[],
+		order:[["1","desc"]],
 		page: false,
 		serverSide:true,
 		info: true,
 		autoWidth: false,
 		searching:true,
-		ajax: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_brand'?>",
+		ajax: "<?php echo $this->config->app_url_root.'/Brand/ajax_brand'?>",
 		columns: [{
 			"data": null,
 			"targets": 0
@@ -199,7 +199,7 @@ if(!defined('CO_BASE_CHECK')){
 			data: null,
 			defaultContent: '<center><a href="#brand_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
-			"orderable": false, "targets": [0,2,-1],
+			"orderable": false, "targets": [0,2,-1], //设置第1、第3、最后一列不可排序
 		}],
 		createdRow: function(row, data, index) {
 			$(row).data('id', data.id);
@@ -268,7 +268,7 @@ if(!defined('CO_BASE_CHECK')){
 			var formobj =  document.getElementById("modal_form");
 			var res = new FormData(formobj);
 			$.ajax({
-				url: "<?php echo $this->config->app_url_root.'/Goods/ajax_add_edit_brand'?>",
+				url: "<?php echo $this->config->app_url_root.'/Brand/ajax_add_edit_brand'?>",
 				type: "POST",
 				dataType:"json",            
 				data: res,
@@ -302,7 +302,7 @@ if(!defined('CO_BASE_CHECK')){
 		var row = table.row( tr );
 		var brand_id = row.data().id;
 		if(confirm("确定删除该项吗？该操作不可逆")){
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_brand'?>",{"brand_id":brand_id},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Brand/ajax_del_brand'?>",{"brand_id":brand_id},function(e){
 				if(e){
 					alert("删除成功");
 					table.draw();
