@@ -147,7 +147,7 @@ if(!defined('CO_BASE_CHECK')){
 		info: true,
 		autoWidth: false,
 		searching:true,
-		ajax: "<?php echo $this->config->app_url_root.'/Goods/ajax_goods_category'?>",
+		ajax: "<?php echo $this->config->app_url_root.'/Category/ajax_goods_category'?>",
 		columns: [{
 			data: null,
 			targets: 0
@@ -212,7 +212,7 @@ if(!defined('CO_BASE_CHECK')){
 			var input_sort_val = input_sort.val();
 			var td_save_tmp_key_btn = $(this).closest('tr').find('.save_tmp_key_btn');
 			if(input_tmp_key_val!=''&&input_sort_val!=''){
-				$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_edit_templet_key'?>",{"tmp_key_id":tmp_key_id,"tmp_key":input_tmp_key_val,"sort":input_sort_val},function(e){
+				$.post("<?php echo $this->config->app_url_root.'/Category/ajax_edit_templet_key'?>",{"tmp_key_id":tmp_key_id,"tmp_key":input_tmp_key_val,"sort":input_sort_val},function(e){
 					if(e){
 						td_tmp_key.empty().append(input_tmp_key_val);
 						td_sort.empty().append(input_sort_val);
@@ -237,41 +237,45 @@ if(!defined('CO_BASE_CHECK')){
 
 	//属性模版的取值填充
 	function ajax_get_tmp_key(category_id){
-		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_category_get_templet_key_count'?>",{"category_id":category_id},function(tot){
+		$.post("<?php echo $this->config->app_url_root.'/Category/ajax_category_get_templet_key_count'?>",{"category_id":category_id},function(tot){
 			tot = Number(tot);
-			$.jqPaginator('#pagination2', {
-				totalCounts:tot,
-				pageSize:10,
-				onPageChange: function (num, type,pageSize) {
-					var start = (num-1)*pageSize;
-					$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_category_get_templet_key'?>",{"category_id":category_id,"start":start,"ppc":pageSize},function(e){
-						e = JSON.parse(e);
-						var str = '';
-						if(e){
-							var i = 1;
-							for(v in e){
-								str += '<tr id="'+e[v].id+'">';
-								str += '<td>'+i+'</td>';
-								str += '<td>'+e[v].category_name+'</td>';
-								str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
-								str += '<td class="sort">'+e[v].sort+'</td>';
-								str += '<td><center>';
-								if(e[v].store_id==0){
-									str += '<a href="javascript:void(0)" style="cursor:not-allowed;text-decoration:none;" class="text-warning" title="系统预设项不能编辑"><i class="fa fa-ban"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-warning" style="cursor:not-allowed;text-decoration:none;" title="系统预设项不能删除"><i class="fa fa-ban"></i>删除</a>';
-								}else{
-									str += '<a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a>';
+			if(tot==0){
+				$('#pagination2').empty().append('此商品类型下暂无商品属性，请添加');
+			}else{
+				$.jqPaginator('#pagination2', {
+					totalCounts:tot,
+					pageSize:5,
+					onPageChange: function (num, type,pageSize) {
+						var start = (num-1)*pageSize;
+						$.post("<?php echo $this->config->app_url_root.'/Category/ajax_category_get_templet_key'?>",{"category_id":category_id,"start":start,"ppc":pageSize},function(e){
+							e = JSON.parse(e);
+							var str = '';
+							if(e){
+								var i = 1;
+								for(v in e){
+									str += '<tr id="'+e[v].id+'">';
+									str += '<td>'+i+'</td>';
+									str += '<td>'+e[v].category_name+'</td>';
+									str += '<td class="tmp_key">'+e[v].tmp_key+'</td>';
+									str += '<td class="sort">'+e[v].sort+'</td>';
+									str += '<td><center>';
+									if(e[v].store_id==0){
+										str += '<a href="javascript:void(0)" style="cursor:not-allowed;text-decoration:none;" class="text-warning" title="系统预设项不能编辑"><i class="fa fa-ban"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-warning" style="cursor:not-allowed;text-decoration:none;" title="系统预设项不能删除"><i class="fa fa-ban"></i>删除</a>';
+									}else{
+										str += '<a href="javascript:void(0)" class="edit_tmp_key_btn"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_tmp_key_btn"><i class="fa fa-trash-o"></i>删除</a>';
+									}
+									str += '</center></td>';
+									str += '</tr>';
+									i++;
 								}
-								str += '</center></td>';
-								str += '</tr>';
-								i++;
+								$('#attr_table').empty().append(str);
+							}else{
+								$('#pagination2').empty().append('此商品类型下暂无商品属性，请添加');
 							}
-							$('#attr_table').empty().append(str);
-						}else{
-							$('#pagination2').empty().append('此商品类型下暂无商品属性，请添加');
-						}
-					});
-				}
-			});
+						});
+					}
+				});
+			}
 		});
 	}
 
@@ -283,7 +287,7 @@ if(!defined('CO_BASE_CHECK')){
 	$('#add_category_btn').click(function(){
 		var input_category_name = $('#input_category_name').val();
 		if(input_category_name!=''){
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_category'?>",{"input_category_name":input_category_name},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Category/ajax_add_category'?>",{"input_category_name":input_category_name},function(e){
 				if(e){
 					alert("添加成功");
 					$('#input_category_name').val('');
@@ -304,7 +308,7 @@ if(!defined('CO_BASE_CHECK')){
 		var input_attr_sort = $('#input_attr_sort').val();
 		var category_id = $('#hidden_category_id').val();
 		if(input_attr_name!=''&&input_attr_sort!=''){
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_add_tmp_key'?>",{"category_id":category_id,"input_attr_name":input_attr_name,"input_attr_sort":input_attr_sort},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Category/ajax_add_tmp_key'?>",{"category_id":category_id,"input_attr_name":input_attr_name,"input_attr_sort":input_attr_sort},function(e){
 				if(e){
 					alert("添加成功");
 					$('#input_attr_name').val('');
@@ -321,7 +325,7 @@ if(!defined('CO_BASE_CHECK')){
 	$('body').on('click','.del_btn',function(){
 		var category_id = $(this).closest('tr').data('id');
 		if(confirm("确定删除该项吗？该操作不可逆")){
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_category'?>",{"category_id":category_id},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Category/ajax_del_category'?>",{"category_id":category_id},function(e){
 				if(e){
 					alert("删除成功");
 					table.draw();
@@ -336,7 +340,7 @@ if(!defined('CO_BASE_CHECK')){
 		var category_id = $('#hidden_category_id').val();
 		var attr_id = $(this).closest('tr').attr('id');
 		if(confirm("确定删除该项吗？该操作不可逆")){
-			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_del_attr_key'?>",{"attr_id":attr_id},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Category/ajax_del_attr_key'?>",{"attr_id":attr_id},function(e){
 				if(e){
 					alert("删除成功");
 					ajax_get_tmp_key(category_id);

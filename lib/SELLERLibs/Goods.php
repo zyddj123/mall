@@ -1,6 +1,6 @@
 <?php
 /**
- * 商品品牌类.
+ * 商品类.
  *
  * @author			B.I.T
  * @copyright		Copyright (c) 2018 - 2019.
@@ -9,19 +9,30 @@
  * @see
  * @since				Version 1.19
  */
-class Brand extends D_Model
+class Goods extends D_Model
 {
     public function init()
     {
-        $this->table = SellerConfig::BRAND;
+        $this->table = SellerConfig::GOODS;
         $this->formData = array(
             'id',
-            'brand_name',
-            'brand_logo',
-            'brand_desc',
-            'site_url',
+            'goods_sn',
+            'goods_name',
+            'click_count',
+            'goods_category',
+            'brand_id',
+            'keywords',
+            'goods_brief',
+            'goods_desc',
+            'goods_img',
+            'is_real',
+            'is_on_sale',
+            'is_new',
+            'is_hot',
             'store_id',
-            'status',
+            'goods_unit',
+            'add_time',
+            'status'
         );
     }
 
@@ -32,7 +43,7 @@ class Brand extends D_Model
         $data['table'] = $this->table;
         $data['order'] = array('1' => 'brand_name', '3' => 'site_url');
         $data['where']['and'] = array('store_id' => array(0, 1), 'status' => 1);
-        $data['where']['or'] = array('brand_name');
+        $data['where']['or'] = array('goods_name','goods_sn');
         // $data['where']['or2'] = array('store_id'=>array(0,1),'status'=>array(0,1));
         $a = new DataTable($get, $data, $this->db);
 

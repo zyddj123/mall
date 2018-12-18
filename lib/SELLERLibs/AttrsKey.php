@@ -1,6 +1,6 @@
 <?php
 /**
- * 商品品牌类.
+ * 商品规格key类.
  *
  * @author			B.I.T
  * @copyright		Copyright (c) 2018 - 2019.
@@ -9,17 +9,14 @@
  * @see
  * @since				Version 1.19
  */
-class Brand extends D_Model
+class AttrsKey extends D_Model
 {
     public function init()
     {
-        $this->table = SellerConfig::BRAND;
+        $this->table = SellerConfig::ATTRS_KEY;
         $this->formData = array(
             'id',
-            'brand_name',
-            'brand_logo',
-            'brand_desc',
-            'site_url',
+            'attr_key_name',
             'store_id',
             'status',
         );
@@ -30,9 +27,9 @@ class Brand extends D_Model
         $data['select'] = $this->formData;
         $data['sum'] = 'id';
         $data['table'] = $this->table;
-        $data['order'] = array('1' => 'brand_name', '3' => 'site_url');
+        $data['order'] = array();
         $data['where']['and'] = array('store_id' => array(0, 1), 'status' => 1);
-        $data['where']['or'] = array('brand_name');
+        $data['where']['or'] = array('attr_key_name');
         // $data['where']['or2'] = array('store_id'=>array(0,1),'status'=>array(0,1));
         $a = new DataTable($get, $data, $this->db);
 
