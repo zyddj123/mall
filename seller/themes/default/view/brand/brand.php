@@ -10,7 +10,7 @@ if(!defined('CO_BASE_CHECK')){
 <head>
 	<!-- meta -->
 	<?php @include_once $this->getThemesPath().'/view/common/meta.php';?>
-	<title><?php echo $this->language['index_title']?></title>
+	<title>商品品牌管理</title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
 	<link href="<?php echo $this->getThemesUrl();?>/js/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -65,10 +65,6 @@ if(!defined('CO_BASE_CHECK')){
 								<div class="row">
 									<div class="col-lg-8 col-sm-8" style="display: -webkit-box;">
 										<a href="#brand_dialog" data-toggle="modal" class="btn btn-warning" id="add_brand">添加商品品牌</a>
-										<div id="add_category_div" class="form-inline" style="display: none">
-											<input style="margin-left: 30px;" type="text" class="form-control" id="input_category_name" placeholder="商品品牌名称">&nbsp;&nbsp;
-											<button class="btn btn-warning" id="add_category_btn" type="button">添加</button>
-										</div>
 									</div>
 								</div><br>
 								<div class="row">

@@ -10,7 +10,7 @@ if (!defined('CO_BASE_CHECK')) {
 <head>
 	<!-- meta -->
 	<?php @include_once $this->getThemesPath().'/view/common/meta.php'; ?>
-	<title><?php echo $this->language['index_title']; ?></title>
+	<title>添加商品</title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
 	<link href="<?php echo $this->getThemesUrl(); ?>/js/select2/select2.min.css" rel="stylesheet">

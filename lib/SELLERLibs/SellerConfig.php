@@ -30,6 +30,7 @@ class SellerConfig{
 	//数据库视图
 	const VIEW_GOODS = 'mall_view_goods';
 	const VIEW_CATEGORY_TMP_KEY = 'mall_view_category_tmp_key';
+	const VIEW_ATTR_KEY_VALUE = 'mall_view_attr_key_value';
 
 	/*---------------------------------路径--------------------------------*/
 	const UPLOAD_HEAD = '/upload/head/';//头像上传路径

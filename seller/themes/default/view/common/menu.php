@@ -11,8 +11,8 @@
 			<li id="goods/goods_index"><a href="<?php echo $this->config->app_url_root.'/Goods/goods_index'?>"><?php echo $this->language['sys_left_menu_goods']?></a></li>
 			<li id="category/category"><a href="<?php echo $this->config->app_url_root.'/Category/category'?>">类别管理</a></li>
 			<li id="brand/brand"><a href="<?php echo $this->config->app_url_root.'/Brand/brand'?>">品牌管理</a></li>
-			<li id="goods/goods_index"><a href="#">规格管理</a></li>
-			<li id="goods/goods_index"><a href="#">商品单位</a></li>
+			<li id="attr/attr"><a href="<?php echo $this->config->app_url_root.'/Attr/attr'?>">规格管理</a></li>
+			<li id="unit/unit"><a href="<?php echo $this->config->app_url_root.'/Unit/unit'?>">商品单位</a></li>
 		</ul>
 	</li>
 

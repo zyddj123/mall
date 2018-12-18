@@ -27,7 +27,7 @@ class AttrsKey extends D_Model
         $data['select'] = $this->formData;
         $data['sum'] = 'id';
         $data['table'] = $this->table;
-        $data['order'] = array();
+        $data['order'] = array('1'=>'attr_key_name');
         $data['where']['and'] = array('store_id' => array(0, 1), 'status' => 1);
         $data['where']['or'] = array('attr_key_name');
         // $data['where']['or2'] = array('store_id'=>array(0,1),'status'=>array(0,1));

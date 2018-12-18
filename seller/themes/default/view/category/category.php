@@ -10,7 +10,7 @@ if(!defined('CO_BASE_CHECK')){
 <head>
 	<!-- meta -->
 	<?php @include_once $this->getThemesPath().'/view/common/meta.php';?>
-	<title><?php echo $this->language['index_title']?></title>
+	<title>商品类别管理</title>
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php';?>
 	<link href="<?php echo $this->getThemesUrl();?>/js/datatable/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -237,6 +237,7 @@ if(!defined('CO_BASE_CHECK')){
 
 	//属性模版的取值填充
 	function ajax_get_tmp_key(category_id){
+		$('#attr_table').empty();
 		$.post("<?php echo $this->config->app_url_root.'/Category/ajax_category_get_templet_key_count'?>",{"category_id":category_id},function(tot){
 			tot = Number(tot);
 			if(tot==0){
