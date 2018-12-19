@@ -53,8 +53,9 @@ class IndexController extends CO_Controller{
 		$db = $this->getDb();
 		$goods = $db->getRow("select * from " .AppConfig::GOODS ." where id = ?",array($id));
 		$data = $db->getAll("select fk_as.*,sku.* from " .AppConfig::GOODS_SKU ." AS sku, ".AppConfig::FK_ATTR_SKU." AS fk_as where sku.goods_id = ? and sku.id = fk_as.sku_id",array($id));
+		$tmp = $db->GetAll("select v.*, k.tmp_key from mall_templet_value AS v ,mall_templet_key AS k where v.goods_id = {$id} and v.tmp_key_id = k.id");
 		if($goods){
-			$this->render('goods/detail',array('sku'=>json_encode($data),'goods'=>$goods));
+			$this->render('goods/detail',array('sku'=>json_encode($data),'goods'=>$goods,'tmp'=>$tmp));
 		}else{
 			$this->render('404');
 		}

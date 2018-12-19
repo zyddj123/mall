@@ -159,12 +159,12 @@
 					<div class="col-md-3 col-sm-4">
 						<!-- .sb-block -->
 						<article class="sb-block">
-							<h3 class="sb-title">About <strong>product</strong></h3>
+							<h3 class="sb-title">关于 <strong>商品</strong></h3>
 							<div class="sb-content">
 								<ul class="nav-list text-uppercase" role="tablist">
-									<li role="presentation" class="active"><a href="#product-desc" aria-controls="product-desc" role="tab" data-toggle="tab">Description</a></li>
-									<li role="presentation"><a href="#product-info" aria-controls="product-info" role="tab" data-toggle="tab">Information</a></li>
-									<li role="presentation"><a href="#product-review" aria-controls="product-review" role="tab" data-toggle="tab">Product review</a></li>
+									<li role="presentation" class="active"><a href="#product-desc" aria-controls="product-desc" role="tab" data-toggle="tab">商品描述</a></li>
+									<li role="presentation"><a href="#product-info" aria-controls="product-info" role="tab" data-toggle="tab">商品详情</a></li>
+									<li role="presentation"><a href="#product-review" aria-controls="product-review" role="tab" data-toggle="tab">商品评论</a></li>
 								</ul>
 							</div>
 						</article>
@@ -176,6 +176,10 @@
 						<div class="tab-content content-section">
 							<!-- #product-desc -->
 							<div role="tabpanel" class="tab-pane fade in active" id="product-desc">
+								<div class="row small-gap">
+									<h4 class="maintitle">商品 <strong>详细描述</strong></h4>
+								</div>
+								<br>
 								<p><?php echo $goods['goods_desc']?></p>
 
 								
@@ -184,21 +188,40 @@
 
 							<!-- #product-info -->
 							<div role="tabpanel" class="tab-pane fade" id="product-info">
-								<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat,
-								vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim
-								qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi
-								tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-								nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat
-								tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+								<div class="row small-gap">
+									<h4 class="maintitle">商品 <strong>详细参数</strong></h4>
+								</div>
+								<br>
+								<div class="row small-gap">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-5">
+										<ul class="list-icon text-uppercase">
+										<?php foreach($tmp as $key => $value):?>
+											<li class="clearfix">
+												<div class="row">
+													<div class="col-sm-5">
+														<strong class="pull-right"><?php echo $value['tmp_key']?></strong>
+													</div>
+													<div class="col-sm-1"></div>
+													<div class="col-sm-5">
+														<span class="pull-left"><?php echo $value['value']?></span>
+													</div>
+												</div>
+											</li>
+										<?php endforeach;?>
+										</ul>
+									</div>
+								</div>
 							</div>
 							<!-- /#product-info -->
 
 							<!-- #product-review -->
 							<div role="tabpanel" class="tab-pane fade" id="product-review">
-								<p>Qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi
-								tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-								nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat
-								tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+								<div class="row small-gap">
+									<h4 class="maintitle">商品 <strong>详细描述</strong></h4>
+								</div>
+								<br>
+								<p>商品评论.</p>
 							</div>
 							<!-- /#product-review -->
 						</div>
