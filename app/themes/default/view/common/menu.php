@@ -11,7 +11,7 @@
         <nav class="menu">
             <ul>
                 <li><a href="checkout.html">Checkout</a></li>
-                <li class="has-children"><a href="#">Home</a>
+                <li class="has-children"><a href="<?php echo $this->config->app_url_root.'/Index'; ?>">主页</a>
                     <ul>
                         <li><a href="index.html">Home 1</a></li>
                         <li><a href="index2.html">Home 2</a></li>

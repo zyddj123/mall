@@ -355,7 +355,7 @@
                 if(typeof status== 'undefined') status=0;//获取值
                 if(typeof p== 'undefined') p=1; //获取当前页数
 				$('#goods').empty().append('<center><img src="<?php echo $this->getThemesUrl(); ?>/images/loading.gif" /></center>');
-                $.post('/Index/test_ajax_data',{"status":status,"p":p},function(e){
+                $.post('<?php echo $this->config->app_url_root.'/Index/ajax_goods'; ?>',{"status":status,"p":p},function(e){
                     $('#goods').empty();//清空所有数据
                     var e = JSON.parse(e);
                     if(e.data){
@@ -381,7 +381,7 @@
 							str += '</div>';
 							str += '<div class="box-info">';
 							str += '<h4 class="name" title="Black Denim Dress"><a href="Index/good?id='+d.id+'">'+d.goods_name+'</a></h4>';
-							str += '<div class="price"><ins>$'+d.id+'</ins> <del>$20.00</del></div>';
+							str += '<div class="price"><ins>$'+d.min_price+'</ins> <del>$20.00</del></div>';
 							str += '</div>';
 							str += '</article>';
 							str += '</div>';

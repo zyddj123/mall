@@ -24,12 +24,15 @@
             
         <div class="pull-right">
             <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-lock"></i> Login or Register</a></li>
-                <li class="hidden-xs"><a href="checkout.html"><i class="fa fa-caret-square-o-right"></i> Checkout</a></li>
+                <?php if(isset($_SESSION['app'][id])&&!empty($_SESSION['app'][id])):?>
+                <li><a href="#"><i class="fa fa-lock"></i> <?php echo $_SESSION['app']['app_name']?> </a></li>
+                <?php else:?>
+                <li><a href="<?php echo $this->config->app_url_root.'/Login'; ?>"><i class="fa fa-lock"></i> 登录|注册</a></li>
+                <?php endif;?>
                 <li class="hidden-xs">
                     <form class="search-form">
                         <input type="text" placeholder="Search" />
-                        <button type="submit"><span class="sr-only">Search</span> <i class="fi flaticon-magnifying-glass"></i></button>
+                        <button type="submit"><span class="sr-only">搜索</span> <i class="fi flaticon-magnifying-glass"></i></button>
                     </form>
                 </li>
             </ul>
@@ -158,7 +161,7 @@
                 <!-- .default-menu -->
                 <nav class="pull-right hidden-sm hidden-xs default-menu text-right">
                     <ul>
-                        <li class="has-children"><a href="#">Home</a>
+                        <li class="has-children"><a href="<?php echo $this->config->app_url_root.'/Index'; ?>">主页</a>
                             <div class="submenu">
                                 <ul>
                                     <li><a href="index.html">Home 1</a></li>

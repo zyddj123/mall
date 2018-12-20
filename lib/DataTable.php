@@ -11,9 +11,9 @@
  * @copyright Copyright (c) 2018-2019, B.I.T.
  * @license
  *
- * @see
+ * @see 新增left join
  *
- * @version v.2.0
+ * @version v.2.1
  */
 class DataTable
 {
@@ -97,29 +97,33 @@ class DataTable
      * @param array  $dataTableGet dataTable前台传递过来的数组
      * @param array  $info         构造好的数组结构如下
      *                             example array(   //表示 select ID AS sum,ID,USERNMAE   其中 sum用来统计数据的总条数
-     *                             "select"=array(
-     *                             "ID"=>"sum",
-     *                             "0"=>'ID',
-     *                             "1"=>"USERNAME",
-     *                             )，
-     *                             "sum"=>"ID",       //必须 用来查询总的条数  值必须是唯一的
-     *                             "table"=>"t_o2o_user",
-     *                             "order"=>array(   //前台会发送过来根据哪一列排序  接收过来的值就是 键值，对应到数据表中的字段就是值，前台有几个列能够排序这里就需要有几个对应的键值队
-     *                             "0"=>"ID",
-     *                             "2"=>"USERNAME",
-     *                             ),
-     *                             "where"=>array(      //and和or可以同时调用  但是or是用来做查询的  and则是初始数据的查询条件
-     *                             "and"=>array(      //表示会查询state=1 and level=2 and (a=1 or a=2) 的数据
-     *                             "state"=>'1',
-     *                             "level"=>"2",
-     *                             "a"=>[1,2]
-     *                             ),
-     *                             "or"=>array("ID","USERNAME"),   //用户查询的时候回根据这里的参数作为查询的列  例如 当search=root时   就会查询 ID like %root% or USERNAME like %root%
-     *                             "or2"=>[ //这里面的会用or连接 几乎很少用 例如下面的数组会变成: a=1 or a=2 or b=2
-     *                             a=>[1,2],
-     *                             b=>[2]
-     *                             ]
-     *                             )
+        *                             "select"=array(
+        *                                  "ID"=>"sum",
+        *                                  "0"=>'ID',
+        *                                  "1"=>"USERNAME",
+        *                             )，
+        *                             "sum"=>"ID",       //必须 用来查询总的条数  值必须是唯一的
+        *                             "table"=>"t_o2o_user",
+        *                             "order"=>array(   //前台会发送过来根据哪一列排序  接收过来的值就是 键值，对应到数据表中的字段就是值，前台有几个列能够排序这里就需要有几个对应的键值队
+        *                                  "0"=>"ID",
+        *                                  "2"=>"USERNAME",
+        *                             ),
+        *                             "where"=>array(      //and和or可以同时调用  但是or是用来做查询的  and则是初始数据的查询条件
+        *                                  "and"=>array(      //表示会查询state=1 and level=2 and (a=1 or a=2) 的数据
+        *                                      "state"=>'1',
+        *                                      "level"=>"2",
+        *                                      "a"=>[1,2]
+        *                                  ),
+        *                                  "or"=>array("ID","USERNAME"),   //用户查询的时候回根据这里的参数作为查询的列  例如 当search=root时   就会查询 ID like %root% or USERNAME like %root%
+        *                                  "or2"=>[ //这里面的会用or连接 几乎很少用 例如下面的数组会变成: a=1 or a=2 or b=2
+        *                                          a=>[1,2],
+        *                                          b=>[2]
+        *                                  ]
+        *                             ),
+        *                             "join"=>array(
+        *                                   'class'=>array('student.class_id','class.id'),
+        *                                   'sex'=>array('student.class_id','sex.id')
+        *                             )
      *                             )
      * @param string $databaseName 数据库的名字 默认是空 用来创建数据库对象
      *
@@ -196,6 +200,7 @@ class DataTable
     {
         $data = $this->_info;
         $selectSql = '';
+        $joinSql = '';
         $orderSql = '';
         $whereSql = '';
         $limitSql = '';
@@ -204,6 +209,9 @@ class DataTable
             $selectSql = self::_getSelectSql($data['select']);
         } else {
             $selectSql = '*';
+        }
+        if (isset($data['join']) && !empty($data['join'])) {
+            $joinSql = self::_getJoinSql($data['join']);
         }
         if (isset($data['order']) && !empty($data['order'])) {
             $orderSql = self::_getOrderSql($data['order']);
@@ -219,8 +227,10 @@ class DataTable
         }
         if (!empty($this->_search)) {
         }
+        
 
-        $sql = 'SELECT '.$selectSql." FROM `{$data['table']}` ".$whereSql.' '.$orderSql.' '.$limitSql;
+        $sql = 'SELECT '.$selectSql." FROM `{$data['table']}` ". $joinSql .$whereSql.' '.$orderSql.' '.$limitSql;
+        // var_dump($sql);die;
         $info = $this->_getAll($sql);
         $sql1 = 'SELECT '.$sumSql." FROM {$data['table']} ".$whereSql;
         @$this->_recordsTotal = $this->_getAll($sql1)['0']['sum'];
@@ -275,13 +285,33 @@ class DataTable
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 if ($key == $this->_order_column) {
-                    $sql = "order by `{$value}` ".$this->_order_dir;
+                    $sql = "order by {$value} ".$this->_order_dir;
                     break;
                 }
             }
         }
 
         return $sql;
+    }
+
+    /**
+     * 构建join部分的sql语句.
+     *
+     * @param array $data 构造函数第二个参数join部分
+     *
+     * @return string join的sql语句
+     */
+    //$data = array(
+    //          'class'=>array($this->table.'class_id','class.id'),
+    //          'sex'=>array($this->table.'sex_id','sex.id'));
+    //      );
+    protected function _getJoinSql($data)
+    {
+        $tmp = array();
+        foreach ($data as $key => $value) {
+            array_push($tmp, " LEFT JOIN {$key} ON {$value[0]} = {$value[1]} ");
+        }
+        return implode(' ', $tmp);
     }
 
     /**
@@ -352,7 +382,7 @@ class DataTable
         $list = array();
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
-                array_push($list, '`'.$value.'`');
+                array_push($list, $value);
             } else {
                 array_push($list, $key.' AS '.$value);
             }
@@ -404,52 +434,49 @@ class DataTable
     }
 
     /**
-     * 预处理where语句参数 ，将多条where语句用or或者and连接起来.
+     * 预处理where语句参数 ，将多条where语句用or或者and连接起来
      *
      * @param data array 待处理的参数
      * @param is_or 查询条件是and还是or  默认是and
-     *
-     * @return string 处理完成的字符串
+     * @return  string 处理完成的字符串
      */
     protected function _processWhereParams($data, $is_or = true)
     {
         $field_list = array();
         if ($is_or) {
             foreach ($data as $field_name => $field_value) {
-                if (is_array($field_value)) {
-                    $data_list = array();
+                if(is_array($field_value)){
+                    $data_list  = array();
                     foreach ($field_value as $key => $value) {
-                        array_push($data_list, '`'.$field_name.'`='."'{$value}'");
+                        array_push($data_list, $field_name . '=' . "'{$value}'");
                     }
-                    array_push($field_list, '('.implode(' OR ', $data_list).')');
-                } else {
-                    array_push($field_list, '`'.$field_name.'`='."'{$field_value}'");
+                    array_push($field_list, "(".implode(' OR ', $data_list).")");
+                }else{
+                    array_push($field_list, $field_name . '=' . "'{$field_value}'");
                 }
             }
-
             return implode(' AND ', $field_list);
         } else {
             foreach ($data as $field_name => $field_value) {
-                array_push($field_list, '`'.$field_value.'` LIKE '."'".'%'.$this->_search.'%'."'");
+                array_push($field_list, $field_value . ' LIKE ' . "'" . '%' . $this->_search . '%' . "'");
             }
-
             return implode(' OR ', $field_list);
         }
     }
 
     protected function _processWhereParamsOr($data)
     {
-        $field_list = [];
+        $field_list=[];
         foreach ($data as $field_name => $field_value) {
             if (is_array($field_value)) {
                 foreach ($field_value as $v) {
-                    array_push($field_list, '`'.$field_name.'`='."'{$v}'");
+                    array_push($field_list, $field_name.'='."'{$v}'");
                 }
             } else {
-                array_push($field_list, '`'.$field_name.'`='."'{$field_value}'");
+                array_push($field_list, $field_name.'='."'{$field_value}'");
             }
         }
 
-        return '('.implode(' OR ', $field_list).')';
+        return "(".implode(' OR ', $field_list).")";
     }
 }
