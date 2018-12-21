@@ -15,6 +15,20 @@
 		<link rel="stylesheet" href="<?php echo $this->getThemesUrl(); ?>/css/style.css" />
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/jquery-1.10.2.min.js"></script>
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/app.js"></script>
+		<style type="text/css">
+			.series {
+				border-style: solid;
+				border-width: 2px;
+				border-color: #CCCCCC;
+				padding-top: 3px;
+				padding-bottom: 3px;
+				font-weight: bold;
+				margin: 2px;
+			}
+			.series a {
+				color: #000;
+			}
+		</style>
 		<!--[if lt IE 9]>
 			<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/html5shiv.min.js"></script>
 		<![endif]-->
@@ -50,9 +64,9 @@
 				<!-- .product-section -->
 				<div class="product-section" itemscope>
 					<div class="row">
-						<div class="col-md-9 col-sm-8">
+						<div class="col-md-12 col-sm-12">
 							<div class="row">
-								<div class="col-md-6 col-sm-5">
+								<div class="col-md-4 col-sm-4">
 									<figure class="product-carousel-image">
 										<a :href="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" data-lightbox="product">
 											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" :src="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" alt="" />
@@ -66,41 +80,69 @@
 									</div>
 								</div>
 								
-								<div class="col-lg-5 col-md-6 col-sm-7">
-									<h3 class="category-title text-uppercase secondary-text">Elegant watches</h3>
+								<div class="col-lg-8 col-md-8 col-sm-8">
+									<!-- <h3 class="category-title text-uppercase secondary-text">Elegant watches</h3> -->
 									
-									<h1 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h1>
+									<!-- <h1 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h1> -->
 									
 									<!-- .content -->
 									<div class="content">
-										<p class="btn-list">
-											<a data-remodal-target="compare" href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-compass"></i> Compare</a>
-											<a data-remodal-target="wishlist" href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> Add to wishlist</a>
-										</p>
-										
-										<div itemprop="description">
-											<p><?php echo $goods['goods_brief']?></p>
-										</div>
 									
 										<div class="row small-gap">
-											<div class="col-sm-6">
-												<ul class="list-icon text-uppercase">
-													<li><i class="fa fa-check"></i> Pure platinum</li>
-													<li><i class="fa fa-check"></i> Precious stone</li>
-													<li><i class="fa fa-check"></i> Cheracom</li>
-													<li><i class="fa fa-check"></i> Stainless steel</li>
-													<li><i class="fa fa-check"></i> Rolesor</li>
-												</ul>
-											</div>
+											<div class="col-sm-12">
+												<!-- .product-panel -->
+												<div class="panel" id="sku" style="height: 500px;padding:20px 20px 10px 30px;">
+													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h2>
+													<meta itemprop="priceCurrency" content="USD" />
+													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price">{{money}}</span></strong></h2></div>
+												
+													<p class="btn-list">
+														<a data-remodal-target="wishlist" href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
+														<span class="pull-right">库存: {{choosed.stock}}</span>
+													</p>
+													<form id="add-to-cart">
+														<!-- <div class="form-group">
+															<div v-for="(item,index) in attr_list">
+																<label class="secondary-text" for="item-color">{{item.attrs_key_name}}</label>
+																<div class="select-sm select-radius">
+																	<select class="form-control" v-model="attr[index]">
+																		<option v-for="key in item.attr_value" v-bind:value="key.attrs_value_id">{{key.attrs_value}}</option>
+																	</select>
+																</div>
+															</div>
 
-											<div class="col-sm-6">
-												<ul class="list-icon text-uppercase">
-													<li><i class="fa fa-check"></i> Gold</li>
-													<li><i class="fa fa-check"></i> 904L stainless steel</li>
-													<li><i class="fa fa-check"></i> Rolesor</li>
-													<li><i class="fa fa-check"></i> Pure platinum</li>
-													<li><i class="fa fa-check"></i> Cheracom</li>
-												</ul>
+														</div> -->
+														<div class="form-group" style="margin-bottom: 0px" v-for="(item,index) in attr_list">
+															<div class=" input-one form-list" style="display:inline-flex;">
+																<label class="required" style="margin-top:8px" id="<?php echo $standard[0]['two']['gsnumber']?> ">
+																	{{item.attrs_key_name}}
+																</label>
+																<ul class="list-inline" style="margin-left:15px;">
+																	<li v-for="key in item.attr_value" class="series" onMouseUp="select($(this))" onmouseover="display($(this))" onMouseOut="conceal($(this))">
+																		<a onclick="get_state_by_standard()" id="">{{key.attrs_value}}</a>
+																	</li>
+																</ul> 
+															</div>
+														</div>
+											
+														<div class="form-group row" style="margin-bottom:30px;">
+															<div class="col-lg-3">
+																<div class="input-group input-group-radius count-input">
+																	<input type="text" class="form-control input-sm" v-model="count" value="1" />
+																	<div class="input-group-btn">
+																		<button class="btn btn-sm btn-input" @click.prevent="countCut" data-value="minus"><i class="fa fa-minus"></i></button>
+																		<button class="btn btn-sm btn-input" @click.prevent="countAdd" data-value="plus"><i class="fa fa-plus"></i></button>
+																	</div>
+																</div>
+															</div>	
+															<div class="col-lg-1"></div>
+															<div class="col-lg-5">	
+																<button data-remodal-target="add-to-cart" class="btn btn-radius btn-simple-to-border btn-primary" type="submit">添加购物车</button>
+															</div>
+														</div>
+													</form>
+												</div>
+												<!-- /.product-panel -->
 											</div>
 										</div>
 									</div>
@@ -109,47 +151,7 @@
 							</div>
 						</div>
 						
-						<div class="col-md-3 col-sm-4">
-							<!-- .product-panel -->
-							<div class="product-panel" id="sku" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-								<link itemprop="availability" href="http://schema.org/InStock" />
-								<p class="status text-uppercase secondary-text">库存: <span>{{choosed.stock}}</span></p>
-								<meta itemprop="priceCurrency" content="USD" />
-								<div class="price"><span class="currency">$</span><span itemprop="price">{{money}}</span></div>
-								
-								<form id="add-to-cart">
-									<div class="form-group">
-										<label class="secondary-text" for="item-count">Quantity</label>
-										
-										<div class="input-group input-group-radius count-input">
-											<input type="text" class="form-control input-sm" v-model="count" value="1" />
-											<div class="input-group-btn">
-												<button class="btn btn-sm btn-input" @click.prevent="countCut" data-value="minus"><i class="fa fa-minus"></i></button>
-												<button class="btn btn-sm btn-input" @click.prevent="countAdd" data-value="plus"><i class="fa fa-plus"></i></button>
-											</div>
-										</div>
-										<div v-for="(item,index) in attr_list">
-											<label class="secondary-text" for="item-color">{{item.attrs_key_name}}</label>
-											<div class="select-sm select-radius">
-												<select class="form-control" v-model="attr[index]">
-													<option v-for="key in item.attr_value" v-bind:value="key.attrs_value_id">{{key.attrs_value}}</option>
-												</select>
-											</div>
-										</div>
-
-									</div>
-									
-									<div class="form-group text-center">
-										<button data-remodal-target="add-to-cart" class="btn btn-radius btn-simple-to-border btn-primary" type="submit">添加购物车</button>
-									</div>
-									
-									<div class="form-feedback on-valid alert alert-small alert-success text-center" role="alert">
-										<p>You added this item to cart.</p>
-									</div>
-								</form>
-							</div>
-							<!-- /.product-panel -->
-						</div>
+						
 					</div>
 				</div>
 				<!-- /.product-section -->
@@ -658,5 +660,30 @@
 				}]
 			});
 		</script>
+		<script type="text/javascript">
+    		//鼠标经过移开事件
+	    function display(d)//鼠标经过
+	    {
+		    d.css('border-width','2px').css('border-color','#ff7e00');
+		    d.children().css('color','#ff7e00');
+	    }
+	    function conceal(c)//鼠标移开
+	    {
+		    if(c.attr('checked')!='checked'){
+			    c.css('border-width','2px').css('border-color','#CCCCCC');
+			    c.children().css('color','#000');
+		    }else{
+			    c.css('border-width','2px').css('border-color','#ff7e00').attr('checked','');
+			    c.children().css('color','#ff7e00');
+		    }
+	    }
+	    function select(s)//鼠标点击
+	    {
+		    s.parent().children('li').removeAttr('checked').css('border-width','2px').css('border-color','#CCCCCC');
+		    s.parent().children('li').children('a').css('color','#000');
+		    s.css('border-width','2px').css('border-color','#ff7e00').attr('checked','checked');
+		    s.children().css('color','#ff7e00');
+	    }
+	</script>
 	</body>
 </html>

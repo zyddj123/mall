@@ -365,9 +365,7 @@
 							str += '<article data-animate class="media-box dark">';
 							str += '<div class="box-content">';
 							str += '<div class="figure item-slider" data-slider-nav="item-slider-nav-1" data-slider-arrows>';
-							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-1.jpg" alt="" /></a>';
-							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-2.jpg" alt="" /></a>';
-							str += '<a href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-5-3.jpg" alt="" /></a>';
+							str += '<a href="<?php echo $this->config->app_url_root;?>/Index/good?id='+d.id+'"><img src="<?php echo SellerConfig::UPLOAD_GOODS?>'+d.store_id+'/'+d.goods_img+'" alt="" /></a>';
 							str += '</div>';
 							str += '<div class="description">查看详细</div>';
 							str += '</div>';
@@ -380,7 +378,7 @@
 							str += '</div>';
 							str += '</div>';
 							str += '<div class="box-info">';
-							str += '<h4 class="name" title="Black Denim Dress"><a href="Index/good?id='+d.id+'">'+d.goods_name+'</a></h4>';
+							str += '<h4 class="name" title="Black Denim Dress"><a href="<?php echo $this->config->app_url_root;?>/Index/good?id='+d.id+'">'+d.goods_name+'</a></h4>';
 							str += '<div class="price"><ins>$'+d.min_price+'</ins> <del>$20.00</del></div>';
 							str += '</div>';
 							str += '</article>';

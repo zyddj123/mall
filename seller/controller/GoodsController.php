@@ -125,6 +125,8 @@ class GoodsController extends CO_Controller
             $goods_data['goods_brief'] = $this->input->post('goods_brief');
             $goods_data['goods_desc'] = $this->input->post('goods_desc');
             $goods_data['store_id'] = $_SESSION['seller']['id'];
+            $goods_img_res = upload_img(SellerConfig::UPLOAD_GOODS.$_SESSION['seller']['id'], $_FILES['goods_img']['name'], $_FILES['goods_img']['size'], $_FILES['goods_img']['tmp_name']);
+            $goods_data['goods_img'] = ($goods_img_res)?$goods_img_res:null;
             $goodsObj = new Goods($this->getDb());
             $goodsSkuObj = new GoodsSku($this->getDb());
             $fkAttrSkuObj = new FkAttrSku($this->getDb());

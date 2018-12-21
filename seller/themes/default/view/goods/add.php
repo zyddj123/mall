@@ -16,6 +16,7 @@ if (!defined('CO_BASE_CHECK')) {
 	<link href="<?php echo $this->getThemesUrl(); ?>/js/select2/select2.min.css" rel="stylesheet">
 	<link href="<?php echo $this->getThemesUrl(); ?>/js/iCheck/skins/flat/_all.css" rel="stylesheet">
 	<link href="<?php echo $this->getThemesUrl(); ?>/css/jquery.stepy.css" rel="stylesheet">
+	<link href="<?php echo $this->getThemesUrl();?>/js/bootstrap-fileupload/bootstrap-fileupload.min.css" rel="stylesheet">
 	<style>
 	.star{
 		color: #ff0000;
@@ -134,6 +135,32 @@ if (!defined('CO_BASE_CHECK')) {
 														<span><i class="fa fa-hand-o-right"></i>跳转到
 															<a href="#">单位管理</a>
 														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+									<!--展示图片-->
+									<section>
+										<header class="panel-heading"> 展示图片 </header>
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-lg-4 col-sm-4">
+													<div class="col-md-9">
+														<div class="fileupload fileupload-new" data-provides="fileupload">
+															<div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+																<img id="goods_img" src="" alt="">
+															</div>
+															<div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+															<div>
+																<span class="btn btn-default btn-file">
+																	<span class="fileupload-new"><i class="fa fa-paper-clip"></i>选择图片</span>
+																	<span class="fileupload-exists"><i class="fa fa-undo"></i> 更改</span>
+																	<input type="file" class="default" name="goods_img" id="goods_img">
+																</span>
+																<a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash"></i> 移除</a>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -305,6 +332,7 @@ if (!defined('CO_BASE_CHECK')) {
 <script src="<?php echo $this->getThemesUrl(); ?>/js/jquery.stepy.js"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/validate/jquery.validate.min.js"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/validate/messages_zh.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 <script>
 	$('#kucun').spinner({value:0, step: 5, min: 0, max: 10000});
 
