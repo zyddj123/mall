@@ -24,9 +24,11 @@
 				padding-bottom: 3px;
 				font-weight: bold;
 				margin: 2px;
+				cursor:pointer;
 			}
 			.series a {
 				color: #000;
+				
 			}
 		</style>
 		<!--[if lt IE 9]>
@@ -39,7 +41,7 @@
 		<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
 		<!--end header-->
 		<!-- .header-section -->
-		<section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
+		<!-- <section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
 			<div class="middle-content">
 				<div class="container">
 					<h1 class="title">Our shop</h1>
@@ -50,7 +52,7 @@
 					</ul>
 				</div>
 			</div>
-		</section>
+		</section> -->
 		<!-- /.header-section -->
 		
 		<!-- .menu-section.fullscreen-menu -->
@@ -97,7 +99,7 @@
 													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price">{{money}}</span></strong></h2></div>
 												
 													<p class="btn-list">
-														<a data-remodal-target="wishlist" href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
+														<a href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
 														<span class="pull-right">库存: {{choosed.stock}}</span>
 													</p>
 													<form id="add-to-cart">
@@ -117,9 +119,10 @@
 																<label class="required" style="margin-top:8px" id="<?php echo $standard[0]['two']['gsnumber']?> ">
 																	{{item.attrs_key_name}}
 																</label>
-																<ul class="list-inline" style="margin-left:15px;">
-																	<li v-for="key in item.attr_value" class="series" onMouseUp="select($(this))" onmouseover="display($(this))" onMouseOut="conceal($(this))">
-																		<a onclick="get_state_by_standard()" id="">{{key.attrs_value}}</a>
+																<ul class="list-inline" style="margin-left:15px;" :value = "item.attrs_key_id">
+																	<li v-for="key in item.attr_value" :value="key.attrs_value_id" class="series" @click="select" @mouseleave="conceal" @mouseenter="display">
+																		<!-- <a @click="select_a" :value="key.attrs_value_id" id="">{{key.attrs_value}}</a> -->
+																		{{key.attrs_value}}
 																	</li>
 																</ul> 
 															</div>
@@ -159,6 +162,12 @@
 				<div class="row" data-animate style="visibility:visible">
 					
 					<div class="col-md-3 col-sm-4">
+						<article class="sb-block">
+							<h3 class="sb-title"><strong>XXX</strong>的店铺</h3>
+							<div class="sb-content">
+								店铺介绍/信用等等
+							</div>
+						</article>
 						<!-- .sb-block -->
 						<article class="sb-block">
 							<h3 class="sb-title">关于 <strong>商品</strong></h3>
@@ -196,16 +205,15 @@
 								<br>
 								<div class="row small-gap">
 									<div class="col-sm-2"></div>
-									<div class="col-sm-5">
+									<div class="col-sm-10">
 										<ul class="list-icon text-uppercase">
 										<?php foreach($tmp as $key => $value):?>
 											<li class="clearfix">
 												<div class="row">
-													<div class="col-sm-5">
+													<div class="col-sm-3">
 														<strong class="pull-right"><?php echo $value['tmp_key']?></strong>
 													</div>
-													<div class="col-sm-1"></div>
-													<div class="col-sm-5">
+													<div class="col-sm-8">
 														<span class="pull-left"><?php echo $value['value']?></span>
 													</div>
 												</div>
@@ -220,10 +228,10 @@
 							<!-- #product-review -->
 							<div role="tabpanel" class="tab-pane fade" id="product-review">
 								<div class="row small-gap">
-									<h4 class="maintitle">商品 <strong>详细描述</strong></h4>
+									<h4 class="maintitle">商品 <strong>买家评价</strong></h4>
 								</div>
 								<br>
-								<p>商品评论.</p>
+								<p>买家评价.</p>
 							</div>
 							<!-- /#product-review -->
 						</div>
@@ -349,132 +357,6 @@
 		</section>
 		<!-- /.section -->
 		
-		<!-- .remodal.modal-section -->
-		<section class="remodal modal-section" data-remodal-id="add-to-cart" data-remodal-options="hashTracking: false" tabindex="-1" role="dialog">
-			<!-- .container.modal-sm -->
-			<div class="container modal-sm">
-				<!-- .modal-content -->
-				<div class="modal-content">
-					<button type="button" class="close" data-remodal-action="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					
-					<div class="modal-body product-feedback">
-						<p class="feedback-title secondary-text">Added to cart:</p>
-						
-						<div class="row">
-							<div class="col-xs-2">
-								<figure>
-									<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-3.jpg" alt="" />
-								</figure>
-							</div>
-							
-							<div class="col-xs-10">
-								<p class="name">Golden <strong>women dress</strong></p>
-							</div>
-						</div>
-						
-						<a href="shopping-cart.html" class="btn btn-block btn-simple-to-border btn-primary">Go to cart</a>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.container.modal-sm -->
-		</section>
-		<!-- /.remodal.modal-section -->
-		
-		<!-- .remodal.modal-section -->
-		<section class="remodal modal-section" data-remodal-id="compare" data-remodal-options="hashTracking: false" tabindex="-1" role="dialog">
-			<!-- .container.modal-sm -->
-			<div class="container modal-sm">
-				<!-- .modal-content -->
-				<div class="modal-content">
-					<button type="button" class="close" data-remodal-action="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					
-					<div class="modal-body product-feedback">
-						<p class="feedback-title secondary-text">Added to compare list:</p>
-						
-						<div class="row">
-							<div class="col-xs-2">
-								<figure>
-									<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-3.jpg" alt="" />
-								</figure>
-							</div>
-							
-							<div class="col-xs-10">
-								<p class="name">Golden <strong>women dress</strong></p>
-							</div>
-						</div>
-						
-						<div class="row">
-							<div class="col-xs-2">
-								<figure>
-									<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-2.jpg" alt="" />
-								</figure>
-							</div>
-							
-							<div class="col-xs-10">
-								<p class="name">Casual <strong>towel</strong></p>
-							</div>
-						</div>
-						
-						<div class="row">
-							<div class="col-xs-2">
-								<figure>
-									<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-1.jpg" alt="" />
-								</figure>
-							</div>
-							
-							<div class="col-xs-10">
-								<p class="name">Colorful <strong>dress</strong></p>
-							</div>
-						</div>
-						
-						<a href="compare.html" class="btn btn-block btn-simple-to-border btn-primary">Go to compare</a>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.container.modal-sm -->
-		</section>
-		<!-- /.remodal.modal-section -->
-		
-		<!-- .remodal.modal-section -->
-		<section class="remodal modal-section" data-remodal-id="wishlist" data-remodal-options="hashTracking: false" tabindex="-1" role="dialog">
-			<!-- .container.modal-sm -->
-			<div class="container modal-sm">
-				<!-- .modal-content -->
-				<div class="modal-content">
-					<button type="button" class="close" data-remodal-action="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					
-					<div class="modal-body product-feedback">
-						<p class="feedback-title secondary-text">Added to wishlist:</p>
-						
-						<div class="row">
-							<div class="col-xs-2">
-								<figure>
-									<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-2.jpg" alt="" />
-								</figure>
-							</div>
-							
-							<div class="col-xs-10">
-								<p class="name">Casual <strong>towel</strong></p>
-							</div>
-						</div>
-						
-						<a href="wishlist.html" class="btn btn-block btn-simple-to-border btn-primary">Go to wishlist</a>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.container.modal-sm -->
-		</section>
-		<!-- /.remodal.modal-section -->
-		
 		<!-- .footer -->
 		<?php @include_once $this->getThemesPath().'/view/common/footer.php'; ?>
 		<!-- /.footer -->
@@ -531,11 +413,6 @@
 			img_arr = unique(img_arr_tmp);
 			// console.log(JSON.stringify(tmp));
 			// console.log(img_arr);
-			// 默认规格显示  数组 同时也为了select数据双向绑定
-			var attr_default = [];
-			for(var i in tmp) {
-				attr_default.push(tmp[i].attr_value[0].attrs_value_id);
-			}
 			var vm = new Vue({
 				el: '#goods',
 				data: {
@@ -544,13 +421,13 @@
 		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
 		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
 					attr_list: tmp,
-					attr: attr_default,
+					attr: {},
 					count: '1',
 					choosed: {}, //{"store_id":"1","goods_id":"48","stock":"120","sku_id":"56"}
 					price: '',
-					store_id: '',
+					store_id: '1',
 					images: img_arr,
-					goods_img: ''
+					goods_img: "<?php echo $goods['goods_img']?>"
 				},
 				created: function(){
 					// $.ajax({
@@ -565,14 +442,14 @@
 					// 		// console.log(e);
 					// 	}
 					// });
-					this.getChoosed();
+					// this.getChoosed();
 				},
-				updated: function(){
-					this.getChoosed();
-					var ss = '<?php echo SellerConfig::UPLOAD_GOODS;?>'+ this.store_id + '/' + this.goods_img;
-					var asd = $('#product-gallery').find('img[src="'+ss+'"]');
-					asd.click();
-				},
+				// updated: function(){
+				// 	this.getChoosed();
+				// 	var ss = '<?php echo SellerConfig::UPLOAD_GOODS;?>'+ this.store_id + '/' + this.goods_img;
+				// 	var asd = $('#product-gallery').find('img[src="'+ss+'"]');
+				// 	asd.click();
+				// },
 				methods: {
 					//数量减少按钮点击操作
 					countCut(){
@@ -587,8 +464,12 @@
 						}
 					},
 					getChoosed(){
+						var aaaaa = [];
+						for(var j in this.attr){
+							aaaaa.push(this.attr[j]);
+						}
 						for(var i in this.list){
-							if(this.list[i].attr_value_id==this.attr.toString()){
+							if(this.list[i].attr_value_id==aaaaa.toString()){
 								this.store_id = this.list[i].store_id;
 								this.choosed.goods_id = this.list[i].goods_id;
 								this.price = this.list[i].price;
@@ -597,7 +478,41 @@
 								this.choosed.sku_id = this.list[i].sku_id;
 							}
 						}
-					}
+					},
+					//鼠标经过移开事件
+					//鼠标经过
+					display(d)
+					{	
+						var el_d = d.target;
+						$(el_d).css('border-width','2px').css('border-color','#ff7e00');
+						$(el_d).css('color','#ff7e00');
+					},
+					//鼠标移开
+					conceal(c)
+					{
+						var el_c = c.target;
+						if($(el_c).attr('checked')!='checked'){
+							$(el_c).css('border-width','2px').css('border-color','#CCCCCC');
+							$(el_c).css('color','#000');
+						}else{
+							$(el_c).css('border-width','2px').css('border-color','#ff7e00').attr('checked','');
+							$(el_c).css('color','#ff7e00');
+						}
+					},
+					select(s)//鼠标点击li
+					{
+						var el_s = s.target;
+						var v = $(el_s).val();
+						var v_p = $(el_s).closest('ul').attr('value');
+						$(el_s).parent().children('li').removeAttr('checked').css('border-width','2px').css('border-color','#CCCCCC');
+						$(el_s).parent().children('li').css('color','#000');
+						$(el_s).css('border-width','2px').css('border-color','#ff7e00').attr('checked','checked');
+						$(el_s).children().css('color','#ff7e00');
+						if(v!=''){
+							this.attr[v_p] = v;
+						}
+						this.getChoosed();
+					},
 				},
 				watch: {
 					count: function (val, oldVal) {
@@ -660,30 +575,5 @@
 				}]
 			});
 		</script>
-		<script type="text/javascript">
-    		//鼠标经过移开事件
-	    function display(d)//鼠标经过
-	    {
-		    d.css('border-width','2px').css('border-color','#ff7e00');
-		    d.children().css('color','#ff7e00');
-	    }
-	    function conceal(c)//鼠标移开
-	    {
-		    if(c.attr('checked')!='checked'){
-			    c.css('border-width','2px').css('border-color','#CCCCCC');
-			    c.children().css('color','#000');
-		    }else{
-			    c.css('border-width','2px').css('border-color','#ff7e00').attr('checked','');
-			    c.children().css('color','#ff7e00');
-		    }
-	    }
-	    function select(s)//鼠标点击
-	    {
-		    s.parent().children('li').removeAttr('checked').css('border-width','2px').css('border-color','#CCCCCC');
-		    s.parent().children('li').children('a').css('color','#000');
-		    s.css('border-width','2px').css('border-color','#ff7e00').attr('checked','checked');
-		    s.children().css('color','#ff7e00');
-	    }
-	</script>
 	</body>
 </html>
