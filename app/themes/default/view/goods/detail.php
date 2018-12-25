@@ -41,7 +41,7 @@
 		<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
 		<!--end header-->
 		<!-- .header-section -->
-		<!-- <section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
+		<section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
 			<div class="middle-content">
 				<div class="container">
 					<h1 class="title">Our shop</h1>
@@ -52,7 +52,7 @@
 					</ul>
 				</div>
 			</div>
-		</section> -->
+		</section>
 		<!-- /.header-section -->
 		
 		<!-- .menu-section.fullscreen-menu -->
@@ -70,14 +70,14 @@
 							<div class="row">
 								<div class="col-md-4 col-sm-4">
 									<figure class="product-carousel-image">
-										<a :href="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" data-lightbox="product">
-											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" :src="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + goods_img" alt="" />
+										<a :href="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" data-lightbox="product">
+											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" :src="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" alt="" />
 										</a>
 									</figure>
 									
 									<div id="product-gallery" class="product-carousel-nav bottom-space">
-										<a v-for="key in images" class="active" href="#" :data-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key">
-											<img style="width:70px;height:70px;" :src="'<?php echo SellerConfig::UPLOAD_GOODS;?>' + store_id + '/' + key" alt="" />
+										<a v-for="key in images" class="active" href="#" :data-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key">
+											<img style="width:70px;height:70px;" :src="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key" alt="" />
 										</a>
 									</div>
 								</div>
@@ -85,7 +85,7 @@
 								<div class="col-lg-8 col-md-8 col-sm-8">
 									<!-- <h3 class="category-title text-uppercase secondary-text">Elegant watches</h3> -->
 									
-									<!-- <h1 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h1> -->
+									<!-- <h1 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']; ?></strong></h1> -->
 									
 									<!-- .content -->
 									<div class="content">
@@ -94,7 +94,7 @@
 											<div class="col-sm-12">
 												<!-- .product-panel -->
 												<div class="panel" id="sku" style="height: 500px;padding:20px 20px 10px 30px;">
-													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']?></strong></h2>
+													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']; ?></strong></h2>
 													<meta itemprop="priceCurrency" content="USD" />
 													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price">{{money}}</span></strong></h2></div>
 												
@@ -102,7 +102,7 @@
 														<a href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
 														<span class="pull-right">库存: {{choosed.stock}}</span>
 													</p>
-													<form id="add-to-cart">
+													<div id="add-to-cart">
 														<!-- <div class="form-group">
 															<div v-for="(item,index) in attr_list">
 																<label class="secondary-text" for="item-color">{{item.attrs_key_name}}</label>
@@ -116,7 +116,7 @@
 														</div> -->
 														<div class="form-group" style="margin-bottom: 0px" v-for="(item,index) in attr_list">
 															<div class=" input-one form-list" style="display:inline-flex;">
-																<label class="required" style="margin-top:8px" id="<?php echo $standard[0]['two']['gsnumber']?> ">
+																<label class="required" style="margin-top:8px">
 																	{{item.attrs_key_name}}
 																</label>
 																<ul class="list-inline" style="margin-left:15px;" :value = "item.attrs_key_id">
@@ -140,10 +140,10 @@
 															</div>	
 															<div class="col-lg-1"></div>
 															<div class="col-lg-5">	
-																<button data-remodal-target="add-to-cart" class="btn btn-radius btn-simple-to-border btn-primary" type="submit">添加购物车</button>
+																<button data-remodal-target="add-to-cart" id="add_to_cart" class="btn btn-radius btn-simple-to-border btn-primary">添加购物车</button>
 															</div>
 														</div>
-													</form>
+													</div>
 												</div>
 												<!-- /.product-panel -->
 											</div>
@@ -191,7 +191,7 @@
 									<h4 class="maintitle">商品 <strong>详细描述</strong></h4>
 								</div>
 								<br>
-								<p><?php echo $goods['goods_desc']?></p>
+								<p><?php echo $goods['goods_desc']; ?></p>
 
 								
 							</div>
@@ -207,18 +207,18 @@
 									<div class="col-sm-2"></div>
 									<div class="col-sm-10">
 										<ul class="list-icon text-uppercase">
-										<?php foreach($tmp as $key => $value):?>
+										<?php foreach ($tmp as $key => $value):?>
 											<li class="clearfix">
 												<div class="row">
 													<div class="col-sm-3">
-														<strong class="pull-right"><?php echo $value['tmp_key']?></strong>
+														<strong class="pull-right"><?php echo $value['tmp_key']; ?></strong>
 													</div>
 													<div class="col-sm-8">
-														<span class="pull-left"><?php echo $value['value']?></span>
+														<span class="pull-left"><?php echo $value['value']; ?></span>
 													</div>
 												</div>
 											</li>
-										<?php endforeach;?>
+										<?php endforeach; ?>
 										</ul>
 									</div>
 								</div>
@@ -380,6 +380,9 @@
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
 		<script>
 			var data = <?php echo $sku; ?>;
+			// tmp = 
+		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
+		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
 			var tmp = [];
 			var img_arr_tmp = [];
 			var img_arr = [];
@@ -411,15 +414,12 @@
 				}
 			}
 			img_arr = unique(img_arr_tmp);
-			// console.log(JSON.stringify(tmp));
+			console.log(JSON.stringify(tmp));
 			// console.log(img_arr);
 			var vm = new Vue({
 				el: '#goods',
 				data: {
 					list: data,
-		// tmp = 
-		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
-		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
 					attr_list: tmp,
 					attr: {},
 					count: '1',
@@ -427,7 +427,7 @@
 					price: '',
 					store_id: '1',
 					images: img_arr,
-					goods_img: "<?php echo $goods['goods_img']?>"
+					goods_img: "<?php echo $goods['goods_img']; ?>",
 				},
 				created: function(){
 					// $.ajax({
@@ -446,7 +446,7 @@
 				},
 				// updated: function(){
 				// 	this.getChoosed();
-				// 	var ss = '<?php echo SellerConfig::UPLOAD_GOODS;?>'+ this.store_id + '/' + this.goods_img;
+				// 	var ss = '<?php echo SellerConfig::UPLOAD_GOODS; ?>'+ this.store_id + '/' + this.goods_img;
 				// 	var asd = $('#product-gallery').find('img[src="'+ss+'"]');
 				// 	asd.click();
 				// },
@@ -463,33 +463,14 @@
 							this.count = parseInt(this.count) + 1;
 						}
 					},
-					getChoosed(){
-						var aaaaa = [];
-						for(var j in this.attr){
-							aaaaa.push(this.attr[j]);
-						}
-						for(var i in this.list){
-							if(this.list[i].attr_value_id==aaaaa.toString()){
-								this.store_id = this.list[i].store_id;
-								this.choosed.goods_id = this.list[i].goods_id;
-								this.price = this.list[i].price;
-								this.choosed.stock = this.list[i].stock;
-								this.goods_img = this.list[i].goods_img;
-								this.choosed.sku_id = this.list[i].sku_id;
-							}
-						}
-					},
-					//鼠标经过移开事件
 					//鼠标经过
-					display(d)
-					{	
+					display(d){	
 						var el_d = d.target;
 						$(el_d).css('border-width','2px').css('border-color','#ff7e00');
 						$(el_d).css('color','#ff7e00');
 					},
 					//鼠标移开
-					conceal(c)
-					{
+					conceal(c){
 						var el_c = c.target;
 						if($(el_c).attr('checked')!='checked'){
 							$(el_c).css('border-width','2px').css('border-color','#CCCCCC');
@@ -499,19 +480,47 @@
 							$(el_c).css('color','#ff7e00');
 						}
 					},
-					select(s)//鼠标点击li
-					{
+					//鼠标点击li
+					select(s){
 						var el_s = s.target;
 						var v = $(el_s).val();
-						var v_p = $(el_s).closest('ul').attr('value');
+						var v_p = $(el_s).parent('ul').attr('value');
 						$(el_s).parent().children('li').removeAttr('checked').css('border-width','2px').css('border-color','#CCCCCC');
 						$(el_s).parent().children('li').css('color','#000');
 						$(el_s).css('border-width','2px').css('border-color','#ff7e00').attr('checked','checked');
 						$(el_s).children().css('color','#ff7e00');
-						if(v!=''){
-							this.attr[v_p] = v;
+						var attr_arr_tmp = []; //所有商品规格的排列组合未去重版 
+						var checked_attr_arr = []; //选中商品规格值的数组   array(2) [19,24]
+						var attr_arr = [];		//所有商品规格的排列组合去重版 array(7) ["19,24", "21,24", "21,25", "22,24", "22,25", "23,24", "23,25"]
+						$('#add-to-cart li[checked=checked]').each(function(i,d){
+							checked_attr_arr.push($(d).val());
+						});
+						
+						for(var i in this.list){
+							var avi = this.list[i]['attr_value_id'].split(',');
+							attr_arr_tmp.push(avi.sort().toString());
 						}
-						this.getChoosed();
+						attr_arr = unique(attr_arr_tmp);
+						console.log(attr_arr);
+						for(var i in this.list){
+							var avi = this.list[i]['attr_value_id'].split(',');
+							if(attr_arr.sort().toString().indexOf(checked_attr_arr.sort().toString())==-1){
+								console.log("没有该属性");
+								$('#add_to_cart').text("不存在的规格组合").css('cursor','not-allowed');
+								return false;
+							}else{
+								console.log("存在该属性");
+								$('#add_to_cart').text("添加购物车").css('cursor','pointer');
+								if(checked_attr_arr.sort().toString()==avi.sort().toString()){
+									this.store_id = this.list[i].store_id;
+									this.choosed.goods_id = this.list[i].goods_id;
+									this.price = this.list[i].price;
+									this.choosed.stock = this.list[i].stock;
+									this.goods_img = this.list[i].goods_img;
+									this.choosed.sku_id = this.list[i].sku_id;
+								}
+							}
+						}
 					},
 				},
 				watch: {
