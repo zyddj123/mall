@@ -16,19 +16,23 @@
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/jquery-1.10.2.min.js"></script>
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/app.js"></script>
 		<style type="text/css">
-			.series {
+			.sku {
+				color: #000;
+				height:32px;
+				margin-left:5px;
+				margin-right:5px;
+				background:none;
+				font-weight: bold;
 				border-style: solid;
 				border-width: 2px;
 				border-color: #CCCCCC;
-				padding-top: 3px;
-				padding-bottom: 3px;
-				font-weight: bold;
-				margin: 2px;
 				cursor:pointer;
 			}
-			.series a {
-				color: #000;
-				
+			.bh-sku-selected {
+				color: #ff7f00;
+				border-color: #ff7f00;
+				border-style: solid;
+				cursor:pointer;
 			}
 		</style>
 		<!--[if lt IE 9]>
@@ -70,15 +74,21 @@
 							<div class="row">
 								<div class="col-md-4 col-sm-4">
 									<figure class="product-carousel-image">
-										<a :href="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" data-lightbox="product">
-											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" :src="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + goods_img" alt="" />
+										<a id="big_images" href="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $goods['goods_img'];?>" data-lightbox="product">
+											<img style="width:400px;height:400px;" itemprop="image" data-gallery-id="product-gallery" src="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $goods['goods_img'];?>" alt="" />
 										</a>
 									</figure>
 									
 									<div id="product-gallery" class="product-carousel-nav bottom-space">
-										<a v-for="key in images" class="active" href="#" :data-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key" :data-zoom-image="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key">
-											<img style="width:70px;height:70px;" :src="'<?php echo SellerConfig::UPLOAD_GOODS; ?>' + store_id + '/' + key" alt="" />
+										<a class="" id="goods_pic" href="#" data-image="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $goods['goods_img'];?>" data-zoom-image="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $goods['goods_img'];?>">
+											<img style="width:70px;height:70px;" src="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $goods['goods_img'];?>" alt="" />
 										</a>
+										<?php $sku_img = json_decode($sku,true);?>
+										<?php foreach($sku_img as $key=>$value):?>
+											<a class="" href="#" data-image="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $value['goods_img'];?>" data-zoom-image="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $value['goods_img'];?>">
+												<img style="width:70px;height:70px;" src="<?php echo SellerConfig::UPLOAD_GOODS.$goods['store_id'];?>/<?php echo $value['goods_img'];?>" alt="" />
+											</a>
+										<?php endforeach;?>
 									</div>
 								</div>
 								
@@ -96,45 +106,24 @@
 												<div class="panel" id="sku" style="height: 500px;padding:20px 20px 10px 30px;">
 													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']; ?></strong></h2>
 													<meta itemprop="priceCurrency" content="USD" />
-													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price">{{money}}</span></strong></h2></div>
+													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price" id="price">0</span></strong></h2></div>
 												
 													<p class="btn-list">
 														<a href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
-														<span class="pull-right">库存: {{choosed.stock}}</span>
+														<span class="pull-right">库存: <span id="stock">--</span></span>
 													</p>
 													<div id="add-to-cart">
-														<!-- <div class="form-group">
-															<div v-for="(item,index) in attr_list">
-																<label class="secondary-text" for="item-color">{{item.attrs_key_name}}</label>
-																<div class="select-sm select-radius">
-																	<select class="form-control" v-model="attr[index]">
-																		<option v-for="key in item.attr_value" v-bind:value="key.attrs_value_id">{{key.attrs_value}}</option>
-																	</select>
-																</div>
-															</div>
+														<div class="form-group" style="margin-bottom: 0px;display:inline-grid;" id="attr_div">
 
-														</div> -->
-														<div class="form-group" style="margin-bottom: 0px" v-for="(item,index) in attr_list">
-															<div class=" input-one form-list" style="display:inline-flex;">
-																<label class="required" style="margin-top:8px">
-																	{{item.attrs_key_name}}
-																</label>
-																<ul class="list-inline" style="margin-left:15px;" :value = "item.attrs_key_id">
-																	<li v-for="key in item.attr_value" :value="key.attrs_value_id" class="series" @click="select" @mouseleave="conceal" @mouseenter="display">
-																		<!-- <a @click="select_a" :value="key.attrs_value_id" id="">{{key.attrs_value}}</a> -->
-																		{{key.attrs_value}}
-																	</li>
-																</ul> 
-															</div>
 														</div>
 											
 														<div class="form-group row" style="margin-bottom:30px;">
 															<div class="col-lg-3">
 																<div class="input-group input-group-radius count-input">
-																	<input type="text" class="form-control input-sm" v-model="count" value="1" />
+																	<input type="text" id="num" class="form-control input-sm" value="1" />
 																	<div class="input-group-btn">
-																		<button class="btn btn-sm btn-input" @click.prevent="countCut" data-value="minus"><i class="fa fa-minus"></i></button>
-																		<button class="btn btn-sm btn-input" @click.prevent="countAdd" data-value="plus"><i class="fa fa-plus"></i></button>
+																		<button class="btn btn-sm btn-input" id="cut"><i class="fa fa-minus"></i></button>
+																		<button class="btn btn-sm btn-input" id="add"><i class="fa fa-plus"></i></button>
 																	</div>
 																</div>
 															</div>	
@@ -374,181 +363,331 @@
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/lightbox.min.js"></script>
 		<!-- Carousel -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/slick.min.js"></script>
-		
-		<script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
 		<!-- Custom JS -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
 		<script>
-			var data = <?php echo $sku; ?>;
-			// tmp = 
-		//[{attrs_key_id:1,attrs_key_name:"颜色",attr_value:[{attrs_value_id:1,attrs_value:"银色"},{attrs_value_id:2,attrs_value:"黑色"}]},
-		//{attrs_key_id:2,attrs_key_name:"内存",attr_value:[{attrs_value_id:5,attrs_value:"32G"},{attrs_value_id:6,attrs_value:"64G"}]}]
-			var tmp = [];
-			var img_arr_tmp = [];
-			var img_arr = [];
-			if(data){
-				for(var x in data){
-					img_arr_tmp.push(data[x].goods_img);
-					var qq = {};
-					if(JSON.stringify(tmp).indexOf(JSON.stringify(data[x].attrs_key_name))==-1){
-						qq.attrs_key_id = data[x].attrs_key_id;
-						qq.attrs_key_name = data[x].attrs_key_name;
-						qq.attr_value = [];
-						var aa = {};
-						aa.attrs_value_id = data[x].attrs_value_id;
-						aa.attrs_value = data[x].attrs_value;
-						qq.attr_value.push(aa);
-						tmp.push(qq);
-					}else{
-						for(var y in tmp){
-							var ww = {};
-							if(tmp[y].attrs_key_name == data[x].attrs_key_name){
-								if(JSON.stringify(tmp[y].attr_value).indexOf(JSON.stringify(data[x].attrs_value))==-1){
-									ww.attrs_value_id = data[x].attrs_value_id;
-									ww.attrs_value = data[x].attrs_value;
-									tmp[y].attr_value.push(ww);
-								}
+			var startTime = new Date().getTime(); //用于下面初始化sku时间
+			var sku = <?php echo $sku; ?>; //后台传过来的sku数据
+			var fk_attr_sku = <?php echo $fk_attr_sku; ?>; //后台传过来的规格名称及id
+			var store_id = <?php echo $goods['store_id']?>; //店铺id
+			var upload_goods_path = '<?php echo SellerConfig::UPLOAD_GOODS; ?>';
+			//var attr_sku = 
+			// [
+			// 		{attrs_key_id:7,attrs_key_name:"尺寸",attr_value:[
+			// 											{attrs_value_id:19,attrs_value:"27英寸"},
+			// 											{attrs_value_id:21,attrs_value:"34英寸"},
+			// 											{attrs_value_id:22,attrs_value:"43英寸"},
+			// 											{attrs_value_id:23,attrs_value:"48.9英寸"}
+			// 										]
+			// 		},
+			// 		{attrs_key_id:8,attrs_key_name:"频率",attr_value:[
+			// 											{attrs_value_id:24,attrs_value:"60HZ"},
+			// 											{attrs_value_id:25,attrs_value:"144HZ"}
+			// 										]
+			// 		}
+			// ]
+			var attr_sku = [];  //用于存放sku需要的数据格式
+			for(var x in fk_attr_sku){
+				var qq = {};
+				if(JSON.stringify(attr_sku).indexOf(JSON.stringify(fk_attr_sku[x]['attrs_key_name']))==-1){
+					qq.attrs_key_id = fk_attr_sku[x].attrs_key_id;
+					qq.attrs_key_name = fk_attr_sku[x].attrs_key_name;
+					qq.attr_value = [];
+					var aa = {};
+					aa.attrs_value_id = fk_attr_sku[x].attrs_value_id;
+					aa.attrs_value = fk_attr_sku[x].attrs_value;
+					qq.attr_value.push(aa);
+					attr_sku.push(qq);
+				}else{
+					for(var y in attr_sku){
+						var ww = {};
+						if(attr_sku[y].attrs_key_name == fk_attr_sku[x].attrs_key_name){
+							if(JSON.stringify(attr_sku[y].attr_value).indexOf(JSON.stringify(fk_attr_sku[x].attrs_value))==-1){
+								ww.attrs_value_id = fk_attr_sku[x].attrs_value_id;
+								ww.attrs_value = fk_attr_sku[x].attrs_value;
+								attr_sku[y].attr_value.push(ww);
 							}
 						}
 					}
 				}
 			}
-			img_arr = unique(img_arr_tmp);
-			console.log(JSON.stringify(tmp));
-			// console.log(img_arr);
-			var vm = new Vue({
-				el: '#goods',
-				data: {
-					list: data,
-					attr_list: tmp,
-					attr: {},
-					count: '1',
-					choosed: {}, //{"store_id":"1","goods_id":"48","stock":"120","sku_id":"56"}
-					price: '',
-					store_id: '1',
-					images: img_arr,
-					goods_img: "<?php echo $goods['goods_img']; ?>",
-				},
-				created: function(){
-					// $.ajax({
-					// 	url: "<?php echo $this->config->app_url_root.'/Index/ajax_data'; ?>",
-					// 	type: "POST",
-					// 	dataType:"json",
-					// 	cache: false,
-					// 	contentType: false,
-					// 	processData: false,
-					// 	success:function(e){
-					// 		// e = JSON.parse(e);
-					// 		// console.log(e);
-					// 	}
-					// });
-					// this.getChoosed();
-				},
-				// updated: function(){
-				// 	this.getChoosed();
-				// 	var ss = '<?php echo SellerConfig::UPLOAD_GOODS; ?>'+ this.store_id + '/' + this.goods_img;
-				// 	var asd = $('#product-gallery').find('img[src="'+ss+'"]');
-				// 	asd.click();
-				// },
-				methods: {
-					//数量减少按钮点击操作
-					countCut(){
-						if(parseInt(this.count)>1){
-							this.count = parseInt(this.count) - 1;
-						}
-					},
-					//数量添加按钮点击操作
-					countAdd(){
-						if(parseInt(this.choosed.stock)>parseInt(this.count)){
-							this.count = parseInt(this.count) + 1;
-						}
-					},
-					//鼠标经过
-					display(d){	
-						var el_d = d.target;
-						$(el_d).css('border-width','2px').css('border-color','#ff7e00');
-						$(el_d).css('color','#ff7e00');
-					},
-					//鼠标移开
-					conceal(c){
-						var el_c = c.target;
-						if($(el_c).attr('checked')!='checked'){
-							$(el_c).css('border-width','2px').css('border-color','#CCCCCC');
-							$(el_c).css('color','#000');
-						}else{
-							$(el_c).css('border-width','2px').css('border-color','#ff7e00').attr('checked','');
-							$(el_c).css('color','#ff7e00');
-						}
-					},
-					//鼠标点击li
-					select(s){
-						var el_s = s.target;
-						var v = $(el_s).val();
-						var v_p = $(el_s).parent('ul').attr('value');
-						$(el_s).parent().children('li').removeAttr('checked').css('border-width','2px').css('border-color','#CCCCCC');
-						$(el_s).parent().children('li').css('color','#000');
-						$(el_s).css('border-width','2px').css('border-color','#ff7e00').attr('checked','checked');
-						$(el_s).children().css('color','#ff7e00');
-						var attr_arr_tmp = []; //所有商品规格的排列组合未去重版 
-						var checked_attr_arr = []; //选中商品规格值的数组   array(2) [19,24]
-						var attr_arr = [];		//所有商品规格的排列组合去重版 array(7) ["19,24", "21,24", "21,25", "22,24", "22,25", "23,24", "23,25"]
-						$('#add-to-cart li[checked=checked]').each(function(i,d){
-							checked_attr_arr.push($(d).val());
-						});
-						
-						for(var i in this.list){
-							var avi = this.list[i]['attr_value_id'].split(',');
-							attr_arr_tmp.push(avi.sort().toString());
-						}
-						attr_arr = unique(attr_arr_tmp);
-						console.log(attr_arr);
-						for(var i in this.list){
-							var avi = this.list[i]['attr_value_id'].split(',');
-							if(attr_arr.sort().toString().indexOf(checked_attr_arr.sort().toString())==-1){
-								console.log("没有该属性");
-								$('#add_to_cart').text("不存在的规格组合").css('cursor','not-allowed');
-								return false;
-							}else{
-								console.log("存在该属性");
-								$('#add_to_cart').text("添加购物车").css('cursor','pointer');
-								if(checked_attr_arr.sort().toString()==avi.sort().toString()){
-									this.store_id = this.list[i].store_id;
-									this.choosed.goods_id = this.list[i].goods_id;
-									this.price = this.list[i].price;
-									this.choosed.stock = this.list[i].stock;
-									this.goods_img = this.list[i].goods_img;
-									this.choosed.sku_id = this.list[i].sku_id;
-								}
-							}
-						}
-					},
-				},
-				watch: {
-					count: function (val, oldVal) {
-      					if(parseInt(this.count)>parseInt(this.choosed.stock)){
-							this.count = this.choosed.stock;
-						}else{
-							this.count = val;
-						}
-    				},
-				},
-				computed: {
-					money: function(){
-						return this.price*this.count;
+			// console.log(attr_sku);
+			// [
+			// 	{attrs_key_id: "7", attrs_key_name: "尺寸", attr_value: Array(4)},
+			// 	{attrs_key_id: "8", attrs_key_name: "频率", attr_value: Array(2)}
+			// ]
+
+			//填充商品规格html
+			var str = '';
+			for(var x in attr_sku){
+				str += '<div class=" input-one form-list" style="display:inline-flex;">';
+				str += '<label class="required" style="margin-top:8px">'+attr_sku[x].attrs_key_name+'</label>';
+				for(var y in attr_sku[x].attr_value){
+					str += '<input type="button" class="sku" attr_id="'+attr_sku[x].attr_value[y].attrs_value_id+'" value="'+attr_sku[x].attr_value[y].attrs_value+'"/>';
+				}
+				str += '</div>';
+			}
+			$('#attr_div').empty().append(str);
+
+			// var keys = [['19', '21','22','23'], ['24', '25']];
+			var keys = [];  //用于sku需要的键名称
+			for(var x in attr_sku){
+				var aa = [];
+				for(var y in attr_sku[x].attr_value){
+					aa.push(attr_sku[x].attr_value[y].attrs_value_id);
+				}
+				keys.push(aa);
+			}
+
+			// var data = {
+			// 			"19,24": {price: 300, count: 0},
+			// 			"21,24": {price: 400, count: 40}, 
+			// 			"21,25": {price: 500, count: 50},
+			// 			"22,24": {price: 600, count: 60},
+			// 			"22,25": {price: 700, count: 70},
+			// 			"23,24": {price: 800, count: 80},
+			// 			"23,25": {price: 900, count: 90},
+			// 		};
+			var data = {};  //用于sku的数据字典
+			var goods_images = []; //用于商品图片展示
+			for(var x in sku){
+				goods_images.push(sku[x].goods_img);
+				var aa = {};
+				aa.sku_id = sku[x].id
+				aa.price = sku[x].price;
+				aa.stock = parseInt(sku[x].stock);
+				aa.goods_img = sku[x].goods_img;
+				data[sku[x].attr_value_id] = aa;
+			}
+
+			//商品图片展示
+			// var str2 = '';
+			// for(var x in goods_images){
+			// 	str2 += '<a class="" href="#" ';
+			// 	str2 += ' data-image="'+ upload_goods_path + store_id + '/' + goods_images[x] +'"';
+			// 	str2 += ' data-zoom-image="'+ upload_goods_path + store_id + '/' + goods_images[x] +'"';
+			// 	str2 += '<img style="width:70px;height:70px;" src="'+ upload_goods_path + store_id + '/' + goods_images[x] +'" alt="" />';
+			// 	str2 += '</a>';
+			// }
+			// $('#product-gallery').empty().append(str2);
+
+			//保存最后的组合结果信息
+			var SKUResult = {};
+			//获得对象的key
+			function getObjKeys(obj) {
+				if (obj !== Object(obj)) throw new TypeError('Invalid object');
+				var keys = [];
+				for (var key in obj)
+					if (Object.prototype.hasOwnProperty.call(obj, key))
+						keys[keys.length] = key;
+				return keys;
+			}
+
+			//把组合的key放入结果集SKUResult
+			function add2SKUResult(combArrItem, sku) {
+				var key = combArrItem.join(",");
+				if(SKUResult[key]) {//SKU信息key属性·
+					SKUResult[key].stock += sku.stock;
+					SKUResult[key].prices.push(sku.price);
+					SKUResult[key].id = sku.id;
+					SKUResult[key].goods_img = sku.goods_img;
+				} else {
+					SKUResult[key] = {
+						stock : sku.stock,
+						prices : [sku.price]
+					};
+				}
+			}
+
+			//初始化得到结果集
+			function initSKU() {
+				var i, j, skuKeys = getObjKeys(data);
+				for(i = 0; i < skuKeys.length; i++) {
+					var skuKey = skuKeys[i];//一条SKU信息key
+					var sku = data[skuKey];	//一条SKU信息value
+					var skuKeyAttrs = skuKey.split(","); //SKU信息key属性值数组
+					skuKeyAttrs.sort(function(value1, value2) {
+						return parseInt(value1) - parseInt(value2);
+					});
+
+					//对每个SKU信息key属性值进行拆分组合
+					var combArr = combInArray(skuKeyAttrs);
+					for(j = 0; j < combArr.length; j++) {
+						add2SKUResult(combArr[j], sku);
 					}
+
+					//结果集接放入SKUResult
+					SKUResult[skuKeyAttrs.join(",")] = {
+						stock:sku.stock,
+						prices:[sku.price]
+					}
+				}
+			}
+
+			/**
+			 * 从数组中生成指定长度的组合
+			 * 方法: 先生成[0,1...]形式的数组, 然后根据0,1从原数组取元素，得到组合数组
+			 */
+			function combInArray(aData) {
+				if(!aData || !aData.length) {
+					return [];
+				}
+
+				var len = aData.length;
+				var aResult = [];
+
+				for(var n = 1; n < len; n++) {
+					var aaFlags = getCombFlags(len, n);
+					while(aaFlags.length) {
+						var aFlag = aaFlags.shift();
+						var aComb = [];
+						for(var i = 0; i < len; i++) {
+							aFlag[i] && aComb.push(aData[i]);
+						}
+						aResult.push(aComb);
+					}
+				}
+				
+				return aResult;
+			}
+
+
+			/**
+			 * 得到从 m 元素中取 n 元素的所有组合
+			 * 结果为[0,1...]形式的数组, 1表示选中，0表示不选
+			 */
+			function getCombFlags(m, n) {
+				if(!n || n < 1) {
+					return [];
+				}
+
+				var aResult = [];
+				var aFlag = [];
+				var bNext = true;
+				var i, j, iCnt1;
+
+				for (i = 0; i < m; i++) {
+					aFlag[i] = i < n ? 1 : 0;
+				}
+
+				aResult.push(aFlag.concat());
+
+				while (bNext) {
+					iCnt1 = 0;
+					for (i = 0; i < m - 1; i++) {
+						if (aFlag[i] == 1 && aFlag[i+1] == 0) {
+							for(j = 0; j < i; j++) {
+								aFlag[j] = j < iCnt1 ? 1 : 0;
+							}
+							aFlag[i] = 0;
+							aFlag[i+1] = 1;
+							var aTmp = aFlag.concat();
+							aResult.push(aTmp);
+							if(aTmp.slice(-n).join("").indexOf('0') == -1) {
+								bNext = false;
+							}
+							break;
+						}
+						aFlag[i] == 1 && iCnt1++;
+					}
+				}
+				return aResult;
+			} 
+
+
+
+			//初始化用户选择事件
+			$(function() {
+				initSKU();
+				var endTime = new Date().getTime();
+				// $('#init_time').text('init sku time: ' + (endTime - startTime) + " ms");
+				console.log('init sku time: ' + (endTime - startTime) + " ms");
+				$('.sku').each(function() {
+					var self = $(this);
+					var attr_id = self.attr('attr_id');
+					if(!SKUResult[attr_id]) {
+						self.attr('disabled', 'disabled').css('border-style','dotted');
+					}
+				}).click(function() {
+					var self = $(this);
+
+					//选中自己，兄弟节点取消选中
+					self.toggleClass('bh-sku-selected').siblings().removeClass('bh-sku-selected');
+					
+					//已经选择的节点
+					var selectedObjs = $('.bh-sku-selected');
+
+					if(selectedObjs.length) {
+						//获得组合key价格
+						var selectedIds = [];
+						selectedObjs.each(function() {
+							selectedIds.push($(this).attr('attr_id'));
+						});
+						selectedIds.sort(function(value1, value2) {
+							return parseInt(value1) - parseInt(value2);
+						});
+						var len = selectedIds.length;
+						var prices = SKUResult[selectedIds.join(',')].prices;
+						var maxPrice = Math.max.apply(Math, prices);
+						var minPrice = Math.min.apply(Math, prices);
+
+						$('#price').text(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
+						$('#stock').text(SKUResult[selectedIds.join(',')].stock);
+						$('#product-gallery a').each(function(){
+							console.log($('#big_images').children('img').attr('src'));
+							if($(this).attr('data-image').indexOf(SKUResult[selectedIds.join(',')].goods_img)>-1){
+								console.log(SKUResult[selectedIds.join(',')].goods_img);
+								$(this).click();
+							}
+						});
+
+						// console.log(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
+						// console.log(SKUResult[selectedIds.join(',')].stock);
+						//用已选中的节点验证待测试节点 underTestObjs
+						$(".sku").not(selectedObjs).not(self).each(function() {
+							var siblingsSelectedObj = $(this).siblings('.bh-sku-selected');
+							var testAttrIds = [];//从选中节点中去掉选中的兄弟节点
+							if(siblingsSelectedObj.length) {
+								var siblingsSelectedObjId = siblingsSelectedObj.attr('attr_id');
+								for(var i = 0; i < len; i++) {
+									(selectedIds[i] != siblingsSelectedObjId) && testAttrIds.push(selectedIds[i]);
+								}
+							} else {
+								testAttrIds = selectedIds.concat();
+							}
+							testAttrIds = testAttrIds.concat($(this).attr('attr_id'));
+							testAttrIds.sort(function(value1, value2) {
+								return parseInt(value1) - parseInt(value2);
+							});
+							if(!SKUResult[testAttrIds.join(',')]) {
+								$(this).attr('disabled', 'disabled').removeClass('bh-sku-selected').css('border-style','dotted');
+							} else {
+								$(this).removeAttr('disabled').css('border-style','solid');
+							}
+						});
+					} else {
+						//设置默认价格
+						$('#price').text('0');
+						$('#stock').text('--');
+						$('#goods_pic').click();
+						//设置属性状态
+						$('.sku').each(function() {
+							SKUResult[$(this).attr('attr_id')] ? $(this).removeAttr('disabled').css('border-style','solid') : $(this).attr('disabled', 'disabled').removeClass('bh-sku-selected').css('border-style','dotted');
+						})
+					}
+				});
+			});
+			
+			//数量添加按钮点击操作
+			$('#add').click(function(){
+				$('#num').val(parseInt($('#num').val()) + 1);
+			});
+			//数量减少按钮点击操作
+			$('#cut').click(function(){
+				if(parseInt($('#num').val())>1){
+					$('#num').val(parseInt($('#num').val()) - 1);
 				}
 			});
-
-			//数组去重
-			function unique(arr){
-				var hash=[];
-				for (var i = 0; i < arr.length; i++) {
-					if(hash.indexOf(arr[i])==-1){
-					hash.push(arr[i]);
-					}
-				}
-				return hash;
-			}
 			
 			// Gallery with zoom
 			var galleryImage = $('[data-gallery-id]');
