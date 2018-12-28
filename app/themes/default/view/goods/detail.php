@@ -116,7 +116,8 @@
 														<div class="form-group" style="margin-bottom: 0px;display:inline-grid;" id="attr_div">
 
 														</div>
-											
+														<br />
+														<br />
 														<div class="form-group row" style="margin-bottom:30px;">
 															<div class="col-lg-3">
 																<div class="input-group input-group-radius count-input">
@@ -421,7 +422,7 @@
 			var str = '';
 			for(var x in attr_sku){
 				str += '<div class=" input-one form-list" style="display:inline-flex;">';
-				str += '<label class="required" style="margin-top:8px">'+attr_sku[x].attrs_key_name+'</label>';
+				str += '<label class="required" style="margin-top:4px;margin-right:20px;">'+attr_sku[x].attrs_key_name+'</label>';
 				for(var y in attr_sku[x].attr_value){
 					str += '<input type="button" class="sku" attr_id="'+attr_sku[x].attr_value[y].attrs_value_id+'" value="'+attr_sku[x].attr_value[y].attrs_value+'"/>';
 				}
@@ -459,7 +460,6 @@
 				aa.goods_img = sku[x].goods_img;
 				data[sku[x].attr_value_id] = aa;
 			}
-
 			//商品图片展示
 			// var str2 = '';
 			// for(var x in goods_images){
@@ -489,12 +489,14 @@
 				if(SKUResult[key]) {//SKU信息key属性·
 					SKUResult[key].stock += sku.stock;
 					SKUResult[key].prices.push(sku.price);
-					SKUResult[key].id = sku.id;
+					SKUResult[key].sku_id = sku.sku_id;
 					SKUResult[key].goods_img = sku.goods_img;
 				} else {
 					SKUResult[key] = {
 						stock : sku.stock,
-						prices : [sku.price]
+						prices : [sku.price],
+						goods_img : sku.goods_img,
+						sku_id : sku.sku_id
 					};
 				}
 			}
@@ -519,7 +521,9 @@
 					//结果集接放入SKUResult
 					SKUResult[skuKeyAttrs.join(",")] = {
 						stock:sku.stock,
-						prices:[sku.price]
+						prices:[sku.price],
+						goods_img : sku.goods_img,
+						sku_id : sku.sku_id
 					}
 				}
 			}
@@ -633,10 +637,9 @@
 
 						$('#price').text(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
 						$('#stock').text(SKUResult[selectedIds.join(',')].stock);
+						console.log(SKUResult[selectedIds.join(',')]);
 						$('#product-gallery a').each(function(){
-							console.log($('#big_images').children('img').attr('src'));
 							if($(this).attr('data-image').indexOf(SKUResult[selectedIds.join(',')].goods_img)>-1){
-								console.log(SKUResult[selectedIds.join(',')].goods_img);
 								$(this).click();
 							}
 						});
