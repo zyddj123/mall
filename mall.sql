@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-12-28 11:18:58
+Date: 2018-12-28 17:39:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -81,22 +81,7 @@ CREATE TABLE `mall_app_session` (
 -- ----------------------------
 -- Records of mall_app_session
 -- ----------------------------
-INSERT INTO `mall_app_session` VALUES ('1e4h1pogh9hoelpb8fcr1o42s1', '1545909881', 'csrf_token|s:10:\"650eeb7653\";', '0000-00-00 00:00:00', '3232235976', '');
-INSERT INTO `mall_app_session` VALUES ('406qdv45inp37isgoul8gjbct5', '1545387305', 'csrf_token|s:10:\"a065c790c0\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('4ipslajj2mfaddbmts9gk1p744', '1545816834', 'csrf_token|s:10:\"7a6a370b5c\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('699jgs3lg6kvc2efkef5bp0t45', '1545823960', 'csrf_token|s:10:\"df7fc7b8be\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('99imunf9oob9vo8mm0eav96m21', '1545880592', 'csrf_token|s:10:\"106171f437\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('an9vhb4gc0c5bt82u39o6aahs7', '1545736386', 'csrf_token|s:10:\"b3ddde917f\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('co7uc14q2ajc8n22gj0fcp7ta3', '1545815750', 'csrf_token|s:10:\"6924bed4c6\";', '0000-00-00 00:00:00', '3232235976', '');
-INSERT INTO `mall_app_session` VALUES ('dqg96pgi9d744uj1atcocphtg3', '1545387172', 'csrf_token|s:10:\"a678032e8b\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('e47iciua28ukdldonkcp2m0035', '1545304765', 'csrf_token|s:10:\"1f719e7ea5\";app|a:5:{s:10:\"csrf_token\";s:10:\"bdb6e1ef39\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('ihhfsn15gnke3ro8svcg593u43', '1545880592', 'csrf_token|s:10:\"106171f437\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('krrab4lum2degmamluqae9fbb2', '1545974277', 'csrf_token|s:10:\"93e7cdbb02\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('q552p2lduf6v3lu4prcm3nduc7', '1545973699', 'csrf_token|s:10:\"a89f708b05\";', '0000-00-00 00:00:00', '3232235976', '');
-INSERT INTO `mall_app_session` VALUES ('t6bhgknpr6u6su9i1l5orpmkv0', '1545910425', 'csrf_token|s:10:\"c618670fcd\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('tcjrqc9mfh0dij5d4ekpns5eq6', '1545823695', 'csrf_token|s:10:\"2c152f23df\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('u5tp9lt0hm4dc51e20esag1kg6', '1545880592', 'csrf_token|s:10:\"106171f437\";', '0000-00-00 00:00:00', '3232235901', '');
-INSERT INTO `mall_app_session` VALUES ('vk27aa3c3sn7qqtcoifghvdmu4', '1545649765', 'csrf_token|s:10:\"b087cebe89\";app|a:5:{s:10:\"csrf_token\";s:10:\"71e13b3819\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('krrab4lum2degmamluqae9fbb2', '1545995057', 'csrf_token|s:10:\"164a528fd4\";app|a:5:{s:10:\"csrf_token\";s:10:\"2b5c60cf2a\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
 
 -- ----------------------------
 -- Table structure for mall_brand
@@ -4380,7 +4365,7 @@ INSERT INTO `mall_seller_session` VALUES ('agiu7vr900gt7njtr1dp3i44d1', '1545727
 INSERT INTO `mall_seller_session` VALUES ('gg2jgrofnhijjb7el4227i2ng1', '1545793769', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"721c770946\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('jgs4s8vdqtcjdkq12rpjheu5j0', '1545305426', 'seller|a:4:{s:10:\"csrf_token\";s:10:\"ff728bafca\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('lfhrjr9mokrk1m9au12tulsc81', '1545278360', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"3040d4d9c0\";}', '0000-00-00 00:00:00', '3232235783', '');
-INSERT INTO `mall_seller_session` VALUES ('mcs4u12q9980brv3n3qhhd31b7', '1545968641', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"c107b26d6a\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('mcs4u12q9980brv3n3qhhd31b7', '1545992788', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"2215a24799\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('mr6rhbi9hi2p0fbabgfaqo7oi6', '1545645966', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"bc37ce3b4d\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('n1k8j1c2nv947jiv5f2cv97p10', '1545822031', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"63b3eb0aa2\";}', '0000-00-00 00:00:00', '3232235789', '');
 INSERT INTO `mall_seller_session` VALUES ('nkulmklt5u8larmho3ttka41r4', '1545294495', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"a1dbe18c7c\";}', '0000-00-00 00:00:00', '3232235783', '');

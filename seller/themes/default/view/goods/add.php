@@ -553,7 +553,7 @@ if (!defined('CO_BASE_CHECK')) {
 	function get_value(attr_id){
 		var data;
 		$.ajaxSettings.async = false;
-		$.post("/Goods/ajax_get_attr_value",{'attr_id':attr_id},function(e){
+		$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_get_attr_value'; ?>",{'attr_id':attr_id},function(e){
 			data = $.parseJSON(e);
 		});
 		$.ajaxSettings.async = true;
@@ -564,7 +564,7 @@ if (!defined('CO_BASE_CHECK')) {
 	$('#goods_category').change(function(){
 		var category_id = $('#goods_category').val();
 		if(category_id!=0){
-			$.post("/Goods/ajax_get_templet_key",{"category_id":category_id},function(e){
+			$.post("<?php echo $this->config->app_url_root.'/Goods/ajax_get_templet_key'; ?>",{"category_id":category_id},function(e){
 				var data = $.parseJSON(e);
 				if(data){
 					var str = '';

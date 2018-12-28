@@ -106,32 +106,32 @@
 												<div class="panel" id="sku" style="height: 500px;padding:20px 20px 10px 30px;">
 													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']; ?></strong></h2>
 													<meta itemprop="priceCurrency" content="USD" />
-													<div class="price"><h2><strong><span class="currency">$</span><span itemprop="price" id="price">0</span></strong></h2></div>
+													<div class="price" style="height:100px;"><h2><strong><span class="currency">$</span><span itemprop="price" id="price">0</span></strong></h2></div>
 												
-													<p class="btn-list">
+													<!-- <p class="btn-list">
 														<a href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
-														<span class="pull-right">库存: <span id="stock">--</span></span>
-													</p>
-													<div id="add-to-cart">
+													</p> -->
+													<div id="add-to-cart" style="display:grid;">
 														<div class="form-group" style="margin-bottom: 0px;display:inline-grid;" id="attr_div">
 
+														</div>
+														<div class="form-group" style="margin-bottom: 0px; display:-webkit-inline-box;">
+															<label class="required" style="margin-top:4px">数量</label>
+															<input type="text" id="num" class="form-control input-sm" style="width:12%;margin-left:25px;border-width:1px;border-color:#CCCCCC;" value="1" />
+															<div class="input-group-btn">
+																<button class="btn btn-sm btn-input" id="cut"><i class="fa fa-minus"></i></button>
+																<button class="btn btn-sm btn-input" id="add"><i class="fa fa-plus"></i></button>
+															</div>
+															<div style="margin-top:5px;margin-left:20px;"><span>库存: <span id="stock">--</span></span></div>
 														</div>
 														<br />
 														<br />
 														<div class="form-group row" style="margin-bottom:30px;">
-															<div class="col-lg-3">
-																<div class="input-group input-group-radius count-input">
-																	<input type="text" id="num" class="form-control input-sm" value="1" />
-																	<div class="input-group-btn">
-																		<button class="btn btn-sm btn-input" id="cut"><i class="fa fa-minus"></i></button>
-																		<button class="btn btn-sm btn-input" id="add"><i class="fa fa-plus"></i></button>
-																	</div>
-																</div>
-															</div>	
-															<div class="col-lg-1"></div>
-															<div class="col-lg-5">	
-																<button data-remodal-target="add-to-cart" id="add_to_cart" class="btn btn-radius btn-simple-to-border btn-primary">添加购物车</button>
-															</div>
+															<input type="hidden" id="sku_id" value="">
+															<button data-remodal-target="add-to-cart" id="add_to_cart" class="btn btn-radius" style="margin-left:10%">添加购物车</button>
+															<!-- btn btn-block btn-angular btn-sm btn-border-to-simple btn-light-gray -->
+															<button id="buy_btn" class="btn btn-radius btn-simple-to-border btn-primary" style="margin-left:10%">立刻购买</button>
+															<div id="err" style="margin: 20px 20px 50px 75px;color:red;"></div>
 														</div>
 													</div>
 												</div>
@@ -238,9 +238,7 @@
 		<section class="section">
 			<div class="container">
 				<div class="section-header text-center bottom-space-2">
-					<h3 class="subtitle">Latest Product View</h3>
-					<h2 class="maintitle">Related <strong>products</strong></h2>
-					
+					<h2 class="maintitle">相关 <strong>商品</strong></h2>
 					<div class="divider type-2"></div>
 				</div>
 				
@@ -637,6 +635,7 @@
 
 						$('#price').text(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
 						$('#stock').text(SKUResult[selectedIds.join(',')].stock);
+						$('#sku_id').val(SKUResult[selectedIds.join(',')].sku_id);
 						console.log(SKUResult[selectedIds.join(',')]);
 						$('#product-gallery a').each(function(){
 							if($(this).attr('data-image').indexOf(SKUResult[selectedIds.join(',')].goods_img)>-1){
@@ -689,6 +688,28 @@
 			$('#cut').click(function(){
 				if(parseInt($('#num').val())>1){
 					$('#num').val(parseInt($('#num').val()) - 1);
+				}
+			});
+
+			$('#buy_btn').click(function(){
+				var sku_id = $('#sku_id').val();
+				var goods_id = '<?php echo $goods["id"]?>';
+				if(sku_id!=''){
+					$.post("<?php echo $this->config->app_url_root.'/Index/ajax_buy_goods'; ?>",{"goods_id":goods_id,"sku_id":sku_id},function(e){
+						e = JSON.parse(e);
+						var flag = e.sta;
+						var mes = e.mes;
+						if(flag==0){
+							//不存在该商品属性
+							$('#err').empty().text('不存在该商品属性，请不要擅自修改不该修改的内容');
+						}else if(flag==1){
+							//成功
+							$('#err').empty();
+						}else if(flag==2){
+							//该商品规格库存为0
+							$('#err').empty().text('该规格已经售罄');
+						}
+					});
 				}
 			});
 			

@@ -93,6 +93,31 @@ class IndexController extends CO_Controller{
 		echo json_encode($arrRet);
 	}
 
+	//购买商品
+	function ajax_buy_goods(){
+		$sku_id = $this->input->post('sku_id');
+		$goods_id = $this->input->post('goods_id');
+		$goodsSkuObj = new GoodsSku($this->getDb());
+		$res = $goodsSkuObj->select(array('id'=>$sku_id,'goods_id'=>$goods_id));
+		$ret = array(
+			'mes'=>'',
+			'sta'=>0
+		);
+		if($res){
+			if($res[0]['stock']>0){
+				$ret['mes'] = '成功';
+				$ret['sta'] = 1;
+			}else{
+				$ret['mes'] = '该商品规格库存为0';
+				$ret['sta'] = 2;
+			}
+		}else{
+			$ret['mes'] = '不存在该商品属性';
+			$ret['sta'] = 0;
+		}
+		echo json_encode($ret);
+	}
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}
