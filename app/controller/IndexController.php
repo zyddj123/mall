@@ -72,7 +72,6 @@ class IndexController extends CO_Controller{
 		}
 		$ppc=10;// 每页显示多少条
 		$arrRet=array(); //返回给前台ajax的数组
-
 		// $data['select'] = array('student.id','name','class_id','student.status','class_name','sex');
 		$data['order'] = array('id'=>'DESC');
 		// $data['where']['and'] = array('student.status'=>1,'class_id'=>array(1,2));
@@ -82,7 +81,6 @@ class IndexController extends CO_Controller{
 		$data['page'] = $p;
 		$data['ppc'] = $ppc;
 		// $data['join'] = array('class'=>array('student.class_id','class.id'),'sex'=>array('student.sex_id','sex.id'));
-
 		$data = $viewGoods->pagination($data);
 		$count = $data['data']['count'];
 		$arrRet['data']=$data['data']['data'];//数据
@@ -116,6 +114,11 @@ class IndexController extends CO_Controller{
 			$ret['sta'] = 0;
 		}
 		echo json_encode($ret);
+	}
+
+	//加载购物车页面
+	function cart(){
+		$this->render('goods/cart');
 	}
 
 	function getThemesUrl(){
