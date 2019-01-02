@@ -41,7 +41,7 @@
 */
 /* ========== BASE ========== */
 /* --- Scaffolding --- */
-@import url("https://fonts.googleapis.com/css?family=Allura|Open+Sans:300,400,600,700|Roboto:400,500,700");
+@import url("gstatic.css");
 @import url("font-awesome.min.css");
 @import url("slick.min.css");
 @import url("remodal.min.css");

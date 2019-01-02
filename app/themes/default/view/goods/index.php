@@ -365,7 +365,7 @@
 							str += '<article data-animate class="media-box dark">';
 							str += '<div class="box-content">';
 							str += '<div class="figure item-slider" data-slider-nav="item-slider-nav-1" data-slider-arrows>';
-							str += '<a href="<?php echo $this->config->app_url_root;?>/Index/good?id='+d.id+'"><img src="<?php echo SellerConfig::UPLOAD_GOODS?>'+d.store_id+'/'+d.goods_img+'" alt="" /></a>';
+							str += '<a href="<?php echo $this->config->app_url_root;?>/Index/good?id='+d.id+'"><img style="width:252px;height:252px;" src="<?php echo SellerConfig::UPLOAD_GOODS?>'+d.store_id+'/'+d.goods_img+'" alt="" /></a>';
 							str += '</div>';
 							str += '<div class="description">查看详细</div>';
 							str += '</div>';

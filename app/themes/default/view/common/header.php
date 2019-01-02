@@ -22,16 +22,16 @@
             </ul>
         </div>
             
-        <div class="pull-right">
+        <div class="pull-right" >
             <ul class="list-inline">
                 <?php if(isset($_SESSION['app'][id])&&!empty($_SESSION['app'][id])):?>
-                <li><a href="#"><i class="fa fa-lock"></i> <?php echo $_SESSION['app']['app_name']?> </a></li>
+                <li><a href="javascript:void(0);"><i class="fa fa-lock"></i> <?php echo $_SESSION['app']['app_name']?> </a></li>
                 <?php else:?>
                 <li><a href="<?php echo $this->config->app_url_root.'/Login'; ?>"><i class="fa fa-lock"></i> 登录|注册</a></li>
                 <?php endif;?>
                 <li class="hidden-xs">
                     <form class="search-form">
-                        <input type="text" placeholder="Search" />
+                        <input type="text" placeholder="搜索" />
                         <button type="submit"><span class="sr-only">搜索</span> <i class="fi flaticon-magnifying-glass"></i></button>
                     </form>
                 </li>
