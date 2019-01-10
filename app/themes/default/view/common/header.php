@@ -61,7 +61,7 @@
                                 <span class="sr-only">Shop</span>
                                 <span class="cart-count">
                                     <i class="fi flaticon-paper-bag"></i>
-                                    <span>2</span>
+                                    <span>1</span>
                                 </span>
                                 <span class="cart-amount">$250.00</span>
                             </a>
@@ -73,7 +73,7 @@
                                 <div class="row small-gap cart-item">
                                     <div class="col-sm-4">
                                         <div class="figure">
-                                            <a class="hidden-xs" href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-1.jpg" alt="" /></a>
+                                            <a class="hidden-xs" href="#"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-1.jpg" alt="" /></a>
                                             <button type="button" class="close" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -81,50 +81,15 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="content">
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-
-                                            <h5 class="title"><a href="shop-detail.html">Colorful <strong>women towel</strong></a></h5>
-
+                                            <h5 class="title"><a href="#"><strong>商品一</strong></a></h5>
                                             <ul class="list-inline text">
-                                                <li>$20.00</li>
-                                                <li>QTY: 1</li>
+                                                <li>黑色</li>
+                                                <li>32G</li>
+                                                <li>38码</li>
                                             </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.cart-item -->
-                                
-                                <!-- .cart-item -->
-                                <div class="row small-gap cart-item">
-                                    <div class="col-sm-4">
-                                        <div class="figure">
-                                            <a class="hidden-xs" href="shop-detail.html"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-2.jpg" alt="" /></a>
-                                            <button type="button" class="close" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <div class="content">
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-
-                                            <h5 class="title"><a href="shop-detail.html">Colorful <strong>women towel</strong></a></h5>
-
                                             <ul class="list-inline text">
                                                 <li>$20.00</li>
-                                                <li>QTY: 1</li>
+                                                <li>数量: 1</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -132,17 +97,17 @@
                                 <!-- /.cart-item -->
                                 
                                 <div class="subtotal clearfix">
-                                    <div class="pull-left text-uppercase">Sub<span class="weight-bold">total</span></div>
+                                    <div class="pull-left text-uppercase"><span class="weight-bold">总计</span></div>
                                     <div class="pull-right big weight-bold">$40.00</div>
                                 </div>
                                 
                                 <div class="row small-gap">
                                     <div class="col-sm-6">
-                                        <a class="btn btn-block btn-angular btn-sm btn-border-to-simple btn-light-gray" href="shopping-cart.html">Your cart</a>
+                                        <a class="btn btn-block btn-angular btn-sm btn-border-to-simple btn-light-gray" href="<?php echo $this->config->app_url_root;?>/Cart/cart">我的购物车</a>
                                     </div>
                                     
                                     <div class="col-sm-6">
-                                        <a href="checkout.html" class="btn btn-block btn-angular btn-sm btn-simple-to-border btn-primary">Checkout</a>
+                                        <a href="#" class="btn btn-block btn-angular btn-sm btn-simple-to-border btn-primary">结算</a>
                                     </div>
                                 </div>
                             </div>

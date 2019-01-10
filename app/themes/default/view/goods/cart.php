@@ -51,36 +51,36 @@
 					
 						<div class="hidden-xs hidden-sm row collapsed">
 							<div class="col-sm-6">
-								<div class="block-title"><strong>Product</strong></div>
+								<div class="block-title"><strong>产品</strong></div>
 							</div>
 							
 							<div class="col-sm-6">
 								<div class="row collapsed">
 									<div class="col-sm-4">
-										<div class="block-title"><strong>Price</strong></div>
+										<div class="block-title"><strong>添加时价格</strong></div>
 									</div>
 									<div class="col-sm-4">
-										<div class="block-title"><strong>Quantity</strong></div>
+										<div class="block-title"><strong>数量</strong></div>
 									</div>
 									<div class="col-sm-4 text-right">
-										<div class="block-title"><strong>Total</strong></div>
+										<div class="block-title"><strong>小计</strong></div>
 									</div>
 								</div>
 							</div>
 						</div>
 						
 						<!-- .cart-section -->
-						<div class="cart-section bottom-space-2">
-							
+						<div class="cart-section bottom-space-2" id="app">
+
 							<!-- .cart-row -->
-							<div class="row collapsed cart-row">
+							<div class="row collapsed cart-row" v-for="(value,index) in res" :key="index">
 								<div class="col-md-6">
 									
 									<div class="row small-gap cart-item">
 										<div class="col-sm-3 col-xs-2">
 											<div class="figure">
 												<a class="hidden-xs" href="#">
-													<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-1.jpg" alt="" />
+													<img src="images/pictures/items/item-4-2.jpg" alt="" />
 												</a>
 												<button type="button" class="close" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
@@ -89,17 +89,11 @@
 										</div>
 										<div class="col-sm-9 col-xs-10">
 											<div class="content">
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-half-o"></i>
+												<h5 style="margin-top:20px;" class="title"><a href="">asfd<strong></strong></a></h5>
+												
+												<div class="text" style="margin-top:5px;">
+													dasafaf
 												</div>
-
-												<h5 class="title"><a href="shop-detail.html">Colorful <strong>women towel</strong></a></h5>
-
-												<div class="text">Women Collection</div>
 											</div>
 										</div>
 									</div>
@@ -108,7 +102,11 @@
 
 								<div class="col-md-6">
 									<div class="row collapsed top-space">
-										<div class="col-xs-4"><span class="visible-sm visible-xs">Price:</span> <strong class="cell-text">$175.00</strong></div>
+										<div class="col-xs-4"><span class="visible-sm visible-xs">Price:</span> 
+											<strong class="cell-text" style="color:#ff7f00;font-size:22px;">
+												$175
+											</strong>
+										</div>
 										<div class="col-xs-4">
 											<div class="input-group count-input">
 												<div class="input-group-btn">
@@ -126,113 +124,6 @@
 							</div>
 							<!-- /.cart-row -->
 							
-							<!-- .cart-row -->
-							<div class="row collapsed cart-row">
-								<div class="col-md-6">
-									
-									<div class="row small-gap cart-item">
-										<div class="col-sm-3 col-xs-2">
-											<div class="figure">
-												<a class="hidden-xs" href="#">
-													<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-2.jpg" alt="" />
-												</a>
-												<button type="button" class="close" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-										</div>
-										<div class="col-sm-9 col-xs-10">
-											<div class="content">
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-half-o"></i>
-												</div>
-
-												<h5 class="title"><a href="shop-detail.html">Colorful <strong>women towel</strong></a></h5>
-
-												<div class="text">Women Collection</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-md-6">
-									<div class="row collapsed top-space">
-										<div class="col-xs-4"><span class="visible-sm visible-xs">Price:</span> <strong class="cell-text">$175.00</strong></div>
-										<div class="col-xs-4">
-											<div class="input-group count-input">
-												<div class="input-group-btn">
-													<button class="btn" data-value="minus">-</button>
-												</div>
-												<input type="text" class="form-control" value="1" readonly />
-												<div class="input-group-btn">
-													<button class="btn" data-value="plus">+</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-xs-4 text-right"><span class="visible-sm visible-xs">Total:</span> <strong class="cell-text">$175.00</strong></div>
-									</div>
-								</div>
-							</div>
-							<!-- /.cart-row -->
-							
-							<!-- .cart-row -->
-							<div class="row collapsed cart-row">
-								<div class="col-md-6">
-									
-									<div class="row small-gap cart-item">
-										<div class="col-sm-3 col-xs-2">
-											<div class="figure">
-												<a class="hidden-xs" href="#">
-													<img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-3.jpg" alt="" />
-												</a>
-												<button type="button" class="close" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-										</div>
-										<div class="col-sm-9 col-xs-10">
-											<div class="content">
-												<div class="rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-half-o"></i>
-												</div>
-
-												<h5 class="title"><a href="shop-detail.html">Colorful <strong>women towel</strong></a></h5>
-
-												<div class="text">Women Collection</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-md-6">
-									<div class="row collapsed top-space">
-										<div class="col-xs-4"><span class="visible-sm visible-xs">Price:</span> <strong class="cell-text">$175.00</strong></div>
-										<div class="col-xs-4">
-											<div class="input-group count-input">
-												<div class="input-group-btn">
-													<button class="btn" data-value="minus">-</button>
-												</div>
-												<input type="text" class="form-control" value="1" readonly />
-												<div class="input-group-btn">
-													<button class="btn" data-value="plus">+</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-xs-4 text-right"><span class="visible-sm visible-xs">Total:</span> <strong class="cell-text">$175.00</strong></div>
-									</div>
-								</div>
-							</div>
-							<!-- /.cart-row -->
 							
 						</div>
 						<!-- /.cart-section -->
@@ -306,9 +197,20 @@
         <!-- Custom select -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/jquery.selectric.min.js"></script>
 		<!-- Custom JS -->
+        <script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
+		<!-- Custom JS -->
         <script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
+
 		<script>
-			
+			var data = <?php echo $cart?>;
+			var app = new Vue({
+				el:'#app',
+				data(){
+					return {
+						res:data,
+					}
+				}
+			});
 		</script>
 	</body>
 </html>

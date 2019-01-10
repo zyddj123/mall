@@ -55,12 +55,13 @@ function init() {
 		var $item = $(event.delegateTarget);
 
 		$item.fadeOut(500, function () {
-			$item.remove();
+			// $item.remove();
+			console.log($item);
 
-			$.ajax({
-				url: './php/cart.php',
-				type: 'POST'
-			});
+			// $.ajax({
+			// 	url: './php/cart.php',
+			// 	type: 'POST'
+			// });
 		});
 	});
 

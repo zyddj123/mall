@@ -419,7 +419,7 @@
 			//填充商品规格html
 			var str = '';
 			for(var x in attr_sku){
-				str += '<div class=" input-one form-list" style="display:inline-flex;">';
+				str += '<div class="sku_fname input-one form-list" style="display:inline-flex;">';
 				str += '<label class="required" style="margin-top:4px;margin-right:20px;">'+attr_sku[x].attrs_key_name+'</label>';
 				for(var y in attr_sku[x].attr_value){
 					str += '<input type="button" class="sku" attr_id="'+attr_sku[x].attr_value[y].attrs_value_id+'" value="'+attr_sku[x].attr_value[y].attrs_value+'"/>';
@@ -691,11 +691,58 @@
 				}
 			});
 
+			//购买按钮点击事件
 			$('#buy_btn').click(function(){
 				var sku_id = $('#sku_id').val();
 				var goods_id = '<?php echo $goods["id"]?>';
-				if(sku_id!=''){
-					$.post("<?php echo $this->config->app_url_root.'/Index/ajax_buy_goods'; ?>",{"goods_id":goods_id,"sku_id":sku_id},function(e){
+				var quantity = $('#num').val();
+				var choSkuL = 0; //选中的属性数量
+				var SkuL = 0; //属性行数
+				$('.sku').each(function(i,d){
+					if($(this).hasClass('bh-sku-selected')){
+						choSkuL++;
+					}
+				})
+				$('.sku_fname').each(function(i,d){
+					SkuL++;
+				});
+				if(sku_id!=''&&choSkuL===SkuL){
+					$.post("<?php echo $this->config->app_url_root.'/Index/ajax_buy_goods'; ?>",{"goods_id":goods_id,"sku_id":sku_id,"quantity":quantity},function(e){
+						e = JSON.parse(e);
+						var flag = e.sta;
+						var mes = e.mes;
+						if(flag==0){
+							//不存在该商品属性
+							$('#err').empty().text('不存在该商品属性，请不要擅自修改不该修改的内容');
+						}else if(flag==1){
+							//成功
+							$('#err').empty();
+						}else if(flag==2){
+							//该商品规格库存为0
+							$('#err').empty().text('该规格已经售罄');
+						}
+					});
+				}
+			});
+
+			//添加购物车按钮点击事件
+			$('#add_to_cart').click(function(){
+				var sku_id = $('#sku_id').val();
+				var goods_id = '<?php echo $goods["id"]?>';
+				var quantity = $('#num').val();
+				var store_id = '<?php echo $goods["store_id"]?>';
+				var choSkuL = 0; //选中的属性数量
+				var SkuL = 0; //属性行数
+				$('.sku').each(function(i,d){
+					if($(this).hasClass('bh-sku-selected')){
+						choSkuL++;
+					}
+				})
+				$('.sku_fname').each(function(i,d){
+					SkuL++;
+				});
+				if(sku_id!=''&&choSkuL===SkuL){
+					$.post("<?php echo $this->config->app_url_root.'/Cart/ajax_insert_cart'; ?>",{"goods_id":goods_id,"sku_id":sku_id,"quantity":quantity,"store_id":store_id},function(e){
 						e = JSON.parse(e);
 						var flag = e.sta;
 						var mes = e.mes;
