@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2018-12-28 17:39:43
+Date: 2019-01-11 17:04:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -57,7 +57,7 @@ CREATE TABLE `mall_app` (
   PRIMARY KEY (`id`),
   KEY `user_name` (`app_name`) USING BTREE,
   KEY `agency_id` (`agency_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mall_app
@@ -81,7 +81,14 @@ CREATE TABLE `mall_app_session` (
 -- ----------------------------
 -- Records of mall_app_session
 -- ----------------------------
+INSERT INTO `mall_app_session` VALUES ('6nq2eqpnecf9743j9dtm8c9sm5', '1546937492', 'csrf_token|s:10:\"f77a2ceebd\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('8rrbp15pc9cn91k5oimqutgdu7', '1546418915', 'csrf_token|s:10:\"88a07f6b60\";app|a:5:{s:10:\"csrf_token\";s:10:\"397fd13b6b\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('aen27a3q1l73b5n7g7rlfvn2g2', '1546602436', 'csrf_token|s:10:\"471df02311\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('aodobfrdhngqau0vjlovusvgo3', '1547204472', 'app|a:5:{s:10:\"csrf_token\";s:10:\"8744b4ac3d\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_app_session` VALUES ('krrab4lum2degmamluqae9fbb2', '1545995057', 'csrf_token|s:10:\"164a528fd4\";app|a:5:{s:10:\"csrf_token\";s:10:\"2b5c60cf2a\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('pclnd6kuk2ekqi6vrb8qia3bu6', '1546489900', 'csrf_token|s:10:\"130e41af38\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('qqbs90ovvpql5p5glivpc0e9s6', '1546080742', 'csrf_token|s:10:\"f64007bbd3\";', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_app_session` VALUES ('r8i936flmq7qsbht4046olrrb4', '1547120310', 'csrf_token|s:10:\"240cf3cca2\";app|a:5:{s:10:\"csrf_token\";s:10:\"e9a7e9e873\";s:2:\"id\";s:1:\"1\";s:8:\"app_name\";s:4:\"app1\";s:7:\"app_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:7:\"app_img\";s:0:\"\";}', '0000-00-00 00:00:00', '3232235901', '');
 
 -- ----------------------------
 -- Table structure for mall_brand
@@ -96,7 +103,7 @@ CREATE TABLE `mall_brand` (
   `store_id` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1正常 0已经删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mall_brand
@@ -118,6 +125,30 @@ INSERT INTO `mall_brand` VALUES ('14', '444', '20181109095039248.jpg', '4444', '
 INSERT INTO `mall_brand` VALUES ('15', '苹果', '20181114152852181.jpg', '苹果官网', 'http://www.iphone.com/', '2', '1');
 INSERT INTO `mall_brand` VALUES ('16', '333', '20181217112706258.jpg', 'eeee', 'http://www.nokia.com.cn/', '2', '0');
 INSERT INTO `mall_brand` VALUES ('17', '小米', '20181221101453425.png', '小米--中国大众品牌', 'https://mi.com', '1', '1');
+
+-- ----------------------------
+-- Table structure for mall_cart
+-- ----------------------------
+DROP TABLE IF EXISTS `mall_cart`;
+CREATE TABLE `mall_cart` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `goods_id` int(11) NOT NULL,
+  `add_price` decimal(10,0) NOT NULL COMMENT '添加购物车时候的价格',
+  `quantity` int(11) NOT NULL COMMENT '数量',
+  `sku_id` bigint(20) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `app_id` int(11) NOT NULL COMMENT '前台用户id',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态 1正常   0不正常',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='购物车';
+
+-- ----------------------------
+-- Records of mall_cart
+-- ----------------------------
+INSERT INTO `mall_cart` VALUES ('1', '63', '200', '7', '88', '2019-01-10 15:04:33', '1', '1', '1');
+INSERT INTO `mall_cart` VALUES ('2', '63', '1100', '6', '98', '2019-01-10 15:05:25', '1', '1', '1');
+INSERT INTO `mall_cart` VALUES ('3', '62', '5000', '2', '83', '2019-01-10 15:06:08', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for mall_category
@@ -403,7 +434,7 @@ INSERT INTO `mall_goods_sku` VALUES ('84', '62', '22,24', '4800', '230', '201812
 INSERT INTO `mall_goods_sku` VALUES ('85', '62', '22,25', '6000', '250', '20181224144842452.jpeg', '1');
 INSERT INTO `mall_goods_sku` VALUES ('86', '62', '23,24', '5100', '270', '20181224144842552.jpeg', '1');
 INSERT INTO `mall_goods_sku` VALUES ('87', '62', '23,25', '7000', '300', '20181224144842253.jpeg', '1');
-INSERT INTO `mall_goods_sku` VALUES ('88', '63', '2,5,8', '200', '20', '20181228094357205.png', '1');
+INSERT INTO `mall_goods_sku` VALUES ('88', '63', '2,5,8', '150', '20', '20181228094357205.png', '1');
 INSERT INTO `mall_goods_sku` VALUES ('89', '63', '2,5,9', '300', '30', '20181228094357949.png', '1');
 INSERT INTO `mall_goods_sku` VALUES ('90', '63', '2,5,10', '400', '40', '20181228094357933.png', '1');
 INSERT INTO `mall_goods_sku` VALUES ('91', '63', '2,6,8', '500', '50', '20181228094357189.png', '1');
@@ -445,260 +476,6 @@ INSERT INTO `mall_keywords` VALUES ('2009-05-12', 'ecshop', '诺基亚', '1');
 INSERT INTO `mall_keywords` VALUES ('2009-05-12', 'ecshop', '夏新', '1');
 INSERT INTO `mall_keywords` VALUES ('2009-05-18', 'ecshop', '52', '2');
 INSERT INTO `mall_keywords` VALUES ('2009-05-22', 'ecshop', 'p', '1');
-
--- ----------------------------
--- Table structure for mall_order_action
--- ----------------------------
-DROP TABLE IF EXISTS `mall_order_action`;
-CREATE TABLE `mall_order_action` (
-  `action_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `action_user` varchar(30) NOT NULL DEFAULT '',
-  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `action_place` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `action_note` varchar(255) NOT NULL DEFAULT '',
-  `log_time` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`action_id`),
-  KEY `order_id` (`order_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mall_order_action
--- ----------------------------
-INSERT INTO `mall_order_action` VALUES ('1', '2', 'admin', '1', '0', '2', '0', '[售后] 1132', '1242142350');
-INSERT INTO `mall_order_action` VALUES ('2', '2', 'admin', '1', '1', '2', '0', '已经发货，注意接收', '1242142389');
-INSERT INTO `mall_order_action` VALUES ('3', '1', 'admin', '1', '1', '2', '0', '已经发货，注意接收', '1242142432');
-INSERT INTO `mall_order_action` VALUES ('4', '2', '买家', '1', '2', '2', '0', '', '1242142449');
-INSERT INTO `mall_order_action` VALUES ('5', '1', '买家', '1', '2', '2', '0', '', '1242142451');
-INSERT INTO `mall_order_action` VALUES ('6', '3', 'admin', '1', '1', '2', '0', '已经发货了，注意接收', '1242142589');
-INSERT INTO `mall_order_action` VALUES ('7', '3', '买家', '1', '2', '2', '0', '', '1242142634');
-INSERT INTO `mall_order_action` VALUES ('8', '5', 'admin', '1', '3', '2', '0', '', '1242142869');
-INSERT INTO `mall_order_action` VALUES ('9', '6', 'admin', '3', '0', '0', '0', '暂时缺货', '1242143337');
-INSERT INTO `mall_order_action` VALUES ('10', '7', 'admin', '1', '0', '0', '0', '', '1242143454');
-INSERT INTO `mall_order_action` VALUES ('11', '1', 'admin', '1', '2', '2', '0', '[售后] 售后', '1242143773');
-INSERT INTO `mall_order_action` VALUES ('12', '2', 'admin', '4', '0', '0', '0', '质量问题', '1242144185');
-INSERT INTO `mall_order_action` VALUES ('13', '12', 'buyer', '2', '0', '0', '0', '用户取消', '1242576313');
-INSERT INTO `mall_order_action` VALUES ('14', '13', 'admin', '1', '1', '0', '0', '11', '1242576445');
-INSERT INTO `mall_order_action` VALUES ('15', '14', 'admin', '1', '3', '2', '0', '', '1242976715');
-INSERT INTO `mall_order_action` VALUES ('16', '14', 'admin', '1', '1', '2', '0', '已经发货，请接收', '1242976740');
-INSERT INTO `mall_order_action` VALUES ('17', '15', 'admin', '1', '0', '0', '0', '', '1245044587');
-INSERT INTO `mall_order_action` VALUES ('18', '15', 'admin', '1', '0', '2', '0', '已经付款', '1245044644');
-INSERT INTO `mall_order_action` VALUES ('19', '15', 'admin', '1', '4', '2', '0', '', '1245044964');
-INSERT INTO `mall_order_action` VALUES ('20', '15', 'admin', '1', '4', '2', '0', '北京供货商', '1245045061');
-INSERT INTO `mall_order_action` VALUES ('21', '3', 'admin', '4', '0', '0', '0', '不喜欢这个颜色', '1245045334');
-INSERT INTO `mall_order_action` VALUES ('22', '15', 'admin', '1', '1', '2', '0', '', '1245045443');
-INSERT INTO `mall_order_action` VALUES ('23', '15', 'admin', '4', '0', '0', '0', '退货', '1245045515');
-INSERT INTO `mall_order_action` VALUES ('24', '16', 'admin', '1', '4', '2', '0', '上海供货', '1245045723');
-INSERT INTO `mall_order_action` VALUES ('25', '17', 'admin', '1', '1', '2', '0', '', '1245048189');
-INSERT INTO `mall_order_action` VALUES ('26', '17', 'admin', '4', '0', '0', '0', '退货', '1245048212');
-INSERT INTO `mall_order_action` VALUES ('27', '19', 'admin', '1', '1', '2', '0', '', '1245384050');
-
--- ----------------------------
--- Table structure for mall_order_goods
--- ----------------------------
-DROP TABLE IF EXISTS `mall_order_goods`;
-CREATE TABLE `mall_order_goods` (
-  `rec_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_name` varchar(120) NOT NULL DEFAULT '',
-  `goods_sn` varchar(60) NOT NULL DEFAULT '',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `market_price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `goods_price` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `goods_attr` text NOT NULL,
-  `send_number` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `is_real` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `is_gift` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `goods_attr_id` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`rec_id`),
-  KEY `order_id` (`order_id`) USING BTREE,
-  KEY `goods_id` (`goods_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mall_order_goods
--- ----------------------------
-INSERT INTO `mall_order_goods` VALUES ('1', '1', '8', '飞利浦9@9v', 'ECS000008', '0', '1', '478.79', '385.00', '颜色:黑 \n', '0', '1', '', '0', '0', '231');
-INSERT INTO `mall_order_goods` VALUES ('2', '2', '12', '摩托罗拉A810', 'ECS000012', '0', '1', '1179.60', '960.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('3', '3', '17', '夏新N7', 'ECS000017', '0', '1', '2760.00', '2300.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('4', '4', '22', '多普达Touch HD', 'ECS000022', '0', '1', '7198.80', '5999.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('5', '5', '9', '诺基亚E66', 'ECS000009', '0', '3', '2757.60', '2200.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('6', '5', '24', 'P806', 'ECS000024', '0', '1', '2400.00', '2000.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('7', '6', '5', '索爱原装M2卡读卡器', 'ECS000005', '0', '1', '24.00', '20.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('8', '7', '9', '诺基亚E66', 'ECS000009', '0', '1', '2757.60', '2298.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('9', '8', '20', '三星BC01', 'ECS000020', '0', '1', '336.00', '238.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('10', '8', '8', '飞利浦9@9v', 'ECS000008', '0', '1', '478.79', '385.00', '颜色:黑 \n', '0', '1', '', '0', '0', '231');
-INSERT INTO `mall_order_goods` VALUES ('11', '9', '24', 'P806', 'ECS000024', '0', '1', '2400.00', '2000.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('12', '10', '24', 'P806', 'ECS000024', '0', '1', '2400.00', '0.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('13', '11', '23', '诺基亚N96', 'ECS000023', '0', '1', '4440.00', '3800.00', '附加配件: 原装电池 [+100]', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('14', '12', '20', '三星BC01', 'ECS000020', '0', '1', '336.00', '238.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('15', '13', '12', '摩托罗拉A810', 'ECS000012', '0', '1', '1179.60', '960.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('16', '14', '15', '摩托罗拉A810', 'ECS000015', '0', '5', '705.60', '588.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('17', '14', '20', '三星BC01', 'ECS000020', '0', '1', '336.00', '238.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('18', '14', '22', '多普达Touch HD', 'ECS000022', '0', '1', '7198.80', '5999.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('19', '14', '3', '诺基亚原装5800耳机', 'ECS000002', '0', '4', '81.60', '68.00', '颜色:银色 \n', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('20', '14', '9', '诺基亚E66', 'ECS000009', '0', '2', '2757.60', '2298.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('21', '15', '13', '诺基亚5320 XpressMusic', 'ECS000013', '0', '3', '1583.20', '1210.00', '颜色:红[10] \n', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('22', '15', '14', '诺基亚5800XM', 'ECS000014', '0', '1', '3150.00', '2493.75', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('23', '15', '24', 'P806', 'ECS000024', '0', '4', '2400.00', '1900.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('24', '15', '9', '诺基亚E66', 'ECS000009', '0', '1', '2757.60', '2183.10', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('25', '15', '8', '飞利浦9@9v', 'ECS000008', '0', '3', '478.79', '379.05', '颜色:黑 \n', '0', '1', '', '0', '0', '231');
-INSERT INTO `mall_order_goods` VALUES ('26', '16', '12', '摩托罗拉A810', 'ECS000012', '0', '2', '1179.60', '933.85', '', '2', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('27', '16', '1', 'KD876', 'ECS000000', '0', '1', '1665.60', '1318.60', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('28', '17', '24', 'P806', 'ECS000024', '0', '1', '2400.00', '1900.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('29', '18', '24', 'P806', 'ECS000024', '0', '5', '2400.00', '100.00', '', '0', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('30', '19', '12', '摩托罗拉A810', 'ECS000012', '0', '2', '1179.60', '933.85', '', '2', '1', '', '0', '0', '');
-INSERT INTO `mall_order_goods` VALUES ('31', '19', '24', 'P806', 'ECS000024', '0', '2', '2400.00', '1850.00', '颜色:灰色 \n', '2', '1', '', '0', '0', '167');
-
--- ----------------------------
--- Table structure for mall_order_info
--- ----------------------------
-DROP TABLE IF EXISTS `mall_order_info`;
-CREATE TABLE `mall_order_info` (
-  `order_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `order_sn` varchar(20) NOT NULL DEFAULT '',
-  `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `order_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `shipping_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `pay_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `consignee` varchar(60) NOT NULL DEFAULT '',
-  `country` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `province` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `city` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `district` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `address` varchar(255) NOT NULL DEFAULT '',
-  `zipcode` varchar(60) NOT NULL DEFAULT '',
-  `tel` varchar(60) NOT NULL DEFAULT '',
-  `mobile` varchar(60) NOT NULL DEFAULT '',
-  `email` varchar(60) NOT NULL DEFAULT '',
-  `best_time` varchar(120) NOT NULL DEFAULT '',
-  `sign_building` varchar(120) NOT NULL DEFAULT '',
-  `postscript` varchar(255) NOT NULL DEFAULT '',
-  `shipping_id` tinyint(3) NOT NULL DEFAULT '0',
-  `shipping_name` varchar(120) NOT NULL DEFAULT '',
-  `pay_id` tinyint(3) NOT NULL DEFAULT '0',
-  `pay_name` varchar(120) NOT NULL DEFAULT '',
-  `how_oos` varchar(120) NOT NULL DEFAULT '',
-  `how_surplus` varchar(120) NOT NULL DEFAULT '',
-  `pack_name` varchar(120) NOT NULL DEFAULT '',
-  `card_name` varchar(120) NOT NULL DEFAULT '',
-  `card_message` varchar(255) NOT NULL DEFAULT '',
-  `inv_payee` varchar(120) NOT NULL DEFAULT '',
-  `inv_content` varchar(120) NOT NULL DEFAULT '',
-  `goods_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `shipping_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `insure_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `pay_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `pack_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `card_fee` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `money_paid` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `surplus` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `integral` int(10) unsigned NOT NULL DEFAULT '0',
-  `integral_money` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `bonus` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `order_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `from_ad` smallint(5) NOT NULL DEFAULT '0',
-  `referer` varchar(255) NOT NULL DEFAULT '',
-  `add_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `confirm_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `pay_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `shipping_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `pack_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `card_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `bonus_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `invoice_no` varchar(255) NOT NULL DEFAULT '',
-  `extension_code` varchar(30) NOT NULL DEFAULT '',
-  `extension_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `to_buyer` varchar(255) NOT NULL DEFAULT '',
-  `pay_note` varchar(255) NOT NULL DEFAULT '',
-  `agency_id` smallint(5) unsigned NOT NULL,
-  `inv_type` varchar(60) NOT NULL,
-  `tax` decimal(10,2) NOT NULL,
-  `is_separate` tinyint(1) NOT NULL DEFAULT '0',
-  `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `discount` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`order_id`),
-  UNIQUE KEY `order_sn` (`order_sn`) USING BTREE,
-  KEY `user_id` (`user_id`) USING BTREE,
-  KEY `order_status` (`order_status`) USING BTREE,
-  KEY `shipping_status` (`shipping_status`) USING BTREE,
-  KEY `pay_status` (`pay_status`) USING BTREE,
-  KEY `shipping_id` (`shipping_id`) USING BTREE,
-  KEY `pay_id` (`pay_id`) USING BTREE,
-  KEY `extension_code` (`extension_code`,`extension_id`) USING BTREE,
-  KEY `agency_id` (`agency_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mall_order_info
--- ----------------------------
-INSERT INTO `mall_order_info` VALUES ('1', '2009051298180', '1', '1', '2', '2', '刘先生', '1', '2', '52', '500', '[中国 北京 北京 海淀区] 中关村海兴大厦', '100085', '010-25851234', '13986765412', 'ecshop@ecshop.com', '中午', '法院', '', '5', '申通快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '385.00', '15.00', '0.00', '0.00', '0.00', '0.00', '0.00', '400.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1242142274', '1242142274', '1242142274', '1242142432', '0', '0', '0', '122', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('2', '2009051255518', '1', '4', '0', '0', '刘先生', '1', '2', '52', '500', '[中国 北京 北京 海淀区] 中关村海兴大厦', '100085', '010-25851234', '13986765412', 'ecshop@ecshop.com', '中午', '法院', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '精品包装', '祝福贺卡', '晚来的祝福', '', '', '960.00', '10.00', '0.00', '0.00', '0.00', '5.00', '0.00', '0.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1242142324', '1242142324', '1242142324', '1242142389', '1', '1', '0', '111', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('3', '2009051267570', '1', '4', '0', '0', '刘先生', '1', '2', '52', '500', '[中国 北京 北京 海淀区] 中关村海兴大厦', '100085', '010-25851234', '13986765412', 'ecshop@ecshop.com', '中午', '法院', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '2300.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1242142549', '1242142549', '1242142549', '1242142589', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('4', '2009051230249', '1', '1', '0', '2', '刘先生', '1', '2', '52', '500', '[中国 北京 北京 海淀区] 中关村海兴大厦', '100085', '010-25851234', '13986765412', 'ecshop@ecshop.com', '中午', '法院', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '5999.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '5989.00', '0', '0.00', '20.00', '0.00', '0', '本站', '1242142681', '1242142681', '1242142681', '0', '0', '0', '1', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('5', '2009051276258', '1', '1', '3', '2', '刘先生', '1', '2', '52', '500', '[中国 北京 北京 海淀区] 中关村海兴大厦', '100085', '010-25851234', '13986765412', 'ecshop@ecshop.com', '中午', '法院', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '8600.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '8610.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1242142808', '1242142808', '1242142808', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('6', '2009051217221', '3', '3', '0', '0', '叶先生', '1', '2', '52', '510', '通州区旗舰凯旋小区', '', '13588104710', '', 'text@ecshop.com', '', '', '', '5', '申通快递', '2', '银行汇款/转帐', '等待所有商品备齐后再发', '', '', '', '', '', '', '20.00', '15.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '35.00', '0', '', '1242143292', '0', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('7', '2009051227085', '3', '1', '0', '0', '叶先生', '1', '2', '52', '510', '通州区旗舰凯旋小区', '', '13588104710', '', 'text@ecshop.com', '', '', '', '5', '申通快递', '2', '银行汇款/转帐', '等待所有商品备齐后再发', '', '', '', '', '', '', '2298.00', '15.00', '0.00', '0.00', '0.00', '0.00', '0.00', '1000.00', '0', '0.00', '0.00', '1198.10', '0', '', '1242143383', '1242143454', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '114.90');
-INSERT INTO `mall_order_info` VALUES ('8', '2009051299732', '3', '0', '0', '0', '叶先生', '1', '2', '52', '510', '通州区旗舰凯旋小区', '', '13588104710', '', 'text@ecshop.com', '', '', '', '5', '申通快递', '2', '银行汇款/转帐', '等待所有商品备齐后再发', '', '', '', '', '', '', '623.00', '15.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '638.00', '0', '', '1242143444', '0', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('9', '2009051210718', '3', '0', '0', '0', '叶先生', '1', '2', '52', '510', '通州区旗舰凯旋小区', '', '13588104710', '', 'text@ecshop.com', '', '', '', '5', '申通快递', '2', '银行汇款/转帐', '等待所有商品备齐后再发', '', '', '', '', '', '', '2000.00', '15.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '2015.00', '0', '', '1242143732', '0', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('10', '2009051268194', '1', '1', '0', '2', '刘先生', '1', '2', '52', '500', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '0.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '17000', '0.00', '0.00', '0.00', '0', '', '1242143920', '1242143920', '1242143920', '0', '0', '0', '0', '', 'exchange_goods', '24', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('11', '2009051264945', '0', '1', '0', '0', '林小姐', '1', '2', '52', '500', '中关村海兴大厦', '', '135474510', '', 'linzi@116.com', '', '', '', '3', '城际快递', '2', '银行汇款/转帐', '', '', '', '', '', '', '', '3800.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '3810.00', '0', '管理员添加', '1242144250', '1242144363', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('12', '2009051712919', '1', '2', '0', '0', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '3', '货到付款', '等待所有商品备齐后再发', '', '', '', '', '', '', '238.00', '10.00', '0.00', '5.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '253.00', '0', '本站', '1242576304', '0', '0', '0', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('13', '2009051719232', '1', '1', '1', '0', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '3', '货到付款', '等待所有商品备齐后再发', '', '', '', '', '', '', '960.00', '10.00', '0.00', '5.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '975.00', '0', '本站', '1242576341', '1242576445', '0', '1242576445', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('14', '2009052224892', '1', '1', '1', '2', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '14045.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '13806.60', '0', '0.00', '5.00', '0.00', '0', '本站', '1242976699', '1242976699', '1242976699', '1242976740', '0', '0', '2', '1123344', '', '0', '', '', '0', '', '0.00', '0', '0', '243.40');
-INSERT INTO `mall_order_info` VALUES ('15', '2009061585887', '1', '4', '0', '0', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '2', '银行汇款/转帐', '等待所有商品备齐后再发', '', '', '', '', '', '', '17044.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '17054.00', '0', '本站', '1245044533', '1245044587', '1245044644', '1245045443', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('16', '2009061525429', '1', '1', '4', '2', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '3186.30', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '3196.30', '0', '0.00', '0.00', '0.00', '0', '本站', '1245045672', '1245045672', '1245045672', '1245045723', '0', '0', '0', '2009061525121', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('17', '2009061503335', '1', '4', '0', '0', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '1900.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1245047978', '1245047978', '1245047978', '1245048189', '0', '0', '0', '', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('18', '2009061510313', '1', '1', '0', '2', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '500.00', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '500.00', '0', '0.00', '0.00', '0.00', '0', '本站', '1245048585', '1245048585', '1245048585', '0', '0', '0', '0', '', 'group_buy', '8', '', '', '0', '', '0.00', '0', '0', '0.00');
-INSERT INTO `mall_order_info` VALUES ('19', '2009061909851', '1', '1', '1', '2', '刘先生', '1', '2', '52', '502', '海兴大厦', '', '010-25851234', '13986765412', 'ecshop@ecshop.com', '', '', '', '3', '城际快递', '1', '余额支付', '等待所有商品备齐后再发', '', '', '', '', '', '', '5567.70', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '5577.70', '0', '0.00', '0.00', '0.00', '0', '本站', '1245384008', '1245384008', '1245384008', '1245384049', '0', '0', '0', '232421', '', '0', '', '', '0', '', '0.00', '0', '0', '0.00');
-
--- ----------------------------
--- Table structure for mall_pack
--- ----------------------------
-DROP TABLE IF EXISTS `mall_pack`;
-CREATE TABLE `mall_pack` (
-  `pack_id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `pack_name` varchar(120) NOT NULL DEFAULT '',
-  `pack_img` varchar(255) NOT NULL DEFAULT '',
-  `pack_fee` decimal(6,2) unsigned NOT NULL DEFAULT '0.00',
-  `free_money` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `pack_desc` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`pack_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mall_pack
--- ----------------------------
-INSERT INTO `mall_pack` VALUES ('1', '精品包装', '1242108360911825791.jpg', '5.00', '800', '精品包装，尽心为您设计一份不一样的礼物');
-
--- ----------------------------
--- Table structure for mall_package_goods
--- ----------------------------
-DROP TABLE IF EXISTS `mall_package_goods`;
-CREATE TABLE `mall_package_goods` (
-  `package_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `product_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `admin_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`package_id`,`goods_id`,`admin_id`,`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of mall_package_goods
--- ----------------------------
-INSERT INTO `mall_package_goods` VALUES ('5', '6', '0', '1', '1');
-INSERT INTO `mall_package_goods` VALUES ('5', '5', '0', '1', '1');
-INSERT INTO `mall_package_goods` VALUES ('6', '4', '0', '1', '1');
-INSERT INTO `mall_package_goods` VALUES ('6', '7', '0', '1', '1');
-INSERT INTO `mall_package_goods` VALUES ('6', '32', '0', '1', '1');
-INSERT INTO `mall_package_goods` VALUES ('5', '31', '0', '1', '1');
 
 -- ----------------------------
 -- Table structure for mall_pay_log
@@ -4332,7 +4109,7 @@ CREATE TABLE `mall_seller` (
   PRIMARY KEY (`id`),
   KEY `user_name` (`seller_name`) USING BTREE,
   KEY `agency_id` (`agency_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mall_seller
@@ -4356,22 +4133,32 @@ CREATE TABLE `mall_seller_session` (
 -- ----------------------------
 -- Records of mall_seller_session
 -- ----------------------------
+INSERT INTO `mall_seller_session` VALUES ('0nvc27l7e9f5hg3oht4k800dc6', '1547180553', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"9f227626a7\";}', '0000-00-00 00:00:00', '3232235783', '');
 INSERT INTO `mall_seller_session` VALUES ('2202anoqdcr3g3v1iloikd2e30', '1545363274', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"d1214eea8e\";}', '0000-00-00 00:00:00', '3232235783', '');
 INSERT INTO `mall_seller_session` VALUES ('3n8p220ep99p6vdj334c7a0ol4', '1545208501', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"b34eadbb86\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235783', '');
 INSERT INTO `mall_seller_session` VALUES ('5ojhpscsgro3cbh32bvh1gfep3', '1545880591', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"106171f437\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('722rtg5asllh824qdkkunrnbl4', '1545967229', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"c1d058f207\";}', '0000-00-00 00:00:00', '3232235789', '');
 INSERT INTO `mall_seller_session` VALUES ('77vrh3rk9a47kktovpuisoee87', '1545620974', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"5f531b4cc8\";}', '0000-00-00 00:00:00', '3232235785', '');
+INSERT INTO `mall_seller_session` VALUES ('7mpqoo595kci9vm8oo0tm3bkb5', '1547180581', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"b3a5ef8c67\";}', '0000-00-00 00:00:00', '3232235783', '');
+INSERT INTO `mall_seller_session` VALUES ('8op2fpu69fucfg0vn0s11l7lq4', '1546489919', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"7e636a0500\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('agiu7vr900gt7njtr1dp3i44d1', '1545727080', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"0ef07903e1\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('cl92fu844otjsmi79ntjpneg24', '1546405886', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"474858ef1d\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('d5iqjq187dqclq696e2h1f71l5', '1546080741', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"e80a12b2fb\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('gg2jgrofnhijjb7el4227i2ng1', '1545793769', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"721c770946\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('hhjb342ve7no275ulv8smmq7n0', '1546398913', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"a8f80e7992\";}', '0000-00-00 00:00:00', '3232235778', '');
 INSERT INTO `mall_seller_session` VALUES ('jgs4s8vdqtcjdkq12rpjheu5j0', '1545305426', 'seller|a:4:{s:10:\"csrf_token\";s:10:\"ff728bafca\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('lfhrjr9mokrk1m9au12tulsc81', '1545278360', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"3040d4d9c0\";}', '0000-00-00 00:00:00', '3232235783', '');
 INSERT INTO `mall_seller_session` VALUES ('mcs4u12q9980brv3n3qhhd31b7', '1545992788', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"2215a24799\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('miihs389rrcojejdt706ao6q91', '1547196729', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"c4a556d8b0\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:15:\"goods/goods_add\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('mr6rhbi9hi2p0fbabgfaqo7oi6', '1545645966', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"bc37ce3b4d\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('n1k8j1c2nv947jiv5f2cv97p10', '1545822031', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"63b3eb0aa2\";}', '0000-00-00 00:00:00', '3232235789', '');
 INSERT INTO `mall_seller_session` VALUES ('nkulmklt5u8larmho3ttka41r4', '1545294495', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"a1dbe18c7c\";}', '0000-00-00 00:00:00', '3232235783', '');
+INSERT INTO `mall_seller_session` VALUES ('oqslclcs48f7n9oq0h5fku97s7', '1546419547', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"65effdd42c\";}', '0000-00-00 00:00:00', '3232235788', '');
 INSERT INTO `mall_seller_session` VALUES ('phjh06rp3n4iuknrvammtdlqu0', '1545367241', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"45accf1ffb\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"goods/goods_index\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('q7igdd64r76otoit1ku8heskn7', '1545212801', 'seller|a:5:{s:10:\"csrf_token\";s:10:\"0a09d4956d\";s:2:\"id\";s:1:\"1\";s:11:\"seller_name\";s:7:\"seller1\";s:10:\"seller_pwd\";s:32:\"e10adc3949ba59abbe56e057f20f883e\";s:16:\"left_menu_action\";s:17:\"category/category\";}', '0000-00-00 00:00:00', '3232235901', '');
+INSERT INTO `mall_seller_session` VALUES ('r84jjtt4cvl753kqffrrd046t6', '1547180617', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"31dabb3a23\";}', '0000-00-00 00:00:00', '3232235901', '');
 INSERT INTO `mall_seller_session` VALUES ('saq85qila6iuab1mim2jciu430', '1545883698', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"3c77ed9889\";}', '0000-00-00 00:00:00', '3232235789', '');
+INSERT INTO `mall_seller_session` VALUES ('ud3tj0m2galu0jjo5ct04qr7r5', '1547089795', 'seller|a:1:{s:10:\"csrf_token\";s:10:\"e7c36386ec\";}', '0000-00-00 00:00:00', '3232235779', '');
 
 -- ----------------------------
 -- Table structure for mall_shipping
