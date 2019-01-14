@@ -57,20 +57,19 @@
                 <div class="pull-right default-menu menu-icons">
                     <ul>
                         <li>
-                            <a class="option-icon cart-icon" href="#">
+                            <a class="option-icon cart-icon" href="<?php echo $this->config->app_url_root;?>/Cart/cart">
                                 <span class="sr-only">Shop</span>
-                                <span class="cart-count">
+                                <span class="cart-count" title="购物车">
                                     <i class="fi flaticon-paper-bag"></i>
-                                    <span>1</span>
+                                    <!-- <span>1</span> -->
                                 </span>
-                                <span class="cart-amount">$250.00</span>
                             </a>
                             
                             <!-- .submenu.cart-submenu -->
-                            <div class="submenu cart-submenu">
+                            <!-- <div class="submenu cart-submenu"> -->
                                 
                                 <!-- .cart-item -->
-                                <div class="row small-gap cart-item">
+                                <!-- <div class="row small-gap cart-item">
                                     <div class="col-sm-4">
                                         <div class="figure">
                                             <a class="hidden-xs" href="#"><img src="<?php echo $this->getThemesUrl(); ?>/images/pictures/items/item-4-1.jpg" alt="" /></a>
@@ -93,10 +92,10 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- /.cart-item -->
                                 
-                                <div class="subtotal clearfix">
+                                <!-- <div class="subtotal clearfix">
                                     <div class="pull-left text-uppercase"><span class="weight-bold">总计</span></div>
                                     <div class="pull-right big weight-bold">$40.00</div>
                                 </div>
@@ -110,7 +109,7 @@
                                         <a href="#" class="btn btn-block btn-angular btn-sm btn-simple-to-border btn-primary">结算</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- /.submenu.cart-submenu -->
                             
                         </li>

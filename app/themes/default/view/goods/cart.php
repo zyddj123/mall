@@ -271,19 +271,6 @@
 					},
 					//删除购物车中的一件商品
 					del_cert_goods(i){
-						// var m = -1;
-						// for(var x in this.checkData){
-							// console.log(this.checkData[x]);
-							// console.log(typeof this.checkData[x]);
-							// console.log("i=="+i);
-							// console.log(typeof toString(i));
-							// console.log(this.checkData[x].indexOf(i.toString()));
-							
-							// if(this.checkData[x].indexOf(i.toString())>-1){
-							// 	m = this.checkData[x].indexOf(i.toString());
-							// }
-						// }
-						// console.log(m);
 						this.checkData = [];
 						this.res.splice(i,1);
 					}
