@@ -143,6 +143,14 @@ class CartController extends CO_Controller{
 		echo json_encode($ret);
 	}
 
+	//删除购物车中的一件商品
+	function ajax_delete_cart(){
+		$id = $this->input->post('cart_id');
+		$cartObj = new Cart($this->getDb());
+		$sta = $cartObj->delete(array('id'=>$id));
+		echo json_encode($sta);
+	}
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}

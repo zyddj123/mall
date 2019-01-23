@@ -49,21 +49,21 @@ function init() {
 	});
 
 	// Cart submenu, Cart section
-	$('.cart-submenu .cart-item, .cart-section .cart-row').on('click', '.close', function (event) {
-		event.preventDefault();
+	// $('.cart-submenu .cart-item, .cart-section .cart-row').on('click', '.close', function (event) {
+	// 	event.preventDefault();
 
-		var $item = $(event.delegateTarget);
+	// 	var $item = $(event.delegateTarget);
 
-		$item.fadeOut(500, function () {
-			// $item.remove();
-			console.log($item);
+	// 	$item.fadeOut(500, function () {
+	// 		// $item.remove();
+			
 
-			// $.ajax({
-			// 	url: './php/cart.php',
-			// 	type: 'POST'
-			// });
-		});
-	});
+	// 		// $.ajax({
+	// 		// 	url: './php/cart.php',
+	// 		// 	type: 'POST'
+	// 		// });
+	// 	});
+	// });
 
 
 	// Go to top

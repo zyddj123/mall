@@ -107,7 +107,7 @@
 													<h2 class="product-title" itemprop="name"> <strong><?php echo $goods['goods_name']; ?></strong></h2>
 													<meta itemprop="priceCurrency" content="USD" />
 													<div class="price" style="height:100px;"><h2><strong><span class="currency">$</span><span itemprop="price" id="price">0</span></strong></h2></div>
-												
+														<input type="hidden" id="price_hidden" >
 													<!-- <p class="btn-list">
 														<a href="#" class="btn btn-sm btn-icon-left btn-radius btn-tertiary-to-secondary"><i class="fa fa-heart-o"></i> 收藏</a>
 													</p> -->
@@ -128,7 +128,7 @@
 														<br />
 														<div class="form-group row" style="margin-bottom:30px;">
 															<input type="hidden" id="sku_id" value="">
-															<button data-remodal-target="add-to-cart" id="add_to_cart" class="btn btn-radius" style="margin-left:10%">添加购物车</button>
+															<button data-remodal-target="add-to-cart" id="add_to_cart" class="btn btn-radius btn-angular btn-border-to-simple btn-secondary" style="margin-left:10%">添加购物车</button>
 															<!-- btn btn-block btn-angular btn-sm btn-border-to-simple btn-light-gray -->
 															<button id="buy_btn" class="btn btn-radius btn-simple-to-border btn-primary" style="margin-left:10%">立刻购买</button>
 															<div id="err" style="margin: 20px 20px 50px 75px;color:red;"></div>
@@ -364,6 +364,8 @@
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/vendors/slick.min.js"></script>
 		<!-- Custom JS -->
 		<script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
+		<!-- layer JS -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/layer/layer.js"></script>
 		<script>
 			var startTime = new Date().getTime(); //用于下面初始化sku时间
 			var sku = <?php echo $sku; ?>; //后台传过来的sku数据
@@ -634,9 +636,10 @@
 						var minPrice = Math.min.apply(Math, prices);
 
 						$('#price').text(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
+						$('#price_hidden').val(maxPrice > minPrice ? minPrice + "-" + maxPrice : maxPrice);
 						$('#stock').text(SKUResult[selectedIds.join(',')].stock);
 						$('#sku_id').val(SKUResult[selectedIds.join(',')].sku_id);
-						console.log(SKUResult[selectedIds.join(',')]);
+						// console.log(SKUResult[selectedIds.join(',')]);
 						$('#product-gallery a').each(function(){
 							if($(this).attr('data-image').indexOf(SKUResult[selectedIds.join(',')].goods_img)>-1){
 								$(this).click();
@@ -670,6 +673,7 @@
 					} else {
 						//设置默认价格
 						$('#price').text('0');
+						$('#price_hidden').text('0');
 						$('#stock').text('--');
 						$('#goods_pic').click();
 						//设置属性状态
@@ -683,11 +687,15 @@
 			//数量添加按钮点击操作
 			$('#add').click(function(){
 				$('#num').val(parseInt($('#num').val()) + 1);
+				var price_now = $('#num').val()*parseInt($('#price_hidden').val());
+				$('#price').text(price_now);
 			});
 			//数量减少按钮点击操作
 			$('#cut').click(function(){
 				if(parseInt($('#num').val())>1){
 					$('#num').val(parseInt($('#num').val()) - 1);
+					var price_now = $('#num').val()*parseInt($('#price_hidden').val());
+					$('#price').text(price_now);
 				}
 			});
 
@@ -722,6 +730,8 @@
 							$('#err').empty().text('该规格已经售罄');
 						}
 					});
+				}else{
+					layer.msg('请选择商品规格');
 				}
 			});
 
@@ -752,11 +762,14 @@
 						}else if(flag==1){
 							//成功
 							$('#err').empty();
+							layer.msg('添加购物车成功，请去购物车结算');
 						}else if(flag==2){
 							//该商品规格库存为0
 							$('#err').empty().text('该规格已经售罄');
 						}
 					});
+				}else{
+					layer.msg('请选择商品规格');
 				}
 			});
 			

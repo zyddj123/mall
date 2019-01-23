@@ -25,7 +25,7 @@
 		<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
 		<!--end header-->
 		<!-- .header-section -->
-		<section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
+		<!-- <section class="header-section height-small middle-wrapper has-bg-layer layer-black bg-img-shop">
 			<div class="middle-content">
 				<div class="container">
 					<h1 class="title">Our shop</h1>
@@ -36,7 +36,7 @@
 					</ul>
 				</div>
 			</div>
-		</section>
+		</section> -->
 		<!-- /.header-section -->
 		
 		<!-- .menu-section.fullscreen-menu -->
@@ -186,7 +186,7 @@
 							</div>
 
 							<div class="bottom-space-2">
-								<a href="checkout.html" class="btn btn-block btn-simple-to-border btn-primary checkout"><span class="weight-normal"></span> 去结算</a>
+								<button @click="checkout" class="btn btn-block btn-simple-to-border btn-primary checkout"><span class="weight-normal"></span> 去结算</button>
 							</div>
 
 							<!-- <h4 class="block-title no-border"> 优惠 <strong>码</strong></h4>
@@ -228,6 +228,8 @@
         <script src="<?php echo $this->getThemesUrl(); ?>/js/vue.js"></script>
 		<!-- Custom JS -->
         <script src="<?php echo $this->getThemesUrl(); ?>/js/script.js"></script>
+		<!-- layer JS -->
+		<script src="<?php echo $this->getThemesUrl(); ?>/js/layer/layer.js"></script>
 
 		<script>
 			var data = <?php echo $cart?>;
@@ -271,8 +273,25 @@
 					},
 					//删除购物车中的一件商品
 					del_cert_goods(i){
-						this.checkData = [];
-						this.res.splice(i,1);
+						$.ajax({
+							url:"<?php echo $this->config->app_url_root.'/Cart/ajax_delete_cart'; ?>",
+							data:{"cart_id":this.res[i].id},
+							type: "POST",
+							dataType:"json",
+							success:function(e){
+								if(e){
+									layer.msg('删除商品成功');
+									app.checkData = [];
+									app.res.splice(i,1);
+								}else{
+									layer.msg('删除商品失败，请稍后重试');
+								}
+							}
+						});
+						
+					},
+					checkout(){
+						console.log(this.checkData);
 					}
 				},
 				computed:{
