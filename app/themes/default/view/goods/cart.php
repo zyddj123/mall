@@ -102,14 +102,14 @@
 									<div class="row small-gap cart-item">
 										<div class="col-sm-3 col-xs-2">
 											<div class="figure">
-												<a class="hidden-xs" href="#">
-													<img :src="upload_file+'/'+value.store_id+'/'+value.goods_sku.goods_img" alt="" />
+												<a class="hidden-xs" :href="'<?php echo $this->config->app_url_root?>'+'/Index/good?id='+value.goods.id">
+													<img :src="'<?php echo SellerConfig::UPLOAD_GOODS?>'+'/'+value.store_id+'/'+value.goods_sku.goods_img" alt="" />
 												</a>
 											</div>
 										</div>
 										<div class="col-sm-9 col-xs-10">
 											<div class="content">
-												<h5 style="margin-top:20px;" class="title"><a href="">{{value.goods.goods_name}}<strong></strong></a></h5>
+												<h5 style="margin-top:20px;" class="title"><a :href="'<?php echo $this->config->app_url_root?>'+'/Index/good?id='+value.goods.id">{{value.goods.goods_name}}<strong></strong></a></h5>
 												
 												<div class="text" style="margin-top:5px;">
 													<span v-for="(item ,i) in value.attrs_value" :key="i">{{item}}&nbsp;</span>
@@ -238,7 +238,6 @@
 				data(){
 					return {
 						res:data,
-						upload_file : '<?php echo SellerConfig::UPLOAD_GOODS?>',
 						checkData:[],
 					}
 				},
