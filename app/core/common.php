@@ -287,7 +287,8 @@ if (!function_exists('checkonline'))
 	function checkonline($uid)
 	{
 		if($uid==''){
-			show_msg('请先登录！','/Login');
+			// show_msg('请先登录！','/Login');
+			echo "<script type='text/javascript'>window.location.href='/Login';</script>";
 		}
 	}
 }
