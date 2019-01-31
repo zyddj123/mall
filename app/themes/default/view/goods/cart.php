@@ -68,7 +68,7 @@
 							<div class="col-sm-6">
 								<div class="row collapsed">
 									<div class="col-sm-3">
-										<div class="block-title"><strong>添加时价格</strong></div>
+										<div class="block-title" style="height: 50px;"><strong>现单价<del style="font-size:15px;color:rgb(187, 171, 160);">原价</del></strong></div>
 									</div>
 									<div class="col-sm-3">
 										<div class="block-title"><strong>数量</strong></div>
