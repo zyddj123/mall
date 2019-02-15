@@ -151,6 +151,11 @@ class CartController extends CO_Controller{
 		echo json_encode($sta);
 	}
 
+	//加载结算页面
+	function checkout(){
+		$this->render('goods/checkout');
+	}
+
 	function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}

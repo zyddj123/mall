@@ -605,7 +605,7 @@
 				initSKU();
 				var endTime = new Date().getTime();
 				// $('#init_time').text('init sku time: ' + (endTime - startTime) + " ms");
-				console.log('init sku time: ' + (endTime - startTime) + " ms");
+				// console.log('init sku time: ' + (endTime - startTime) + " ms");
 				$('.sku').each(function() {
 					var self = $(this);
 					var attr_id = self.attr('attr_id');
@@ -715,6 +715,8 @@
 					SkuL++;
 				});
 				if(sku_id!=''&&choSkuL===SkuL){
+					//登录验证
+					login_check();
 					$.post("<?php echo $this->config->app_url_root.'/Index/ajax_buy_goods'; ?>",{"goods_id":goods_id,"sku_id":sku_id,"quantity":quantity},function(e){
 						e = JSON.parse(e);
 						var flag = e.sta;
@@ -752,6 +754,8 @@
 					SkuL++;
 				});
 				if(sku_id!=''&&choSkuL===SkuL){
+					//登录验证
+					login_check();
 					$.post("<?php echo $this->config->app_url_root.'/Cart/ajax_insert_cart'; ?>",{"goods_id":goods_id,"sku_id":sku_id,"quantity":quantity,"store_id":store_id},function(e){
 						e = JSON.parse(e);
 						var flag = e.sta;
@@ -772,6 +776,11 @@
 					layer.msg('请选择商品规格');
 				}
 			});
+
+			//点击购买和点击添加购物车按钮登录验证
+			function login_check(){
+				<?php if($_SESSION['app']['id']=='') echo "window.location.href='/Login';";?>
+			}
 			
 			// Gallery with zoom
 			var galleryImage = $('[data-gallery-id]');
