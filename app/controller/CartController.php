@@ -153,7 +153,10 @@ class CartController extends CO_Controller{
 
 	//加载结算页面
 	function checkout(){
-		$this->render('goods/checkout');
+		$user_id = $_SESSION['app']['id'];
+		$userAddressObj = new UserAddress($this->getDb());
+		$data['userAddress'] = $userAddressObj->select(array('user_id'=>$user_id));
+		$this->render('goods/checkout',$data);
 	}
 
 	function getThemesUrl(){

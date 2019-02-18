@@ -53,20 +53,17 @@
 							</div>
 
 							<div class="row" style="margin-left: 20px;">
-								<div class="radio">
-                                    <label class="has-success">
-                                        <input type="radio" name="addr" id="addr" data-validation="required" class="valid">
-                                        <span class="button"></span>
-                                        <span class="text">张三</span>
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label class="has-success">
-                                        <input type="radio" name="addr" id="addr" data-validation="required" class="valid">
-                                        <span class="button"></span>
-                                        <span class="text">李四</span>
-                                    </label>
-                                </div>
+								<?php foreach($userAddress as $key => $value):?>
+									<div class="radio">
+										<label class="has-success">
+											<input type="radio" name="addr" id="addr" data-validation="required" class="valid">
+											<span class="button"></span>
+											<span class="text">
+											<?php echo $value['consignee'].'-'.$value['country'].$value['province'].$value['city'].$value['district'].$value['address'].'-'.$value['mobile'];?>
+											</span>
+										</label>
+									</div>
+								<?php endforeach; ?>
 							</div>
 
 							<div class="section-header">

@@ -27,6 +27,7 @@ class SellerConfig{
 	const TEMPLET_VALUE = 'mall_templet_value';
 	const FK_ATTR_SKU = 'mall_fk_attr_sku';
 	const CART = 'mall_cart';
+	const USERADDRESS = 'mall_user_address';
 
 	//数据库视图
 	const VIEW_GOODS = 'mall_view_goods';
