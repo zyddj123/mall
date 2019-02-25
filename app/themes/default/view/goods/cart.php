@@ -272,7 +272,8 @@
 					},
 					//删除购物车中的一件商品
 					del_cert_goods(i){
-						$.ajax({
+						if(confirm("确定删除？不可恢复！")){
+							$.ajax({
 							url:"<?php echo $this->config->app_url_root.'/Cart/ajax_delete_cart'; ?>",
 							data:{"cart_id":this.res[i].id},
 							type: "POST",
@@ -287,7 +288,7 @@
 								}
 							}
 						});
-						
+						}
 					},
 					checkout(){
 						console.log(this.checkData);
