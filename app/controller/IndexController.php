@@ -6,6 +6,8 @@ if (!defined('CO_BASE_CHECK')){
 	exit;
 }
 
+use Cache\Redis;
+
 /**
  * app首页_控制器
  *
@@ -18,6 +20,7 @@ if (!defined('CO_BASE_CHECK')){
  */
 include_once realpath(__DIR__.'/../').'/core/APP_Session.php';
 include_once realpath(__DIR__.'/../').'/core/common.php';
+
 // ------------------------------------------------------------------------
 class IndexController extends CO_Controller{
 	
@@ -89,6 +92,12 @@ class IndexController extends CO_Controller{
 		$arrRet['all']=$count;//总条数
 		$arrRet['entries']=ceil($count/$ppc);//总页数
 		echo json_encode($arrRet);
+	}
+
+	public function test()
+	{
+		$redis = new Redis();
+		var_dump($redis);die;
 	}
 
 
