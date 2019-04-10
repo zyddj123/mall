@@ -232,13 +232,15 @@ class DataTable
         $sql = 'SELECT '.$selectSql." FROM `{$data['table']}` ". $joinSql .$whereSql.' '.$orderSql.' '.$limitSql;
         // var_dump($sql);die;
         $info = $this->_getAll($sql);
-        $sql1 = 'SELECT '.$sumSql." FROM {$data['table']} ".$whereSql;
+        $sql1 = 'SELECT '.$sumSql." FROM {$data['table']} ". $joinSql .$whereSql.' '.$orderSql;
         @$this->_recordsTotal = $this->_getAll($sql1)['0']['sum'];
-        $sql2 = 'SELECT '.$sumSql." FROM {$data['table']} ".$whereSql;
-        @$this->_recordsFiltered = $this->_getAll($sql2)['0']['sum'];
+        $sql2 = 'SELECT '.$sumSql." FROM {$data['table']} ". $joinSql .$whereSql.' '.$orderSql;
+        // @$this->_recordsFiltered = $this->_getAll($sql2)['0']['sum'];
+        @$this->_recordsFiltered = $this->_recordsTotal;
         if ($debug) {
             echo $sql."\r\n";
             echo $sql1."\r\n";
+            echo $sql2."\r\n";
         }
 
         return array(

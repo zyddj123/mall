@@ -17,6 +17,16 @@
 	</li>
 
 
+	<!-- 运费系统 -->
+	<li class="menu-list"><a href=""><i class="fa fa-shopping-cart"></i><span>运费系统</span></a>
+		<ul class="sub-menu-list">
+			<li id="freight/freight_add"><a href="<?php echo $this->config->app_url_root.'/Freight/freight_add'?>">新增运费模版</a></li>
+			<li id="freight/freight_index"><a href="<?php echo $this->config->app_url_root.'/Freight/freight_index'?>">运费模版列表</a></li>
+			<!-- <li id="freight/freight"><a href="<?php echo $this->config->app_url_root.'/Freight/category'?>">类别管理</a></li> -->
+		</ul>
+	</li>
+
+
 
 	
 	
