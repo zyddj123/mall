@@ -52,7 +52,7 @@ if (!defined('CO_BASE_CHECK')) {
 			<div class="wrapper">
 				<section class="panel panel-default">
 					<header class="panel-heading">
-						<h3 class="panel-title">商品规格</h3>
+						<h3 class="panel-title">新增运费模版</h3>
 					</header>
 					<div class="panel-body">
 						<!--基本信息-->
@@ -67,115 +67,31 @@ if (!defined('CO_BASE_CHECK')) {
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="freight_name" class="col-lg-2 col-sm-2 control-label">是否包邮</label>
+                                            <label for="is_postage" class="col-lg-2 col-sm-2 control-label">是否包邮</label>
                                             <div class="square-yellow single-row col-lg-2 col-sm-2">
                                                 <div class="radio">
-                                                    <input name="is_postage" type="radio" checked><label>包邮 </label>
+                                                    <input name="is_postage" class="is_postage" id="postaged" type="radio" value="1"><label>包邮 </label>
                                                 </div>
                                             </div>
                                             <div class="square-yellow single-row col-lg-2 col-sm-2">
                                                 <div class="radio">
-                                                    <input name="is_postage" type="radio"><label>不包邮 </label>
+                                                    <input name="is_postage" class="is_postage" id="unpostaged" value="2" type="radio"><label>不包邮 </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="freight_name" class="col-lg-2 col-sm-2 control-label">计价方式</label>
-                                            <div class="square-yellow single-row col-lg-2 col-sm-2">
-                                                <div class="radio">
-                                                    <input name="valuation_model" type="radio" checked><label>按重量 </label>
-                                                </div>
-                                            </div>
-                                            <div class="square-yellow single-row col-lg-2 col-sm-2">
-                                                <div class="radio">
-                                                    <input name="valuation_model" type="radio"><label>按件数 </label>
-                                                </div>
-                                            </div>
-                                            <div class="square-yellow single-row col-lg-2 col-sm-2">
-                                                <div class="radio">
-                                                    <input name="valuation_model" type="radio"><label>按体积 </label>
-                                                </div>
-                                            </div>
+
+                                        <!--计价方式start-->
+                                        <div class="form-group" id="valuation_model">
+                                            
                                         </div>
-                                        <div class="form-group">
-                                            <label for="freight_name" class="col-lg-2 col-sm-2 control-label">运送方式</label>
-                                            <div style="display: grid;">
-                                                <div class="square-yellow single-row col-lg-10 col-sm-10">
-                                                    <div class="square-yellow single-row">
-                                                        <div class="checkbox ">
-                                                            <input type="checkbox" checked>
-                                                            <label>快递 </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="panel" style="border-style:double; margin-left:20px">
-                                                        <div class="panel-body">
-                                                            <div class="row" style="display: inline-flex;padding-left: 20px;">
-                                                                默认运费：
-                                                                <input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">  kg内
-                                                                <input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">
-                                                                元，每增加
-                                                                <input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">
-                                                                kg，增加运费
-                                                                <input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">
-                                                                元
-                                                            </div>
-                                                            <div class="row" style="padding:0px 10px 0px 0px;">
-                                                                <table class="table table-bordered" style="margin: 0px 5px 0px 5px;">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th class="text-center">运送到</th>
-                                                                            <th class="text-center">首重(kg)</th>
-                                                                            <th class="text-center">首费(元)</th>
-                                                                            <th class="text-center">续重(kg)</th>
-                                                                            <th class="text-center">续费(元)</th>
-                                                                            <th class="text-center">操作</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><a href="javascript:void(0)"><i class="fa fa-trash-o"></i></a></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="areas">未添加地区</span>  <a href="javascript:void(0)"><i class="fa fa-edit pull-right"></i></a></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>
-                                                                            <td class="text-center"><a href="javascript:void(0)"><i class="fa fa-trash-o"></i></a></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="square-yellow single-row col-lg-10 col-sm-10">
-                                                    <div class="square-yellow single-row">
-                                                        <div class="checkbox ">
-                                                            <input type="checkbox">
-                                                            <label>EMS </label>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="square-yellow single-row col-lg-10 col-sm-10">
-                                                    <div class="square-yellow single-row">
-                                                        <div class="checkbox ">
-                                                            <input type="checkbox">
-                                                            <label>平邮 </label>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
+                                        <!--计价方式end-->
+                                        <!--运送方式start-->
+                                        <div class="form-group" id="carry_model">
+                                            
                                         </div>
+                                        <!--运送方式end-->
                                         <div class="form-group">
-                                            <div class="col-lg-offset-4 col-lg-10">
+                                            <div class="col-lg-offset-5 col-lg-10">
                                                 <button type="submit" class="btn btn-success">保存</button>
                                             </div>
                                         </div>
@@ -222,23 +138,179 @@ if (!defined('CO_BASE_CHECK')) {
 <script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/RegionalChoice.js"></script>
 <script>
 	$(function(){
-        $('.square-yellow input').iCheck({
+        $('.is_postage').iCheck({
             checkboxClass: 'icheckbox_square-yellow',
             radioClass: 'iradio_square-yellow',
             // increaseArea: '20%' // optional
         });
     });
-    $(function () {
-        //------生成地区
-        GetRegionPlug();
-        //------选择后确定按钮
-        $(".btntest1").click(function () {
-            var areas = GetChecked().join(",");//已选择的城市名
-            // $(".areas").empty().html(areas);//显示在页面
-            // $("#selectedareas").val(areas);//存入隐藏的input
-            $('#myModal').modal('hide');//完后隐藏模态框
-        })
-    })
+
+    //是否包邮str
+    var valuation_model_str = '';
+    valuation_model_str += '<label for="valuation_model" class="col-lg-2 col-sm-2 control-label">计价方式</label>';
+    valuation_model_str += '<div class="square-yellow single-row col-lg-2 col-sm-2">';
+    valuation_model_str += '<div class="radio">';
+    valuation_model_str += '<input name="valuation_model" class="valuation_model" id="valuation_model_kg" value="1" type="radio"><label>按重量 </label>';
+    valuation_model_str += '</div>';
+    valuation_model_str += '</div>';
+    valuation_model_str += '<div class="square-yellow single-row col-lg-2 col-sm-2">';
+    valuation_model_str += '<div class="radio">';
+    valuation_model_str += '<input name="valuation_model" class="valuation_model" id="valuation_model_num" value="2" type="radio"><label>按件数 </label>';
+    valuation_model_str += '</div>';
+    valuation_model_str += '</div>';
+    valuation_model_str += '<div class="square-yellow single-row col-lg-2 col-sm-2">';
+    valuation_model_str += '<div class="radio">';
+    valuation_model_str += '<input name="valuation_model" class="valuation_model" id="valuation_model_m" value="3" type="radio"><label>按体积 </label>';
+    valuation_model_str += '</div>';
+    valuation_model_str += '</div>';
+
+    //计价方式str
+
+    var carry_model_str = '';
+    carry_model_str += '<label for="freight_name" class="col-lg-2 col-sm-2 control-label">运送方式</label>';
+    carry_model_str += '<div style="display: grid;">';
+    carry_model_str += '<div class="col-lg-10 col-sm-10">';
+    carry_model_str += '<label class="text-success" style="margin-left: 20px;margin-top: 7px;">除指定地区外，其它地区的运费采用"默认运费" </label>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
+    carry_model_str += '<div class="carry_model_father">';
+    carry_model_str += '<div class="checkbox ">';
+    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="parcel">';
+    carry_model_str += '<label>快递 </label>';
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="panel carry_model_panel">';                                                   
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
+    carry_model_str += '<div class="carry_model_father">';
+    carry_model_str += '<div class="checkbox ">';
+    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="ems">';
+    carry_model_str += '<label>EMS </label>';
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="panel carry_model_panel">';
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
+    carry_model_str += '<div class="carry_model_father">';
+    carry_model_str += '<div class="checkbox ">';
+    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="surface_mall">';
+    carry_model_str += '<label>平邮 </label>';
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '<div class="panel carry_model_panel">'; 
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+    carry_model_str += '</div>';
+
+    //运费模版str
+    function make_carry_model_panel_str(choose){
+        var attr = '';
+        var attr_zh = '';
+        var carry_model_panel_str = '';
+        switch (choose) {
+            case 1:
+                attr = '千克';
+                attr_zh = '重';
+                break;
+            case 2:
+                attr = '件';
+                attr_zh = '件数';
+                break;
+            case 3:
+                attr = '立方米';
+                attr_zh = '体积';
+                break;
+            default:
+                break;
+        }
+        carry_model_panel_str += '<div class="panel-body">';
+        carry_model_panel_str += '<div class="row" style="display: inline-flex;padding-left: 20px;">';
+        carry_model_panel_str += '默认运费：';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;"> '+attr+'内';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += '元，每增加';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += attr+'，增加运费';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += '元';
+        carry_model_panel_str += '</div>';
+        carry_model_panel_str += '<div class="row" style="padding:0px 10px 0px 0px;">';
+        carry_model_panel_str += '<table class="table table-bordered" style="margin: 0px 5px 0px 5px;">';
+        carry_model_panel_str += '<thead>';
+        carry_model_panel_str += '<tr>';
+        carry_model_panel_str += '<th class="text-center">运送到</th>';
+        carry_model_panel_str += '<th class="text-center">首'+attr_zh+'('+attr+')</th>';
+        carry_model_panel_str += '<th class="text-center">首费(元)</th>';
+        carry_model_panel_str += '<th class="text-center">续'+attr_zh+'('+attr+')</th>';
+        carry_model_panel_str += '<th class="text-center">续费(元)</th>';
+        carry_model_panel_str += '<th class="text-center">操作</th>';
+        carry_model_panel_str += '</tr>';
+        carry_model_panel_str += '</thead>';
+        carry_model_panel_str += '<tbody>';
+        carry_model_panel_str += '<tr>';
+        carry_model_panel_str += '<td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+        carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        carry_model_panel_str += '<td class="text-center"><a href="javascript:void(0)"><i class="fa fa-trash-o"></i></a></td>';
+        carry_model_panel_str += '</tr>';
+        carry_model_panel_str += '</tbody>';
+        carry_model_panel_str += '</table>';
+        carry_model_panel_str += '</div>';
+        carry_model_panel_str += '</div>';
+        return carry_model_panel_str;
+    }
+
+    //包邮
+    $('#postaged').on('ifChecked',(e)=>{
+        $('#valuation_model').empty();
+        $('#carry_model').empty();
+    });
+    //不包邮
+    $('#unpostaged').on('ifChecked',(e)=>{
+        $('#valuation_model').empty().append(valuation_model_str);
+
+        $('.valuation_model').iCheck({
+            checkboxClass: 'icheckbox_square-yellow',
+            radioClass: 'iradio_square-yellow',
+        });
+
+        //计价方式选中
+        $('.valuation_model').on('ifChecked',(e)=>{
+            $('#carry_model').empty().append(carry_model_str);
+            $('.carry_model').iCheck({
+                checkboxClass: 'icheckbox_square-yellow',
+                radioClass: 'iradio_square-yellow',
+            });
+            var str = make_carry_model_panel_str(parseInt(e.target.value));
+            //运送方式选中
+            $('.carry_model').on('ifChecked',(e)=>{
+                $(e.target).closest('.carry_model_father').next('.carry_model_panel').empty().append(str).css({'border-style':'double','margin-left':'20px'});
+                
+                //省市插件初始化
+                //------生成地区
+                GetRegionPlug();
+                //------选择后确定按钮
+                $(".btntest1").click(function () {
+                    var areas = GetChecked().join(",");//已选择的城市名
+                    // $(".areas").empty().html(areas);//显示在页面
+                    // $("#selectedareas").val(areas);//存入隐藏的input
+                    $('#myModal').modal('hide');//完后隐藏模态框
+                });
+                
+            });
+
+            //运送方式取消选中
+            $('.carry_model').on('ifUnchecked',(e)=>{
+                $(e.target).closest('.carry_model_father').next('.carry_model_panel').empty().css({'border-style':'none','margin-left':'20px'});
+            });
+        });
+    });
+
+
 </script>
 </body>
 </html>
