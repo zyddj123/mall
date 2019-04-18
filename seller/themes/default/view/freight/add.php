@@ -90,6 +90,12 @@ if (!defined('CO_BASE_CHECK')) {
                                             
                                         </div>
                                         <!--运送方式end-->
+                                        
+                                        <!--指定条件包邮start-->
+                                        <div class="form-group" id="is_postage_by_if_div">
+                                            
+                                        </div>
+                                        <!--指定条件包邮end-->
                                         <div class="form-group">
                                             <div class="col-lg-offset-5 col-lg-10">
                                                 <button type="submit" class="btn btn-success">保存</button>
@@ -135,6 +141,7 @@ if (!defined('CO_BASE_CHECK')) {
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php'; ?>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/iCheck/jquery.icheck.min.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/regional.json"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/RegionalChoice.js"></script>
 <script>
 	$(function(){
@@ -204,6 +211,18 @@ if (!defined('CO_BASE_CHECK')) {
     carry_model_str += '</div>';
     carry_model_str += '</div>';
 
+    //是否指定条件包邮str
+    var is_postage_by_if_str = '';
+    is_postage_by_if_str += '<hr>';
+    is_postage_by_if_str += '<div class="row">';
+    is_postage_by_if_str += '<label for="is_postage_by_if" class="col-lg-2 col-sm-2 control-label"></label>';
+    is_postage_by_if_str += '<div class="square-yellow single-row col-lg-2 col-sm-2">';
+    is_postage_by_if_str += '<div class="checkbox">';
+    is_postage_by_if_str += '<input name="is_postage_by_if" class="is_postage_by_if" id="is_postage_by_if" value="1" type="checkbox"><label>指定条件包邮(可选) </label>';
+    is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '</div>';
+
     //运费模版str
     function make_carry_model_panel_str(choose){
         var attr = '';
@@ -268,6 +287,7 @@ if (!defined('CO_BASE_CHECK')) {
     $('#postaged').on('ifChecked',(e)=>{
         $('#valuation_model').empty();
         $('#carry_model').empty();
+        $('#is_postage_by_if_div').empty();
     });
     //不包邮
     $('#unpostaged').on('ifChecked',(e)=>{
@@ -281,7 +301,12 @@ if (!defined('CO_BASE_CHECK')) {
         //计价方式选中
         $('.valuation_model').on('ifChecked',(e)=>{
             $('#carry_model').empty().append(carry_model_str);
+            $('#is_postage_by_if_div').empty().append(is_postage_by_if_str);
             $('.carry_model').iCheck({
+                checkboxClass: 'icheckbox_square-yellow',
+                radioClass: 'iradio_square-yellow',
+            });
+            $('.is_postage_by_if').iCheck({
                 checkboxClass: 'icheckbox_square-yellow',
                 radioClass: 'iradio_square-yellow',
             });
@@ -295,7 +320,8 @@ if (!defined('CO_BASE_CHECK')) {
                 GetRegionPlug();
                 //------选择后确定按钮
                 $(".btntest1").click(function () {
-                    var areas = GetChecked().join(",");//已选择的城市名
+                    var areas = GetChecked();//已选择的城市名
+                    console.log(areas);
                     // $(".areas").empty().html(areas);//显示在页面
                     // $("#selectedareas").val(areas);//存入隐藏的input
                     $('#myModal').modal('hide');//完后隐藏模态框
