@@ -59,11 +59,12 @@ if (!defined('CO_BASE_CHECK')) {
 						<section>
 							<div class="panel-body">
 								<div class="row">
-									<form class="form-horizontal col-lg-offset-1 col-lg-10" role="form">
+									<form class="form-horizontal col-lg-offset-1 col-lg-10" id="freightForm" action="#" method="post" role="form">
+                                        <input type="hidden" name="CSRF-TOKEN" value="<?php echo $this->session->token(); ?>">
                                         <div class="form-group">
                                             <label for="freight_name" class="col-lg-2 col-sm-2 control-label">模版名称</label>
                                             <div class="col-lg-8">
-                                                <input type="email" style="margin-left: 20px;" class="form-control" id="freight_name" placeholder="请输入模版名称">
+                                                <input type="text" name="freight_name" style="margin-left: 20px;" class="form-control" id="freight_name" placeholder="请输入模版名称">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -98,7 +99,7 @@ if (!defined('CO_BASE_CHECK')) {
                                         <!--指定条件包邮end-->
                                         <div class="form-group">
                                             <div class="col-lg-offset-5 col-lg-10">
-                                                <button type="submit" class="btn btn-success">保存</button>
+                                                <button type="button" class="btn btn-success" id="submit_btn">保存</button>
                                             </div>
                                         </div>
                                     </form>
@@ -143,6 +144,8 @@ if (!defined('CO_BASE_CHECK')) {
 <script src="<?php echo $this->getThemesUrl(); ?>/js/iCheck/jquery.icheck.min.js"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/regional.json"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/RegionalChoice.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/validate/jquery.form.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/layer/layer.js"></script>
 <script>
 	$(function(){
         $('.is_postage').iCheck({
@@ -174,7 +177,7 @@ if (!defined('CO_BASE_CHECK')) {
     //计价方式str
 
     var carry_model_str = '';
-    carry_model_str += '<label for="freight_name" class="col-lg-2 col-sm-2 control-label">运送方式</label>';
+    carry_model_str += '<label for="carry_model" class="col-lg-2 col-sm-2 control-label">运送方式</label>';
     carry_model_str += '<div style="display: grid;">';
     carry_model_str += '<div class="col-lg-10 col-sm-10">';
     carry_model_str += '<label class="text-success" style="margin-left: 20px;margin-top: 7px;">除指定地区外，其它地区的运费采用"默认运费" </label>';
@@ -182,7 +185,7 @@ if (!defined('CO_BASE_CHECK')) {
     carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
     carry_model_str += '<div class="carry_model_father">';
     carry_model_str += '<div class="checkbox ">';
-    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="parcel">';
+    carry_model_str += '<input type="checkbox" class="carry_model" value="1" name="carry_model" id="parcel">';
     carry_model_str += '<label>快递 </label>';
     carry_model_str += '</div>';
     carry_model_str += '</div>';
@@ -192,7 +195,7 @@ if (!defined('CO_BASE_CHECK')) {
     carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
     carry_model_str += '<div class="carry_model_father">';
     carry_model_str += '<div class="checkbox ">';
-    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="ems">';
+    carry_model_str += '<input type="checkbox" class="carry_model" value="2" name="carry_model" id="ems">';
     carry_model_str += '<label>EMS </label>';
     carry_model_str += '</div>';
     carry_model_str += '</div>';
@@ -202,7 +205,7 @@ if (!defined('CO_BASE_CHECK')) {
     carry_model_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
     carry_model_str += '<div class="carry_model_father">';
     carry_model_str += '<div class="checkbox ">';
-    carry_model_str += '<input type="checkbox" class="carry_model" name="carry_model" id="surface_mall">';
+    carry_model_str += '<input type="checkbox" class="carry_model" value="3" name="carry_model" id="surface_mall">';
     carry_model_str += '<label>平邮 </label>';
     carry_model_str += '</div>';
     carry_model_str += '</div>';
@@ -211,17 +214,57 @@ if (!defined('CO_BASE_CHECK')) {
     carry_model_str += '</div>';
     carry_model_str += '</div>';
 
-    //是否指定条件包邮str
+
+    //生成是否指定条件包邮str
     var is_postage_by_if_str = '';
     is_postage_by_if_str += '<hr>';
-    is_postage_by_if_str += '<div class="row">';
-    is_postage_by_if_str += '<label for="is_postage_by_if" class="col-lg-2 col-sm-2 control-label"></label>';
-    is_postage_by_if_str += '<div class="square-yellow single-row col-lg-2 col-sm-2">';
-    is_postage_by_if_str += '<div class="checkbox">';
+    is_postage_by_if_str += '<label for="freight_name" class="col-lg-2 col-sm-2 control-label"></label>';
+    is_postage_by_if_str += '<div style="display: grid;">';
+    is_postage_by_if_str += '<div class="col-lg-10 col-sm-10">';
+    is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '<div class="square-yellow single-row col-lg-10 col-sm-10">';
+    is_postage_by_if_str += '<div class="carry_model_father">';
+    is_postage_by_if_str += '<div class="checkbox ">';
     is_postage_by_if_str += '<input name="is_postage_by_if" class="is_postage_by_if" id="is_postage_by_if" value="1" type="checkbox"><label>指定条件包邮(可选) </label>';
     is_postage_by_if_str += '</div>';
     is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '<div class="panel is_postage_by_if_panel">';  
+    is_postage_by_if_str += '<div class="panel-body" style="border-style: ridge; margin-left: 20px;">';
+    is_postage_by_if_str += '<div class="row" style="padding:0px 10px 0px 0px;">';
+    is_postage_by_if_str += '<table class="table table-bordered" style="margin: 0px 5px 0px 5px;">';
+    is_postage_by_if_str += '<thead>';
+    is_postage_by_if_str += '<tr>';
+    is_postage_by_if_str += '<th class="text-center">选择地区</th>';
+    is_postage_by_if_str += '<th class="text-center">选择运送方式</th>';
+    is_postage_by_if_str += '<th class="text-center">选择快递</th>';
+    is_postage_by_if_str += '<th class="text-center">设置包邮条件</th>';
+    is_postage_by_if_str += '<th class="text-center">操作</th>';
+    is_postage_by_if_str += '</tr>';
+    is_postage_by_if_str += '</thead>';
+    is_postage_by_if_str += '<tbody>';
+    is_postage_by_if_str += '<tr>';
+    is_postage_by_if_str += '<td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+    is_postage_by_if_str += '<td class="text-center"><center><select class="form-control"><option value="1">快递</option><option value="2">EMS</option><option value="3">平邮</option></select></center></td>';
+    is_postage_by_if_str += '<td class="text-center"><center> </center></td>';
+    is_postage_by_if_str += '<td class="text-center"><center>';
+    is_postage_by_if_str += '<select name="set_postage_by_if_select" id="set_postage_by_if_select" class="form-control">';
+    is_postage_by_if_str += '<option value="1">数量</option>';
+    is_postage_by_if_str += '<option value="2">金额</option>';
+    is_postage_by_if_str += '<option value="3">重量</option>';
+    is_postage_by_if_str += '<option value="4">重量+金额</option>';
+    is_postage_by_if_str += '</select><br />';
+    is_postage_by_if_str += '<div id="postage_by_if_down_div" style="display: inline-flex;">在数量为<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">件以上包邮</div>';
+    is_postage_by_if_str += '</center></td>';
+    is_postage_by_if_str += '<td class="text-center"><a href="javascript:void(0)"><i class="fa fa-trash-o"></i></a></td>';
+    is_postage_by_if_str += '</tr>';
+    is_postage_by_if_str += '</tbody>';
+    is_postage_by_if_str += '</table>';
     is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '</div>';                                                 
+    is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '</div>';
+    is_postage_by_if_str += '</div>';
+
 
     //运费模版str
     function make_carry_model_panel_str(choose){
@@ -315,17 +358,7 @@ if (!defined('CO_BASE_CHECK')) {
             $('.carry_model').on('ifChecked',(e)=>{
                 $(e.target).closest('.carry_model_father').next('.carry_model_panel').empty().append(str).css({'border-style':'double','margin-left':'20px'});
                 
-                //省市插件初始化
-                //------生成地区
-                GetRegionPlug();
-                //------选择后确定按钮
-                $(".btntest1").click(function () {
-                    var areas = GetChecked();//已选择的城市名
-                    console.log(areas);
-                    // $(".areas").empty().html(areas);//显示在页面
-                    // $("#selectedareas").val(areas);//存入隐藏的input
-                    $('#myModal').modal('hide');//完后隐藏模态框
-                });
+                
                 
             });
 
@@ -333,6 +366,80 @@ if (!defined('CO_BASE_CHECK')) {
             $('.carry_model').on('ifUnchecked',(e)=>{
                 $(e.target).closest('.carry_model_father').next('.carry_model_panel').empty().css({'border-style':'none','margin-left':'20px'});
             });
+
+            //指定条件包邮 设置包邮条件select事件
+            $('#set_postage_by_if_select').change((e)=>{
+                var postage_by_if_down_div_str = '';
+                switch (parseInt(e.target.value)) {
+                    case 1:
+                        postage_by_if_down_div_str = '在数量为<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">件以上包邮';
+                        break;
+                    case 2:
+                        postage_by_if_down_div_str = '在金额为<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">元以上包邮';
+                        break;
+                    case 3:
+                        postage_by_if_down_div_str = '在重量为<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">千克以下包邮';
+                        break;
+                    case 4:
+                        postage_by_if_down_div_str = '<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">千克以下<input class="form-control input-sm" type="text" style="width:40px;margin-top:-5px;">元以上包邮';
+                        break;
+                    default:
+                        break;
+                }
+                $('#postage_by_if_down_div').empty().append(postage_by_if_down_div_str);
+            });
+
+            //省市插件初始化
+            GetRegionPlug();
+            //------选择后确定按钮
+            $(".btntest1").click(() => {
+                var areas = GetChecked();//已选择的城市名
+                console.log(areas);
+                // $(".areas").empty().html(areas);//显示在页面
+                // $("#selectedareas").val(areas);//存入隐藏的input
+                $('#myModal').modal('hide');//完后隐藏模态框
+            });
+        });
+    });
+
+    $('#submit_btn').click(()=>{
+        var freight_name = $.trim($('#freight_name').val());
+        if(freight_name==''||freight_name==null) {
+            layer.msg("运费模版名称不能为空！");
+            return false;
+        }
+        var is_postage = $('input[name=is_postage]:checked').val();
+        if(is_postage==null||is_postage=='undefined'){
+            layer.msg("是否包邮为必选项！");
+            return false;
+        }else if(is_postage=='2'){
+            var valuation_model = $('input[name=valuation_model]:checked').val();
+            if(valuation_model==null||valuation_model=='undefined'){
+                layer.msg("计价方式为必选项！");
+                return false;
+            }else{
+                var carry_model = [];
+                $.each($('input[name=carry_model]'),(i,d)=>{
+                    if(d.checked){
+                        carry_model.push(parseInt(d.value));
+                    }
+                });
+                if(carry_model.length==0){
+                    layer.msg("运送方式为必选项！");
+                    return false;
+                }
+            }
+        }
+        $('#freightForm').ajaxSubmit({
+            url:"<?php echo $this->config->app_url_root.'/Freight/freight_add_ajax'?>",
+            type: 'post',
+            dataType: 'json',
+            success:(e)=>{
+                
+            },
+            error:(err)=>{
+
+            }
         });
     });
 

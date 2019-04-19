@@ -54,6 +54,10 @@ class FreightController extends CO_Controller{
 		$this->render('freight/add');
 	}
 
+    public function freight_add_ajax(){
+        var_dump($_POST);
+    }
+
 	public function getThemesUrl(){
 		return HTTP_ROOT_PATH.'/'.VIEW_THEMES_PATH_NAME.'/'.$this->getThemes();
 	}
