@@ -18,7 +18,7 @@
 
 
 	<!-- 运费系统 -->
-	<li class="menu-list"><a href=""><i class="fa fa-shopping-cart"></i><span>运费系统</span></a>
+	<li class="menu-list"><a href=""><i class="fa fa-usd"></i><span>运费系统</span></a>
 		<ul class="sub-menu-list">
 			<li id="freight/freight_add"><a href="<?php echo $this->config->app_url_root.'/Freight/freight_add'?>">新增运费模版</a></li>
 			<li id="freight/freight_index"><a href="<?php echo $this->config->app_url_root.'/Freight/freight_index'?>">运费模版列表</a></li>
@@ -30,5 +30,5 @@
 
 	
 	
-	<li><a href="<?php echo $this->config->app_url_root.'/logout'?>"><i class="fa fa-sign-in"></i> <span><?php echo $this->language['sys_left_menu_logout'];?></span></a></li>
+	<li><a href="<?php echo $this->config->app_url_root.'/Login/logout'?>"><i class="fa fa-sign-in"></i> <span><?php echo $this->language['sys_left_menu_logout'];?></span></a></li>
 </ul>

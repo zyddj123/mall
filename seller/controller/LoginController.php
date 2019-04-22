@@ -83,7 +83,7 @@ class LoginController extends CO_Controller{
 
 	function logout(){
 		$this->session->Destroy();
-		self::login();
+		$this->login();
 	}
 	
 	/**

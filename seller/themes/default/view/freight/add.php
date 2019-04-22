@@ -290,12 +290,12 @@ if (!defined('CO_BASE_CHECK')) {
         carry_model_panel_str += '<div class="panel-body">';
         carry_model_panel_str += '<div class="row" style="display: inline-flex;padding-left: 20px;">';
         carry_model_panel_str += '默认运费：';
-        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;"> '+attr+'内';
-        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15 attr_num" type="text" style="width:50px;margin-top: -5px;"> '+attr+'内';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15 money_num" type="text" style="width:50px;margin-top: -5px;">';
         carry_model_panel_str += '元，每增加';
-        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15 attr_per" type="text" style="width:50px;margin-top: -5px;">';
         carry_model_panel_str += attr+'，增加运费';
-        carry_model_panel_str += '<input class="form-control input-sm m-bot15" type="text" style="width:50px;margin-top: -5px;">';
+        carry_model_panel_str += '<input class="form-control input-sm m-bot15 money_per" type="text" style="width:50px;margin-top: -5px;">';
         carry_model_panel_str += '元';
         carry_model_panel_str += '</div>';
         carry_model_panel_str += '<div class="row" style="padding:0px 10px 0px 0px;">';
@@ -312,12 +312,12 @@ if (!defined('CO_BASE_CHECK')) {
         carry_model_panel_str += '</thead>';
         carry_model_panel_str += '<tbody>';
         carry_model_panel_str += '<tr>';
-        carry_model_panel_str += '<td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+        carry_model_panel_str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
-        carry_model_panel_str += '<td class="text-center"><a href="javascript:void(0)"><i class="fa fa-trash-o"></i></a></td>';
+        carry_model_panel_str += '<td class="text-center"><a href="javascript:void(0)"><i class="fa fa-plus add_tr"></i></a></td>';
         carry_model_panel_str += '</tr>';
         carry_model_panel_str += '</tbody>';
         carry_model_panel_str += '</table>';
@@ -325,6 +325,25 @@ if (!defined('CO_BASE_CHECK')) {
         carry_model_panel_str += '</div>';
         return carry_model_panel_str;
     }
+
+    //添加“运送到”表格
+    $('body').on('click','.add_tr',function(){
+        var str = '';
+        str += '<tr>';
+        str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+        str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
+        str += '<td class="text-center"><a href="javascript:void(0)"><i class="fa fa-plus add_tr"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)"><i class="fa fa-trash-o del_tr"></i></a></td>';
+        str += '</tr>';
+        $(this).closest('tbody').append(str);
+    });
+
+    //删除“运送到”表格
+    $('body').on('click','.del_tr',function(){
+        $(this).closest('tr').remove();
+    });
 
     //包邮
     $('#postaged').on('ifChecked',(e)=>{
@@ -394,53 +413,87 @@ if (!defined('CO_BASE_CHECK')) {
             //------选择后确定按钮
             $(".btntest1").click(() => {
                 var areas = GetChecked();//已选择的城市名
-                console.log(areas);
-                // $(".areas").empty().html(areas);//显示在页面
-                // $("#selectedareas").val(areas);//存入隐藏的input
+                // console.log(areas);
+                $(".freight_areas").empty().html(areas.CheckedName.join(',')).data('areas_ids',areas.CheckedId);
                 $('#myModal').modal('hide');//完后隐藏模态框
             });
         });
     });
 
     $('#submit_btn').click(()=>{
+        var flag = false;
         var freight_name = $.trim($('#freight_name').val());
         if(freight_name==''||freight_name==null) {
             layer.msg("运费模版名称不能为空！");
+            flag = false;
             return false;
         }
         var is_postage = $('input[name=is_postage]:checked').val();
         if(is_postage==null||is_postage=='undefined'){
             layer.msg("是否包邮为必选项！");
+            flag = false;
             return false;
+        }else if(is_postage=='1'){
+            flag = true;
         }else if(is_postage=='2'){
             var valuation_model = $('input[name=valuation_model]:checked').val();
             if(valuation_model==null||valuation_model=='undefined'){
                 layer.msg("计价方式为必选项！");
+                flag = false;
                 return false;
             }else{
                 var carry_model = [];
+                var flag_neibu = false;
                 $.each($('input[name=carry_model]'),(i,d)=>{
                     if(d.checked){
-                        carry_model.push(parseInt(d.value));
+                        var attr_num = $(d).closest('.square-yellow').find('.attr_num').first().val();
+                        var money_num = $(d).closest('.square-yellow').find('.money_num').first().val();
+                        var attr_per = $(d).closest('.square-yellow').find('.attr_per').first().val();
+                        var money_per = $(d).closest('.square-yellow').find('.money_per').first().val();
+
+                        var aa = {};
+                        aa.cm = parseInt(d.value);
+                        aa.attr_num = attr_num;
+                        aa.money_num = money_num;
+                        aa.attr_per = attr_per;
+                        aa.money_per = money_per
+                        carry_model.push(aa);
+
+                        // if(){
+                        //     var freight_areas = $(d).closest('.square-yellow').find('.freight_areas').first().text();
+                        // }
+
+                        if(attr_num==''||money_num==''||attr_per==''||money_per==''){
+                            layer.msg("默认运费为必填项！");
+                            flag_neibu = false;
+                            return false;
+                        }else{
+                            flag_neibu = true;
+                        }
                     }
                 });
+                flag = flag_neibu?true:false;
+                console.log(carry_model);
                 if(carry_model.length==0){
                     layer.msg("运送方式为必选项！");
+                    flag = false;
                     return false;
                 }
             }
         }
-        $('#freightForm').ajaxSubmit({
-            url:"<?php echo $this->config->app_url_root.'/Freight/freight_add_ajax'?>",
-            type: 'post',
-            dataType: 'json',
-            success:(e)=>{
-                
-            },
-            error:(err)=>{
+        if(flag){
+            $('#freightForm').ajaxSubmit({
+                url:"<?php echo $this->config->app_url_root.'/Freight/freight_add_ajax'?>",
+                type: 'post',
+                dataType: 'json',
+                success:(e)=>{
+                    
+                },
+                error:(err)=>{
 
-            }
-        });
+                }
+            });
+        }
     });
 
 

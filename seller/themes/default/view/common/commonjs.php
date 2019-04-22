@@ -2,7 +2,7 @@
 <script src="<?php echo $this->getThemesUrl();?>/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/bootstrap.min.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/modernizr.min.js"></script>
-<script src="<?php echo $this->getThemesUrl();?>/js/jquery.nicescroll.js"></script>
+<!-- <script src="<?php echo $this->getThemesUrl();?>/js/jquery.nicescroll.js"></script> -->
 <script src="<?php echo $this->getThemesUrl();?>/js/scripts.js"></script>
 <script>
 $(function(){

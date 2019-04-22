@@ -7,7 +7,7 @@
 <script src="js/html5shiv.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]-->
-<script src="<?php echo $this->getThemesUrl();?>/js/jquery-1.10.2.min.js"></script>
+<script src="<?php echo $this->getThemesUrl();?>/js/jquery-3.3.1.js"></script>
 <script src="<?php echo $this->getThemesUrl();?>/js/app.js"></script>
 <script>
 </script>
