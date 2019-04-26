@@ -464,7 +464,7 @@ if (!defined('CO_BASE_CHECK')) {
                         // }
 
                         if(attr_num==''||money_num==''||attr_per==''||money_per==''){
-                            layer.msg("默认运费为必填项！");
+                            layer.msg("选中的默认运费为必填项！");
                             flag_neibu = false;
                             return false;
                         }else{
