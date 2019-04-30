@@ -46,7 +46,7 @@ class ViewGoods extends D_Model
         $data['select'] = $this->formData;
         $data['sum'] = 'id';
         $data['table'] = $this->table;
-        $data['order'] = array();
+        $data['order'] = array('1'=>'goods_name','2'=>'category_name','3'=>'is_on_sale','4'=>'min_price','5'=>'max_price','6'=>'sum_stock','7'=>'unit_name');
         $data['where']['and'] = array('store_id' => $_SESSION['seller']['id'],'status'=>1);
         $data['where']['or'] = array('goods_name','goods_sn','category_name');
         $a = new DataTable($get, $data, $this->db);

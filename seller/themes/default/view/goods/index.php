@@ -67,6 +67,7 @@ if(!defined('CO_BASE_CHECK')){
 													<th>#</th>
 													<th>商品名称</th>
 													<th>商品类别</th>
+													<th>商品状态</th>
 													<th>最低价格</th>
 													<th>最高价格</th>
 													<th>库存</th>
@@ -111,6 +112,9 @@ if(!defined('CO_BASE_CHECK')){
 		},{
 			"data": "category_name",
 		},{
+			"data": "is_on_sale",
+			"class": "is_on_sale"
+		},{
 			"data": "min_price",
 		},{
 			"data": "max_price",
@@ -126,13 +130,18 @@ if(!defined('CO_BASE_CHECK')){
 			data: null,
 			defaultContent: '<center><a href="#brand_dialog" class="edit_btn" data-toggle="modal"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="text-danger del_btn"><i class="fa fa-trash-o"></i>删除</a></center>',
 		},{ 
-			"orderable": false, "targets": [0,-1],
+			"orderable": false, 
+			"targets": [0,-1],
 		}],
 		createdRow: function(row, data, index) {
 			$(row).data('id', data.id);
 			// console.log($(row).data('id'));
 			// console.log(index);
-			$(row).find('.brand_logo').empty().append('<img style="height:25px;" src = "<?php echo SellerConfig::BRAND_LOGO;?>'+data.brand_logo+'">');
+			if(parseInt(data.is_on_sale)==1){
+				$(row).find('.is_on_sale').empty().append('<center><span class="label label-success label-mini">上架</span></center>');
+			}else if(parseInt(data.is_on_sale)==0){
+				$(row).find('.is_on_sale').empty().append('<center><span class="label label-danger label-mini">下架</span></center>');
+			}
 			if(data.store_id==0){
 				$(row).find('.del_btn').attr('class','text-warning').css('cursor','not-allowed').css('text-decoration','none').attr('title','系统预设项不能删除').find('i').attr('class','fa fa-ban');
 			}
