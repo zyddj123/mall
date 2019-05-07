@@ -1,4 +1,19 @@
-(function ($) {
+/**
+ * 适合包邮地区的 省市选择插件.
+ *
+ * @author zyddj123
+ * @copyright Copyright (c) 2019-2020
+ * @version v.1.0
+ *
+ * @api $(ele).areas();
+ * @param {level: 1} //联动级别，1为省，2为省市。 默认是1
+ * @action getChecked //获取选中的值 return array
+ * @example $('#div1').areas({level:2}).find('.okBtn').on("getChecked",function(ev,x){
+                console.log(x);
+            });
+ */
+
+;(function ($) {
     // 城市数据
     var areasData = {
         "0": ["北京", "上海", "天津", "重庆", "河北", "山西", "河南", "辽宁", "吉林", "黑龙江", "内蒙古", "江苏", "山东", "安徽", "浙江", "湖北", "福建", "广东", "湖南", "江西", "广西", "海南", "四川", "云南", "贵州", "陕西", "西藏", "青海", "甘肃", "新疆", "宁夏", "台湾", "香港", "澳门"],
@@ -404,46 +419,49 @@
         "0_32_0": ["香港市区内"],
         "0_33_0": ["澳门市区内"],
     };
-    $.fn.extend({
-        areas: function (option) {
-            var defaultSetting = {
-                level: 1,       //联动级别，1为省市区，2为省市，3为省。 默认是1
-            };
-            var setting = $.extend(defaultSetting, option);
-            var str = "";
-            str += '<div class="areas">';//areas start
-            str += '<div class="place-div">';//place-div start
-            str += '<div>';
-            str += '<div class="checkbtn"><a class="allcheck">全选</a><a class="clearCheck">清空</a></div>';
-            str += '<div class="placegroup">';//placegroup-div start
-            //绘制省份
-            $.each(areasData['0'],function(i,d){
-                str += '<div class="place clearfloat">';//place clearfloat start
-                str += '<div class="areasProvince">';//areasProvince start
-                str += '<span areasProvinceId="'+i+'" areasProvinceValue='+d+'>';//span start
-                str += '<input type="checkbox" class="areasProvinceChb" />&nbsp;';
-                str += d;
-                str += '</span>';//span end
-                str += '</div>';//areasProvince end
-                str += '<div class="areasCity clearfloat">';//areasCity clearfloat start
+    $.fn.areas = function (option) {
+        var defaultSetting = {
+            level: 1,       //联动级别，1为省，2为省市。 默认是1
+        };
+        var setting = $.extend(defaultSetting, option);
+        var str = "";
+        str += '<div class="areas">';//areas start
+        str += '<div class="place-div">';//place-div start
+        str += '<div>';
+        str += '<div class="placegroup">';//placegroup-div start
+        //绘制省份
+        $.each(areasData['0'], function (i, d) {
+            str += '<div class="place clearfloat">';//place clearfloat start
+            str += '<div class="areasProvince">';//areasProvince start
+            str += '<span areasProvinceId="' + i + '" areasProvinceValue=' + d + '>';//span start
+            str += '<input type="checkbox" class="areasProvinceChb" />&nbsp;';
+            str += d;
+            str += '</span>';//span end
+            str += '</div>';//areasProvince end
+            if (setting.level == 2) {
                 //绘制市
-                $.each(areasData['0_'+i],function(x,y){
+                str += '<div class="areasCity clearfloat">';//areasCity clearfloat start
+                $.each(areasData['0_' + i], function (x, y) {
                     str += '<div class="place-tooltips">';//place-tooltips start
-                    str += '<span areasCityId="0_'+x+'" areasCityValue='+x+'>';//span start
+                    str += '<span areasCityId="0_' + x + '" areasCityValue=' + y + '>';//span start
                     str += '<input type="checkbox" class="areasCityChb" />';
                     str += y;
                     str += '</span>';//span end
                     str += '</div>'//place-tooltips end
                 });
                 str += '</div>';//areasCity clearfloat end
-                str += '</div>';//place clearfloat end
-            });
-            str += '</div>';//placegroup-div end
-            str += '</div>';
-            str += '</div>';//place-div end
-            str += '</div>';//areas end
-            this.empty().append(str);
+            }
+            str += '</div>';//place clearfloat end
+        });
+        str += '</div>';//placegroup-div end
+        // str += '<div class="checkbtn"></div>';
+        str += '<div class="checkbtn"><button class="allCheck">全选</button><button class="clearCheck">清空</button><button class="okBtn">确定</button></div>';
+        str += '</div>';
+        str += '</div>';//place-div end
+        str += '</div>';//areas end
+        this.empty().append(str);
 
+        if (setting.level == 2) {
             // 鼠标移到省份上事件
             this.find(".areas").on('mouseover', '.place', function () {
                 $(this).addClass("place-active");
@@ -455,23 +473,61 @@
                 $(this).removeClass("place-active");
                 $(".areasCity").hide();
             });
-
-            //省份复选框点击事件
-            this.find(".areas").on('click', '.areasProvinceChb', function () {
-                $(this).closest('.place').find("input").prop("checked", $(this).prop("checked"));
-            });
-            
-            //全选
-            this.find(".areas").on('click','.allcheck',()=>{
-                this.find("input").prop("checked", true);
-            });
-
-            //全取消
-            this.find(".areas").on('click','.clearCheck',()=>{
-                this.find("input").prop("checked", false);
-            });
-
-            return this;
         }
-    });
+
+        //省份复选框点击事件
+        this.find(".areas").on('click', '.areasProvinceChb', function () {
+            $(this).closest('.place').find("input").prop("checked", $(this).prop("checked"));
+        });
+
+        //市复选框点击事件
+        this.find(".areas").on('click', '.areasCityChb', function () {
+            // $(this).closest('.place').find("input[class='areasProvinceChb']").prop('checked', $(this).closest('.areasCity').find("input:checked").length > 0);
+            if($(this).closest('.areasCity').find("input:checked").length > 0 && $(this).closest('.areasCity').find("input:checked").length < $(this).closest('.areasCity').find("input").length){
+                $(this).closest('.place').find("input[class='areasProvinceChb']").get(0).indeterminate = true;
+            }else {
+                $(this).closest('.place').find("input[class='areasProvinceChb']").get(0).indeterminate = false;
+                $(this).closest('.place').find("input[class='areasProvinceChb']").prop('checked',$(this).closest('.areasCity').find("input:checked").length==0?false:true);
+            }
+        });
+
+        //全选
+        this.find(".areas").on('click', '.allCheck', () => {
+            this.find("input").prop("checked", true);
+        });
+
+        //全取消
+        this.find(".areas").on('click', '.clearCheck', () => {
+            this.find("input").prop("checked", false);
+        });
+
+        //确定按钮点击事件  并且监听确定按钮的getChecked事件 并返回所有选中的复选框的值
+        this.find(".areas").on('click', '.okBtn', () => {
+            var checkData = this.getChecked();
+            this.find(".okBtn").trigger("getChecked",[checkData]);
+        });
+        
+
+        this.getChecked = ()=>{
+            var cData = [];
+            $.each(this.find("input[class='areasProvinceChb']:checked,input[class='areasProvinceChb']:indeterminate"), function (i, d) {
+                var tmpP = {};
+                tmpP.areasProvinceId = $(d).closest('span').attr('areasProvinceId');
+                tmpP.areasProvinceValue = $(d).closest('span').attr('areasProvinceValue');
+                if (setting.level == 2) {
+                    tmpP.children = [];
+                    $.each($(d).closest('.place').find("input[class='areasCityChb']:checked"), function (x, y) {
+                        var tmpC = {};
+                        tmpC.areasCityId = $(y).closest('span').attr('areasCityId');
+                        tmpC.areasCityValue = $(y).closest('span').attr('areasCityValue');
+                        tmpP.children.push(tmpC);
+                    });
+                }
+                cData.push(tmpP);
+            });
+            return cData;
+        }
+
+        return this;
+    }
 }(jQuery));

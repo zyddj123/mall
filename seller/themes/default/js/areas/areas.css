@@ -9,11 +9,41 @@ a.btntest{
 .display-none{
     display: none;
 }
-.checkbtn a{
+.checkbtn .clearCheck{
+    float: left;
+    margin-right: 0px;
+    margin-bottom: 10px;
     font-size: 15px;
-    color: #333;
+    color: #000;
     text-decoration: none;
     cursor: pointer;
+    margin-top: 10px;
+    background-color: #fff;
+    border-style: none;
+}
+.checkbtn .allCheck{
+    float: left;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #fff;
+    border-style: none;
+}
+.checkbtn .okBtn{
+    float: right;
+    margin-right: 30px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: #fff;
+    border-style: none;
 }
 .ri{
     float: right;
@@ -23,7 +53,10 @@ a.btntest{
 .place-div>div{
     width: 100%;
     background: #f5f5f5;
-    padding: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 40px;
 }
 .place{
     display: inline-block;
@@ -66,7 +99,7 @@ a.btntest{
 }
 .place-div .checkbtn a{
     background-color: #FBFBFB;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #fff;
     height: 30px;
     line-height: 30px;
     display: inline-block;
