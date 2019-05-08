@@ -14,7 +14,7 @@ if (!defined('CO_BASE_CHECK')) {
 	<!-- header -->
 	<?php @include_once $this->getThemesPath().'/view/common/header.php'; ?>
     <link href="<?php echo $this->getThemesUrl(); ?>/js/iCheck/skins/square/yellow.css" rel="stylesheet">
-    <link href="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/RegionalChoice.css" rel="stylesheet">
+    <link href="<?php echo $this->getThemesUrl(); ?>/js/areas/areas.css" rel="stylesheet">
 	<style>
 	.radio {
         display: flex;
@@ -115,7 +115,7 @@ if (!defined('CO_BASE_CHECK')) {
                                                     </h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="test-div">
+                                                    <div class="choiceAreasDiv">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -142,8 +142,7 @@ if (!defined('CO_BASE_CHECK')) {
 </section>
 <?php @include_once $this->getThemesPath().'/view/common/commonjs.php'; ?>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/iCheck/jquery.icheck.min.js"></script>
-<script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/regional.json"></script>
-<script src="<?php echo $this->getThemesUrl(); ?>/js/RegionalChoice/RegionalChoice.js"></script>
+<script src="<?php echo $this->getThemesUrl(); ?>/js/areas/areas.js"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/validate/jquery.form.js"></script>
 <script src="<?php echo $this->getThemesUrl(); ?>/js/layer/layer.js"></script>
 <script>
@@ -243,7 +242,7 @@ if (!defined('CO_BASE_CHECK')) {
     is_postage_by_if_str += '</thead>';
     is_postage_by_if_str += '<tbody>';
     is_postage_by_if_str += '<tr>';
-    is_postage_by_if_str += '<td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+    is_postage_by_if_str += '<td><span class="areas">未添加地区</span>  <a href="javascript:void(0)" class="modal_areas"><i class="fa fa-edit pull-right"></i></a></td>';
     is_postage_by_if_str += '<td class="text-center"><center><select class="form-control"><option value="1">快递</option><option value="2">EMS</option><option value="3">平邮</option></select></center></td>';
     is_postage_by_if_str += '<td class="text-center"><center> </center></td>';
     is_postage_by_if_str += '<td class="text-center"><center>';
@@ -312,7 +311,7 @@ if (!defined('CO_BASE_CHECK')) {
         carry_model_panel_str += '</thead>';
         carry_model_panel_str += '<tbody>';
         carry_model_panel_str += '<tr>';
-        carry_model_panel_str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+        carry_model_panel_str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" class="modal_areas"><i class="fa fa-edit pull-right"></i></a></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         carry_model_panel_str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
@@ -330,7 +329,7 @@ if (!defined('CO_BASE_CHECK')) {
     $('body').on('click','.add_tr',function(){
         var str = '';
         str += '<tr>';
-        str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal"><i class="fa fa-edit pull-right"></i></a></td>';
+        str += '<td><span class="freight_areas">未添加地区</span>  <a href="javascript:void(0)" class="modal_areas"><i class="fa fa-edit pull-right"></i></a></td>';
         str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
         str += '<td class="text-center"><center><input class="form-control input-sm" type="text" style="width:40px;"></center></td>';
@@ -408,15 +407,16 @@ if (!defined('CO_BASE_CHECK')) {
                 $('#postage_by_if_down_div').empty().append(postage_by_if_down_div_str);
             });
 
-            //省市插件初始化
-            GetRegionPlug();
-            //------选择后确定按钮
-            $(".btntest1").click(() => {
-                var areas = GetChecked();//已选择的城市名
-                // console.log(areas);
-                $(".freight_areas").empty().html(areas.CheckedName.join(',')).data('areas_ids',areas.CheckedId);
-                $('#myModal').modal('hide');//完后隐藏模态框
+            $('body').on('click','.modal_areas',function(){
+                $('#myModal').modal('show');
             });
+
+            // 包邮城市插件初始化并且获得选中的值
+            $('.choiceAreasDiv').areas({level: 1, okBtn: '.btntest1'}).on("getChecked",function(ev,x){
+                console.log(x);
+                $('#myModal').modal('hide');
+            });
+
         });
     });
 

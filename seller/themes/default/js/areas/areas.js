@@ -3,12 +3,16 @@
  *
  * @author zyddj123
  * @copyright Copyright (c) 2019-2020
- * @version v.1.0
+ * @version v.1.1
  *
  * @api $(ele).areas();
- * @param {level: 1} //联动级别，1为省，2为省市。 默认是1
+ * @param {
+ *          level: 1,  //联动级别，1为省，2为省市。 默认是1
+ *          okBtn: '', //确认按钮，获取所有选中的复选框的值 默认为空 视图上会显示一个按钮  如果有初始值 视图上就不会有默认按钮
+ *        } 
  * @action getChecked //获取选中的值 return array
- * @example $('#div1').areas({level:2}).find('.okBtn').on("getChecked",function(ev,x){
+ * @return 确认按钮的jquery对象
+ * @example $('#div1').areas({level:2, okBtn:'.btntest1'}).on("getChecked",function(ev,x){
                 console.log(x);
             });
  */
@@ -422,6 +426,7 @@
     $.fn.areas = function (option) {
         var defaultSetting = {
             level: 1,       //联动级别，1为省，2为省市。 默认是1
+            okBtn: '',
         };
         var setting = $.extend(defaultSetting, option);
         var str = "";
@@ -455,7 +460,11 @@
         });
         str += '</div>';//placegroup-div end
         // str += '<div class="checkbtn"></div>';
-        str += '<div class="checkbtn"><button class="allCheck">全选</button><button class="clearCheck">清空</button><button class="okBtn">确定</button></div>';
+        str += '<div class="checkbtn"><button class="allCheck">全选</button><button class="clearCheck">清空</button>';
+        if(setting.okBtn==''){
+            str += '<button class="okBtn">确定</button>';
+        }
+        str += '</div>';
         str += '</div>';
         str += '</div>';//place-div end
         str += '</div>';//areas end
@@ -502,11 +511,17 @@
         });
 
         //确定按钮点击事件  并且监听确定按钮的getChecked事件 并返回所有选中的复选框的值
-        this.find(".areas").on('click', '.okBtn', () => {
-            var checkData = this.getChecked();
-            this.find(".okBtn").trigger("getChecked",[checkData]);
-        });
-        
+        if(setting.okBtn==''){
+            this.find(".areas").on('click', '.okBtn', () => {
+                var checkData = this.getChecked();
+                this.find(".okBtn").trigger("getChecked",[checkData]);
+            });
+        }else{
+            $(setting.okBtn).click(() => {
+                var checkData = this.getChecked();
+                $(setting.okBtn).trigger("getChecked",[checkData]);
+            });
+        }
 
         this.getChecked = ()=>{
             var cData = [];
@@ -528,6 +543,6 @@
             return cData;
         }
 
-        return this;
+        return (setting.okBtn=='')?$(".okBtn"):$(setting.okBtn);
     }
 }(jQuery));
