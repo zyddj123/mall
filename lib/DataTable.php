@@ -11,9 +11,9 @@
  * @copyright Copyright (c) 2018-2019, B.I.T.
  * @license
  *
- * @see 新增left join
+ * @see 增加安全性_getAll()
  *
- * @version v.2.1
+ * @version v.2.2
  */
 class DataTable
 {
@@ -125,15 +125,15 @@ class DataTable
         *                                   'sex'=>array('student.class_id','sex.id')
         *                             )
      *                             )
-     * @param string $databaseName 数据库的名字 默认是空 用来创建数据库对象
+     * @param string $db 数据库对象
      *
      * @return object this
      */
     public function __construct($dataTableGet, $info = array(), $db = '')
     {
-        self::_init($dataTableGet);
+        $this->_init($dataTableGet);
         $this->_db = $db;
-        // self::_getDb($databaseName);
+        // $this->_getDb($databaseName);
         $this->_info = $info;
     }
 
@@ -184,9 +184,9 @@ class DataTable
      *
      * @return array 执行的结果
      */
-    protected function _getAll($sql)
+    protected function _getAll($sql,$value)
     {
-        return $this->_db->GetAll($sql);
+        return $this->_db->query($sql,$value);
     }
 
     /**
@@ -205,25 +205,28 @@ class DataTable
         $whereSql = '';
         $limitSql = '';
         $sumSql = '';
+        $values=[];
         if (isset($data['select']) && !empty($data['select'])) {
-            $selectSql = self::_getSelectSql($data['select']);
+            $selectSql = $this->_getSelectSql($data['select']);
         } else {
             $selectSql = '*';
         }
         if (isset($data['join']) && !empty($data['join'])) {
-            $joinSql = self::_getJoinSql($data['join']);
+            $joinSql = $this->_getJoinSql($data['join']);
         }
         if (isset($data['order']) && !empty($data['order'])) {
-            $orderSql = self::_getOrderSql($data['order']);
+            $orderSql = $this->_getOrderSql($data['order']);
         }
         if (isset($data['where']) && !empty($data['where'])) {
-            $whereSql = self::_getWhereSql($data['where']);
+            $wh=$this->_getWhereSql($data['where']);
+            $whereSql = $wh['sql'];
+            $values=array_merge($values,$wh['data']);
         }
         if (isset($this->_start) && isset($this->_length)) {
-            $limitSql = self::_getLimitSql();
+            $limitSql = $this->_getLimitSql();
         }
         if (isset($data['sum']) && !empty($data['sum'])) {
-            $sumSql = self::_getRecordsTotal($data['sum']);
+            $sumSql = $this->_getRecordsTotal($data['sum']);
         }
         if (!empty($this->_search)) {
         }
@@ -231,9 +234,9 @@ class DataTable
 
         $sql = 'SELECT '.$selectSql." FROM `{$data['table']}` ". $joinSql .$whereSql.' '.$orderSql.' '.$limitSql;
         // var_dump($sql);die;
-        $info = $this->_getAll($sql);
+        $info = $this->_getAll($sql,$values);
         $sql1 = 'SELECT '.$sumSql." FROM {$data['table']} ". $joinSql .$whereSql.' '.$orderSql;
-        @$this->_recordsTotal = $this->_getAll($sql1)['0']['sum'];
+        @$this->_recordsTotal = $this->_getAll($sql1,$values)['0']['sum'];
         $sql2 = 'SELECT '.$sumSql." FROM {$data['table']} ". $joinSql .$whereSql.' '.$orderSql;
         // @$this->_recordsFiltered = $this->_getAll($sql2)['0']['sum'];
         @$this->_recordsFiltered = $this->_recordsTotal;
@@ -241,6 +244,7 @@ class DataTable
             echo $sql."\r\n";
             echo $sql1."\r\n";
             echo $sql2."\r\n";
+            var_dump($values);
         }
 
         return array(
@@ -311,6 +315,8 @@ class DataTable
     {
         $tmp = array();
         foreach ($data as $key => $value) {
+            $tmp1=[];
+            // $tmp1['sql']=" LEFT JOIN {$key} ON {$value[0]} = ? ";
             array_push($tmp, " LEFT JOIN {$key} ON {$value[0]} = {$value[1]} ");
         }
         return implode(' ', $tmp);
@@ -333,8 +339,10 @@ class DataTable
         $orsql = '';
         $or2Sql = '';
         $whereSql = '';
+
+        $data=[];
         if (!is_null($and)) {
-            $andSql = self::_processWhereParams($and);
+            $andSql = $this->_processWhereParams($and);
             $this->_andSql = $andSql;
         }
         if (!is_null($or2)) {
@@ -343,33 +351,40 @@ class DataTable
             $or2Sql = $this->_processWhereParamsOr($o2);
         }
         if (!is_null($or) && !empty($this->_search)) {
-            $orSql = self::_processWhereParams($or, false);
+            $orSql = $this->_processWhereParams($or, false);
         }
         $flag = 0;
         //四种情况
-        if (empty($andSql) && empty($orSql)) {
+        if (empty($andSql['sql']) && empty($orSql['sql'])) {
             $whereSql = '';
             $flag = 1;
-        } elseif (!empty($andSql) && empty($orSql)) {
-            $whereSql = 'WHERE '.$andSql;
+        } elseif (!empty($andSql['sql']) && empty($orSql['sql'])) {
+            $whereSql = 'WHERE '.$andSql['sql'];
+            $data=array_merge($data,$andSql['data']);
             $flag = 2;
-        } elseif (empty($andSql) && !empty($orSql)) {
-            $whereSql = 'WHERE '.$orSql;
+        } elseif (empty($andSql['sql']) && !empty($orSql['sql'])) {
+            $whereSql = 'WHERE '.$orSql['sql'];
+            $data=array_merge($data,$orSql['data']);
             $flag = 2;
         } else {
-            $whereSql = 'WHERE '.$andSql.' AND '.'('.$orSql.')';
+            $whereSql = 'WHERE '.$andSql['sql'].' AND '.'('.$orSql['sql'].')';
+            $data=array_merge($data,$andSql['data'],$orSql['data']);
             $flag = 2;
         }
-        if (!empty($or2Sql)) {
+        if (!empty($or2Sql['sql'])) {
             if (1 == $flag) {
-                $whereSql = 'WHERE '.$or2Sql;
+                $whereSql = 'WHERE '.$or2Sql['sql'];
+                $data=array_merge($data,$or2Sql['data']);
             }
             if (2 == $flag) {
-                $whereSql .= ' AND '.$or2Sql;
+                $whereSql .= ' AND '.$or2Sql['sql'];
+                $data=array_merge($data,$or2Sql['data']);
             }
         }
-
-        return $whereSql;
+        return [
+            'sql'=>$whereSql,
+            'data'=>$data
+        ];
     }
 
     /**
@@ -430,9 +445,9 @@ class DataTable
     protected function _getLimitSql()
     {
         $limitSql = '';
-        $limitSql = 'LIMIT '.$this->_start.', '.$this->_length;
-
+        $limitSql = 'LIMIT '.$this->_start.' , '.$this->_length;
         return $limitSql;
+       
     }
 
     /**
@@ -442,43 +457,58 @@ class DataTable
      * @param is_or 查询条件是and还是or  默认是and
      * @return  string 处理完成的字符串
      */
-    protected function _processWhereParams($data, $is_or = true)
+    protected function _processWhereParams($where, $is_or = true)
     {
         $field_list = array();
+        $data=[];
         if ($is_or) {
-            foreach ($data as $field_name => $field_value) {
+            foreach ($where as $field_name => $field_value) {
                 if(is_array($field_value)){
                     $data_list  = array();
                     foreach ($field_value as $key => $value) {
-                        array_push($data_list, $field_name . '=' . "'{$value}'");
+                        array_push($data,$value);
+                        array_push($data_list, $field_name . '=' . "?");
                     }
                     array_push($field_list, "(".implode(' OR ', $data_list).")");
                 }else{
-                    array_push($field_list, $field_name . '=' . "'{$field_value}'");
+                    array_push($data,$field_value);
+                    array_push($field_list, $field_name . '=' . "?");
                 }
             }
-            return implode(' AND ', $field_list);
+            return [
+                'sql'=>implode(' AND ', $field_list),
+                'data'=>$data
+            ];
         } else {
-            foreach ($data as $field_name => $field_value) {
-                array_push($field_list, $field_value . ' LIKE ' . "'" . '%' . $this->_search . '%' . "'");
+            foreach ($where as $field_name => $field_value) {
+                array_push($data,'%'.$this->_search.'%');
+                array_push($field_list, $field_value . ' LIKE ' . '?');
             }
-            return implode(' OR ', $field_list);
+            return [
+                'sql'=>implode(' OR ', $field_list),
+                'data'=>$data
+            ];
         }
     }
 
     protected function _processWhereParamsOr($data)
     {
         $field_list=[];
+        $data=[];
         foreach ($data as $field_name => $field_value) {
             if (is_array($field_value)) {
                 foreach ($field_value as $v) {
-                    array_push($field_list, $field_name.'='."'{$v}'");
+                    array_push($data,$v);
+                    array_push($field_list, $field_name.'='."?");
                 }
             } else {
-                array_push($field_list, $field_name.'='."'{$field_value}'");
+                array_push($data,$field_value);
+                array_push($field_list, $field_name.'='."?");
             }
         }
-
-        return "(".implode(' OR ', $field_list).")";
+        return [
+                'sql'=>"(".implode(' OR ', $field_list).")",
+                'data'=>$data
+            ];
     }
 }
