@@ -11,9 +11,9 @@
  * @copyright Copyright (c) 2018-2019, B.I.T.
  * @license
  *
- * @see 增加安全性_getAll()
+ * @see 新增 子查询
  *
- * @version v.2.2
+ * @version v.2.3
  */
 class DataTable
 {
@@ -118,7 +118,13 @@ class DataTable
         *                                  "or2"=>[ //这里面的会用or连接 几乎很少用 例如下面的数组会变成: a=1 or a=2 or b=2
         *                                          a=>[1,2],
         *                                          b=>[2]
-        *                                  ]
+        *                                  ],
+        *                                  'child'=>[   //Where子查询
+        *                                           'ID'        //字段名
+        *                                           'method',   // not in 、exists 、in、not exists
+        *                                           'sql'       //子查询sql语句,
+        *                                           [value]     //数组  sql语句里的参数值 (?)
+        *                                   ]   
         *                             ),
         *                             "join"=>array(
         *                                   'class'=>array('student.class_id','class.id'),
@@ -334,6 +340,7 @@ class DataTable
         $and = isset($data['and']) && !empty($data['and']) ? $data['and'] : null;
         $or = isset($data['or']) && !empty($data['or']) ? $data['or'] : null;
         $or2 = isset($data['or2']) && !empty($data['or2']) ? $data['or2'] : null;
+        $child = isset($data['child']) && !empty($data['child']) ? $data['child'] : null;
 
         $andSql = '';
         $orsql = '';
@@ -353,6 +360,7 @@ class DataTable
         if (!is_null($or) && !empty($this->_search)) {
             $orSql = $this->_processWhereParams($or, false);
         }
+
         $flag = 0;
         //四种情况
         if (empty($andSql['sql']) && empty($orSql['sql'])) {
@@ -381,6 +389,18 @@ class DataTable
                 $data=array_merge($data,$or2Sql['data']);
             }
         }
+
+        if (!is_null($child)) {
+            if (1 == $flag) {
+                $whereSql .= 'WHERE '.$child[0].' '.$child[1].'('.$child[2].')';
+                $data=array_merge($data,$child[3]);
+            }
+            if (2 == $flag) {
+                $whereSql .= ' AND '.$child[0].' '.$child[1].'('.$child[2].')';
+                $data=array_merge($data,$child[3]);
+            }
+        }
+
         return [
             'sql'=>$whereSql,
             'data'=>$data
@@ -491,11 +511,11 @@ class DataTable
         }
     }
 
-    protected function _processWhereParamsOr($data)
+    protected function _processWhereParamsOr($where)
     {
         $field_list=[];
         $data=[];
-        foreach ($data as $field_name => $field_value) {
+        foreach ($where as $field_name => $field_value) {
             if (is_array($field_value)) {
                 foreach ($field_value as $v) {
                     array_push($data,$v);
